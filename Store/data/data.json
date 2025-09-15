@@ -33,9 +33,20 @@
             "title": "Cavodi ",
             "description": "Cavodi est un carnet de voyage numérique qui vous permet de noter vos meilleures moment pendant vos voyage et vacances dans le monde, vous donnants ainsi la possibilité de le partager avec vos amis sur les réseaux sociaux.",
             "images": [
-                "./Store/assets/1757949792657-logo.png","https://play-lh.googleusercontent.com/s3IFzDnOtVyzN6u0-mzT6AentxHVfePPHPoUC5_UryKb02clqCjINVR48JDXFu_UhpQv=w5120-h2880-rw","https://play-lh.googleusercontent.com/IHAwNi1s5uTTpq_HzXQ7A3G_vSMS_QZSipUbYerH7SrjWl07uKHElFcDU8HdwLmZPWk=w5120-h2880-rw","https://play-lh.googleusercontent.com/PEIX6rv82Eelby0szOvajGY9ajO_GSg7lxtu2GCbgim_Rye-bKausu1r_F7MQgbA91g=w5120-h2880-rw"
+                "./Store/assets/1757949792657-logo.png",
+                "https://play-lh.googleusercontent.com/s3IFzDnOtVyzN6u0-mzT6AentxHVfePPHPoUC5_UryKb02clqCjINVR48JDXFu_UhpQv=w5120-h2880-rw",
+                "https://play-lh.googleusercontent.com/IHAwNi1s5uTTpq_HzXQ7A3G_vSMS_QZSipUbYerH7SrjWl07uKHElFcDU8HdwLmZPWk=w5120-h2880-rw",
+                "https://play-lh.googleusercontent.com/PEIX6rv82Eelby0szOvajGY9ajO_GSg7lxtu2GCbgim_Rye-bKausu1r_F7MQgbA91g=w5120-h2880-rw"
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.viz.cavodi"
+        },
+        "viz": {
+            "title": "Viz",
+            "description": "L'application VIZ est un parc numérique artistique permettant de vivre en direct et en rediffusion les activités culturelles de la ville de Goma et aussi l'expositions d'art en réalité virtuel .",
+            "images": [
+                "..\\Store\\assets\\1757949898677-logo.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.viz"
         }
     }
 }
