@@ -77,6 +77,14 @@
                 "./Store/assets/1757951921308-2.png"
             ],
             "downloadLink": "https://joyfashions.shop/"
+        },
+        "winnercompany": {
+            "title": "Winnercompany",
+            "description": "Un système de gestion d’une boutique est une application (web, mobile ou desktop) qui permet d’administrer et de contrôler les différentes opérations liées à la vente de produits et à la gestion quotidienne de l’activité commerciale.\n\n🎯 Objectifs\n\nAutomatiser les processus de vente, d’achat et de gestion des stocks.\n\nAméliorer la visibilité sur l’état des produits disponibles.\n\nSuivre les ventes et générer des rapports pour la prise de décision.\n\nRéduire les erreurs humaines dans les calculs et enregistrements.",
+            "images": [
+                "https://winnercompany.net/assets/logo.png"
+            ],
+            "downloadLink": "https://winnercompany.net/"
         }
     }
 }
