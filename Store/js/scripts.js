@@ -14,7 +14,7 @@ function createAppCard(appId, app) {
                 <img class="card-img-top-custom" src="${app.images[0]}" alt="Logo de l'application ${app.title}" />
                 <div class="card-body p-9">
                     <div class="text-center">
-                        <h5 class="fw-bolder">${app.title}</h5>
+                        <h5 class="fw-bolder card-title-custom">${app.title}</h5>
                     </div>
                 </div>
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

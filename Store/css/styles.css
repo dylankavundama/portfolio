@@ -10831,3 +10831,7 @@ textarea.form-control-lg {
     width: auto;
     object-fit: contain;
 }
+
+.card-title-custom {
+    font-size: 100%;
+}
