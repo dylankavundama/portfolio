@@ -4,17 +4,10 @@
             "title": "WMA Hub",
             "description": "WMA Hub est une plateforme internationale qui se concentre sur la promotion, la gestion et la distribution d'artistes et de contenus audiovisuels, avec une présence significative en Afrique.\r\n\r\nL'entreprise propose plusieurs services aux musiciens et aux créateurs de contenu, notamment :\r\n\r\nDistribution musicale : Ils distribuent de la musique sur plus de 200 plateformes de streaming dans le monde. Ils privilégient également le paiement rapide des droits d'auteur et proposent des services sans abonnement.\r\n\r\nGestion et promotion des artistes : WMA Hub s'efforce d'offrir aux artistes une visibilité, un soutien stratégique et des opportunités de carrière grâce à un réseau de professionnels de la musique et de la vidéo.\r\n\r\nGestion du catalogue : ils fournissent des outils pour aider les artistes à gérer leur musique, leurs droits d'auteur et leurs données financières au sein d'un seul système. Cela inclut la gestion des ressources numériques, le suivi des indicateurs de streaming et de revenus, et la simplification des rapports financiers.\r\n\r\nEssentiellement, ils agissent comme une plateforme centrale permettant aux artistes de diffuser leur travail dans le monde, de gérer leur entreprise et de développer leur carrière.",
             "images": [
-                ".Store/assets/1757933453145-placeholder.jpg"
+                "./Store/assets/1757933453145-placeholder.jpg"
             ],
             "downloadLink": "https://wmahub.com/"
-        },
-        "dd": {
-            "title": "dd",
-            "description": "ddd",
-            "images": [
-                "https://images.squarespace-cdn.com/content/v1/5c3a90bb266c079ba94dd625/1650313424391-SXADF6ALP4JWJMOL86QT/logo+transparent+peri.png"
-            ],
-            "downloadLink": "https://images.squarespace-cdn.com/content/v1/5c3a90bb266c079ba94dd625/1650313424391-SXADF6ALP4JWJMOL86QT/logo+transparent+peri.png"
         }
+ 
     }
 }
