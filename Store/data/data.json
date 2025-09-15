@@ -66,7 +66,7 @@
             "title": "Easykivu ",
             "description": "Easykivu est une plateforme de commerce électronique basée en République démocratique du Congo (RDC). Il s'agit d'une place de marché en ligne pour l'achat et la vente de biens, principalement destinée à l'est du pays.",
             "images": [
-                "..\\Store\\assets\\1757950755708-logo.jpg"
+                "./Store/assets/1757950755708-logo.jpg"
             ],
             "downloadLink": "https://easykivu.com/wp/"
         }
