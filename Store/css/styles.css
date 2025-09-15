@@ -10835,3 +10835,24 @@ textarea.form-control-lg {
 .card-title-custom {
     font-size: 100%;
 }
+.logo-circle-container {
+    width: 100px; /* Définissez la largeur et la hauteur de votre cercle */
+    height: 100px;
+    border-radius: 50%; /* Rend l'élément circulaire */
+    overflow: hidden; /* Cache tout ce qui dépasse du cercle */
+    display: flex; /* Utilise flexbox pour centrer l'image */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    margin: 20px auto; /* Centre le cercle horizontalement dans son parent et ajoute de l'espace */
+    background-color: #f0f0f0; /* Couleur de fond du cercle, visible si l'image est transparente */
+    border: 1px solid #ddd; /* Une petite bordure pour délimiter le cercle (optionnel) */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Une petite ombre pour la profondeur (optionnel) */
+}
+
+.logo-circle-container img.card-img-top-custom {
+    max-width: 100%; /* S'assure que l'image ne dépasse pas la largeur du conteneur */
+    max-height: 100%; /* S'assure que l'image ne dépasse pas la hauteur du conteneur */
+    object-fit: contain; /* Redimensionne l'image pour qu'elle tienne dans le conteneur sans être rognée */
+    /* object-fit: cover; pour remplir le cercle entièrement, en rognant les bords si nécessaire */
+    border-radius: 0; /* Important : réinitialise le border-radius de l'image si elle en avait un */
+}
