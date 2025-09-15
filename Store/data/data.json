@@ -1,0 +1,31 @@
+{
+    "apps": {
+        "mes-taches": {
+            "title": "Mes Tâches",
+            "description": "Une application de gestion de tâches simple et intuitive. Organisez votre vie, priorisez vos objectifs et ne manquez jamais une échéance importante. Ajoutez, modifiez et suivez vos tâches facilement.",
+            "images": [
+                "https://m.media-amazon.com/images/M/MV5BYTgyMTlkZTgtMTMxYi00Mjk5LTg2NTMtNGYyMDVlZWM0NmZjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                "../Store/assets/task_screen2.png",
+                "../Store/assets/task_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.mestaches"
+        },
+        "dd": {
+            "title": "dd",
+            "description": "dd",
+            "images": [
+                "ddd"
+            ],
+            "downloadLink": "http://localhost:3000/add_app.html"
+        },
+        "test": {
+            "title": "test",
+            "description": "dsssssssssssssdd",
+            "images": [
+                "https://images.pexels.com/photos/19505711/pexels-photo-19505711.jpeg",
+                "https://cdn.redcare-pharmacie.fr/images/BE0/437/945/9/BE04379459-p10.jpg"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.sas.clash.of.a.knight"
+        }
+    }
+}

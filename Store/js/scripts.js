@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Charger les données depuis le fichier JSON
-    fetch('data.json')
+    fetch('data/data.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erreur de chargement du fichier data.json');
@@ -87,4 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Il y a eu un problème avec l\'opération fetch:', error);
             alert('Impossible de charger les données des applications. Veuillez vérifier le chemin du fichier.');
         });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (votre code JavaScript existant pour les cartes d'applications) ...
+
+    // Fonction pour mettre à jour l'année dans le pied de page
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        const currentYear = new Date().getFullYear();
+        currentYearSpan.textContent = currentYear;
+    }
 });
