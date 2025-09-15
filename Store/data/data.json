@@ -44,7 +44,7 @@
             "title": "Viz",
             "description": "L'application VIZ est un parc numérique artistique permettant de vivre en direct et en rediffusion les activités culturelles de la ville de Goma et aussi l'expositions d'art en réalité virtuel .",
             "images": [
-                "..\\Store\\assets\\1757949898677-logo.png"
+                "./Store/assets/1757949898677-logo.png","https://play-lh.googleusercontent.com/toU_B9jNPoejFZb1BpPYDLuJOMKzm1ZbdOtC39poS9rfsdXoljGhgs1z0T0yXk2EEUw=w5120-h2880-rw","https://play-lh.googleusercontent.com/-vlfr8Z-uMsiAJ4BFkLzznCm2UeMMsalIiKh6ijVbRs0LM8TyeDKJLefE4dBY8MGGXs=w5120-h2880-rw","https://play-lh.googleusercontent.com/b_MxqFhGTUTungDc579ZeSXoHit2lJ3pA3lcGKKa8GaEQsHoXKRh3SxztTqmH0d1rA=w5120-h2880-rw"
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.viz"
         }
