@@ -10860,7 +10860,9 @@ textarea.form-control-lg {
 
 .header-background {
     /* Votre code précédent... */
-    background-image: url('https://s3-alpha.figma.com/hub/file/4210100113/0d13eb3a-6b59-4412-a59a-59529fb259af-cover.png');
+    background-image: 
+    url('https://img2.storyblok.com/filters:format(webp)/f/122804/3334x1452/0c741f35a3/types-of-application-software.webp');    
+    /* url('https://aib-ci.net/wp-content/uploads/2021/10/votre-application-mobile-740x520-740x520-1.png'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
