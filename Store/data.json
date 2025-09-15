@@ -1,0 +1,114 @@
+{
+    "apps": {
+        "mes-taches": {
+            "title": "Mes Tâches",
+            "description": "Une application de gestion de tâches simple et intuitive. Organisez votre vie, priorisez vos objectifs et ne manquez jamais une échéance importante. Ajoutez, modifiez et suivez vos tâches facilement.",
+            "images": [
+            "https://m.media-amazon.com/images/M/MV5BYTgyMTlkZTgtMTMxYi00Mjk5LTg2NTMtNGYyMDVlZWM0NmZjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+                "../Store/assets/task_screen2.png",
+                "../Store/assets/task_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.mestaches"
+        },
+        "gayux": {
+            "title": "Gayux",
+            "description": "Gayux est une application de quiz ludique pour tester vos connaissances générales. Défiez vos amis et montez dans les classements en répondant à des questions variées sur de nombreux sujets.",
+            "images": [
+                "../Store/assets/gayux_screen1.png",
+                "../Store/assets/gayux_screen2.png",
+                "../Store/assets/gayux_screen3.png"
+            ],
+            "downloadLink": "../Store/apk/gayux.apk"
+        },
+        "wma": {
+            "title": "WMA",
+            "description": "WMA est une application de musique qui vous permet d'écouter des artistes locaux et internationaux. Créez vos propres playlists et découvrez de nouveaux sons en toute simplicité.",
+            "images": [
+                "../Store/assets/wma_screen1.png",
+                "../Store/assets/wma_screen2.png",
+                "../Store/assets/wma_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.vmardc"
+        },
+        "bookim": {
+            "title": "Bookim",
+            "description": "Bookim est votre bibliothèque numérique personnelle. Lisez des livres, des magazines et des documents en ligne, où que vous soyez. Synchronisez vos lectures sur tous vos appareils.",
+            "images": [
+                "../Store/assets/bookim_screen1.png",
+                "../Store/assets/bookim_screen2.png",
+                "../Store/assets/bookim_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.bookimfr"
+        },
+        "statut-save": {
+            "title": "Statut Save",
+            "description": "Statut Save est un outil pratique pour sauvegarder les statuts de vos contacts sur les réseaux sociaux. Ne manquez plus jamais une vidéo ou une photo de vos amis.",
+            "images": [
+                "../Store/assets/statussave_screen1.png",
+                "../Store/assets/statussave_screen2.png",
+                "../Store/assets/statussave_screen3.png"
+            ],
+            "downloadLink": "../Store/apk/save.apk"
+        },
+        "kactu": {
+            "title": "Kactu",
+            "description": "Kactu est une application de messagerie instantanée sécurisée. Restez en contact avec vos proches grâce à des appels vidéo et des messages cryptés de bout en bout.",
+            "images": [
+                "../Store/assets/kactu_screen1.png",
+                "../Store/assets/kactu_screen2.png",
+                "../Store/assets/kactu_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.kactu"
+        },
+        "kin-resto": {
+            "title": "Kin Resto",
+            "description": "Kin Resto vous aide à trouver les meilleurs restaurants à Kinshasa. Découvrez des menus, lisez des avis et réservez une table directement depuis votre téléphone.",
+            "images": [
+                "../Store/assets/kinresto_screen1.png",
+                "../Store/assets/kinresto_screen2.png",
+                "../Store/assets/kinresto_screen3.png"
+            ],
+            "downloadLink": "../Store/apk/kinresto.apk"
+        },
+        "u-mood": {
+            "title": "U-Mood",
+            "description": "U-Mood est une application de bien-être qui vous aide à suivre votre humeur et à améliorer votre santé mentale. Suivez votre progression, méditez et trouvez des ressources pour vous sentir mieux.",
+            "images": [
+                "../Store/assets/umood_screen1.png",
+                "../Store/assets/umood_screen2.png",
+                "../Store/assets/umood_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.umood"
+        },
+        "rwanda-music": {
+            "title": "Rwanda Music",
+            "description": "Rwanda Music est une plateforme dédiée aux talents musicaux rwandais. Écoutez vos artistes préférés, découvrez les dernières tendances et soutenez la scène locale.",
+            "images": [
+                "../Store/assets/rwandamusic_screen1.png",
+                "../Store/assets/rwandamusic_screen2.png",
+                "../Store/assets/rwandamusic_screen3.png"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.rwandamusic"
+        },
+        "fally-ipupa-songs": {
+            "title": "Fally Ipupa Songs",
+            "description": "Retrouvez toutes les chansons de Fally Ipupa. Écoutez les hits de votre artiste préféré hors ligne et en ligne. Créez vos playlists personnalisées.",
+            "images": [
+                "../Store/assets/fally_screen1.png",
+                "../Store/assets/fally_screen2.png",
+                "../Store/assets/fally_screen3.png"
+            ],
+            "downloadLink": "../Store/apk/fally.apk"
+        },
+        "ferre-gola": {
+            "title": "Ferre Gola",
+            "description": "Découvrez la discographie complète de Ferre Gola. Plongez dans ses albums, ses singles et ses collaborations pour une expérience musicale immersive.",
+            "images": [
+                "../Store/assets/ferre_screen1.png",
+                "../Store/assets/ferre_screen2.png",
+                "../Store/assets/ferre_screen3.png"
+            ],
+            "downloadLink": "../Store/apk/ferre.apk"
+        }
+    }
+}
