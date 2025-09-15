@@ -10825,8 +10825,9 @@ textarea.form-control-lg {
   }
 }
 
+ 
 .card-img-top-custom {
-    height: 180px; /* Définissez la hauteur souhaitée pour vos images */
+    height: 150px;
     width: auto;
-    object-fit: contain; /* Cette propriété redimensionne l'image pour qu'elle s'intègre dans le cadre sans être coupée */
+    object-fit: contain;
 }

@@ -85,6 +85,15 @@
                 "https://winnercompany.net/assets/logo.png"
             ],
             "downloadLink": "https://winnercompany.net/"
+        },
+        "babutik": {
+            "title": "Babutik",
+            "description": "Une application e-commerce multiplateforme est une application mobile conçue pour fonctionner sur plusieurs systèmes d'exploitation (Android, iOS, Web, etc.) à partir d'une seule base de code. Cette approche permet de réduire les coûts et le temps de développement tout en offrant une expérience utilisateur cohérente sur différentes plateformes.",
+            "images": [
+                "./Store/assets/1757953942195-logo.png"
+ 
+            ],
+            "downloadLink": "https://babutik.com/"
         }
     }
 }
