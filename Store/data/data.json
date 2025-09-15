@@ -69,6 +69,14 @@
                 "./Store/assets/1757950755708-logo.jpg"
             ],
             "downloadLink": "https://easykivu.com/wp/"
+        },
+        "joyfashions": {
+            "title": "joyfashions",
+            "description": "C’est un site qui se présente comme une boutique de mode en ligne. Ils proposent des vêtements et accessoires pour hommes, femmes, enfants, ainsi que des parfums, sacs, chaussures, et quelques articles électroniques. \r\n\r\nLe catalogue semble assez large : robes, pantalons, jupes, etc.",
+            "images": [
+                "./Store/assets/1757951921308-2.png"
+            ],
+            "downloadLink": "https://joyfashions.shop/"
         }
     }
 }
