@@ -7,7 +7,14 @@
                 "./Store/assets/1757933453145-placeholder.jpg"
             ],
             "downloadLink": "https://wmahub.com/"
+        },
+        "millantech": {
+            "title": "Millantech",
+            "description": "Millantech est une boutique de vente en ligne situer dans la ville de bunia specialiser dans la vente des outils et appareil electronique & accesoires informatique.",
+            "images": [
+                "./Store/assets/1757949489711-logo.png","https://play-lh.googleusercontent.com/2NV6y38iZZKik5-5cfCe0nAFuVYy4ffs-MHH6YO2RwyeOOmdSDICD7otQBBIo2NCWGM=w5120-h2880-rw","https://play-lh.googleusercontent.com/T3ySddWl6bnfXSDskzMk22CBFyuK9QYYm8ih0czHk8Nbs4K9Xpf_cNoKQeebvOgjBkM=w5120-h2880-rw"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.phx.boutique"
         }
- 
     }
 }
