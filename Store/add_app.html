@@ -17,12 +17,17 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .image-input-group {
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+            padding: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 class="mb-4 text-center">Ajouter une Nouvelle Application</h2>
-        <form id="add-app-form" action="/add-app" method="post" enctype="multipart/form-data">
+        <form id="add-app-form" action="/add-app" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Nom de l'Application</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -31,10 +36,32 @@
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
             </div>
+            
             <div class="mb-3">
-                <label for="images" class="form-label">Images de l'Application (plusieurs fichiers)</label>
-                <input type="file" class="form-control" id="images" name="images" multiple required>
+                <label class="form-label">Source des images :</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="imageSource" id="sourceFile" value="file" checked>
+                    <label class="form-check-label" for="sourceFile">
+                        Fichiers sur l'ordinateur
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="imageSource" id="sourceLink" value="link">
+                    <label class="form-check-label" for="sourceLink">
+                        Liens URL
+                    </label>
+                </div>
             </div>
+
+            <div class="mb-3 image-input-group" id="file-input-group">
+                <label for="images" class="form-label">Images de l'Application (plusieurs fichiers)</label>
+                <input type="file" class="form-control" id="images" name="images" multiple>
+            </div>
+            <div class="mb-3 image-input-group" id="link-input-group" style="display:none;">
+                <label for="imageLinks" class="form-label">Liens des Images (séparés par une virgule)</label>
+                <textarea class="form-control" id="imageLinks" name="imageLinks" rows="3" placeholder="http://exemple.com/image1.png, http://exemple.com/image2.png"></textarea>
+            </div>
+            
             <div class="mb-3">
                 <label for="downloadLink" class="form-label">Lien de Téléchargement</label>
                 <input type="url" class="form-control" id="downloadLink" name="downloadLink" required>
@@ -45,16 +72,55 @@
     </div>
 
     <script>
-        document.getElementById('add-app-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            const responseMessage = document.getElementById('response-message');
+        const form = document.getElementById('add-app-form');
+        const fileInputGroup = document.getElementById('file-input-group');
+        const linkInputGroup = document.getElementById('link-input-group');
+        const imagesInput = document.getElementById('images');
+        const imageLinksInput = document.getElementById('imageLinks');
 
+        // Gérer le changement entre les deux modes d'entrée d'image
+        document.querySelectorAll('input[name="imageSource"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'file') {
+                    fileInputGroup.style.display = 'block';
+                    linkInputGroup.style.display = 'none';
+                    imagesInput.setAttribute('required', 'required');
+                    imageLinksInput.removeAttribute('required');
+                } else {
+                    fileInputGroup.style.display = 'none';
+                    linkInputGroup.style.display = 'block';
+                    imagesInput.removeAttribute('required');
+                    imageLinksInput.setAttribute('required', 'required');
+                }
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const responseMessage = document.getElementById('response-message');
+            const imageSource = document.querySelector('input[name="imageSource"]:checked').value;
+            let bodyData;
+            let headers = {};
+
+            if (imageSource === 'file') {
+                const formData = new FormData(form);
+                bodyData = formData;
+            } else { // 'link'
+                const data = {
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    imageLinks: imageLinksInput.value.split(',').map(link => link.trim()),
+                    downloadLink: document.getElementById('downloadLink').value
+                };
+                bodyData = JSON.stringify(data);
+                headers['Content-Type'] = 'application/json';
+            }
+            
             try {
                 const response = await fetch(form.action, {
                     method: 'POST',
-                    body: formData // On envoie l'objet FormData directement
+                    headers: headers,
+                    body: bodyData
                 });
                 const result = await response.text();
                 responseMessage.textContent = result;
