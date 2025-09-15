@@ -40,6 +40,15 @@
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.viz.cavodi"
         },
+                "yannexchange": {
+            "title": "YannExchange",
+            "description": "YannExchange est une plateforme d'échange de crypto-monnaies basée à Goma, en République démocratique du Congo. Elle est considérée comme l'une des plateformes d'échange de devises cryptographiques les plus importantes en Afrique de l'Est.\r\n\r\nSon objectif est de faciliter l'accès aux outils financiers numériques et de promouvoir l'inclusion financière dans une région où l'accès au système bancaire traditionnel peut être limité.\r\n\r\nYannExchange a notamment noué un partenariat avec une entreprise nommée \"Token Mithrandir\", dans le but de permettre aux habitants de Goma et des environs de négocier et d'utiliser le token MITHR, ainsi que d'autres actifs numériques. Ce partenariat vise également à mener des initiatives éducatives, des ateliers communautaires et à distribuer des portefeuilles numériques pour favoriser une adoption responsable des crypto-monnaies.",
+            "images": [
+                "./Store/assets/1757956677074-WhatsApp Image 2025-03-08 at 17.05.51_9077ae45.jpg"
+      
+            ],
+            "downloadLink": "https://yannexchange.com/"
+        },
         "viz": {
             "title": "Viz",
             "description": "L'application VIZ est un parc numérique artistique permettant de vivre en direct et en rediffusion les activités culturelles de la ville de Goma et aussi l'expositions d'art en réalité virtuel .",
@@ -70,6 +79,14 @@
             ],
             "downloadLink": "https://easykivu.com/wp/"
         },
+        "babutik": {
+            "title": "Babutik",
+            "description": "Une application e-commerce multiplateforme est une application mobile conçue pour fonctionner sur plusieurs systèmes d'exploitation (Android, iOS, Web, etc.) à partir d'une seule base de code. Cette approche permet de réduire les coûts et le temps de développement tout en offrant une expérience utilisateur cohérente sur différentes plateformes.",
+            "images": [
+                "./Store/assets/1757953942195-logo.png"
+            ],
+            "downloadLink": "https://babutik.com/"
+        },
         "joyfashions": {
             "title": "joyfashions",
             "description": "C’est un site qui se présente comme une boutique de mode en ligne. Ils proposent des vêtements et accessoires pour hommes, femmes, enfants, ainsi que des parfums, sacs, chaussures, et quelques articles électroniques. \r\n\r\nLe catalogue semble assez large : robes, pantalons, jupes, etc.",
@@ -85,15 +102,7 @@
                 "https://winnercompany.net/assets/logo.png"
             ],
             "downloadLink": "https://winnercompany.net/"
-        },
-        "babutik": {
-            "title": "Babutik",
-            "description": "Une application e-commerce multiplateforme est une application mobile conçue pour fonctionner sur plusieurs systèmes d'exploitation (Android, iOS, Web, etc.) à partir d'une seule base de code. Cette approche permet de réduire les coûts et le temps de développement tout en offrant une expérience utilisateur cohérente sur différentes plateformes.",
-            "images": [
-                "./Store/assets/1757953942195-logo.png"
- 
-            ],
-            "downloadLink": "https://babutik.com/"
         }
+
     }
 }
