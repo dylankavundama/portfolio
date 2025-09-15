@@ -7,25 +7,46 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalDownloadLink = document.getElementById('app-download-link');
 
     // Fonction pour créer une carte d'application
-    function createAppCard(appId, app) {
-        return `
-            <div class="col mb-5">
-                <div class="card h-140">
-                    <img class="card-img-top" src="${app.images[0]}" alt="Logo de l'application ${app.title}" />
-                    <div class="card-body p-9">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">${app.title}</h5>
-                        </div>
+ function createAppCard(appId, app) {
+    return `
+        <div class="col mb-5">
+            <div class="card h-140">
+                <img class="card-img-top card-img-top-custom" src="${app.images[0]}" alt="Logo de l'application ${app.title}" />
+                <div class="card-body p-9">
+                    <div class="text-center">
+                        <h5 class="fw-bolder">${app.title}</h5>
                     </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto app-details-btn" href="#${appId}" data-bs-toggle="modal" data-bs-target="#appDetailsModal">Voir les détails</a>
-                        </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto app-details-btn" href="#${appId}" data-bs-toggle="modal" data-bs-target="#appDetailsModal">Voir les détails</a>
                     </div>
                 </div>
             </div>
-        `;
-    }
+        </div>
+    `;
+}
+
+
+    // function createAppCard(appId, app) {
+    //     return `
+    //         <div class="col mb-5">
+    //             <div class="card h-140">
+    //                 <img class="card-img-top" src="${app.images[0]}" alt="Logo de l'application ${app.title}" />
+    //                 <div class="card-body p-9">
+    //                     <div class="text-center">
+    //                         <h5 class="fw-bolder">${app.title}</h5>
+    //                     </div>
+    //                 </div>
+    //                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    //                     <div class="text-center">
+    //                         <a class="btn btn-outline-dark mt-auto app-details-btn" href="#${appId}" data-bs-toggle="modal" data-bs-target="#appDetailsModal">Voir les détails</a>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     `;
+    // }
 
     // Fonction pour mettre à jour la modale avec les détails de l'application
     function updateModal(app) {
