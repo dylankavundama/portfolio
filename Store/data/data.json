@@ -40,12 +40,11 @@
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.viz.cavodi"
         },
-                "yannexchange": {
+        "yannexchange": {
             "title": "YannExchange",
             "description": "YannExchange est une plateforme d'échange de crypto-monnaies basée à Goma, en République démocratique du Congo. Elle est considérée comme l'une des plateformes d'échange de devises cryptographiques les plus importantes en Afrique de l'Est.\r\n\r\nSon objectif est de faciliter l'accès aux outils financiers numériques et de promouvoir l'inclusion financière dans une région où l'accès au système bancaire traditionnel peut être limité.\r\n\r\nYannExchange a notamment noué un partenariat avec une entreprise nommée \"Token Mithrandir\", dans le but de permettre aux habitants de Goma et des environs de négocier et d'utiliser le token MITHR, ainsi que d'autres actifs numériques. Ce partenariat vise également à mener des initiatives éducatives, des ateliers communautaires et à distribuer des portefeuilles numériques pour favoriser une adoption responsable des crypto-monnaies.",
             "images": [
                 "./Store/assets/yann.jpg"
-      
             ],
             "downloadLink": "https://yannexchange.com/"
         },
@@ -102,7 +101,14 @@
                 "https://winnercompany.net/assets/logo.png"
             ],
             "downloadLink": "https://winnercompany.net/"
+        },
+        "mosungi-": {
+            "title": "Mosungi ",
+            "description": "La Fondation Mosungi est une organisation humanitaire congolaise qui soutient les victimes de violences sexuelles liées aux conflits en RDC. Elle fournit des soins médicaux, psychologiques, sociaux et juridiques, promeut la justice et sensibilise les communautés. Elle propose aussi des formations en premiers secours et œuvre pour protéger les femmes et les enfants.",
+            "images": [
+                "..\\Store\\assets\\1757958018095-logo.png"
+            ],
+            "downloadLink": "https://www.mosungi.org/"
         }
-
     }
 }
