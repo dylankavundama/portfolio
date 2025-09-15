@@ -12,9 +12,30 @@
             "title": "Millantech",
             "description": "Millantech est une boutique de vente en ligne situer dans la ville de bunia specialiser dans la vente des outils et appareil electronique & accesoires informatique.",
             "images": [
-                "./Store/assets/1757949489711-logo.png","https://play-lh.googleusercontent.com/2NV6y38iZZKik5-5cfCe0nAFuVYy4ffs-MHH6YO2RwyeOOmdSDICD7otQBBIo2NCWGM=w5120-h2880-rw","https://play-lh.googleusercontent.com/T3ySddWl6bnfXSDskzMk22CBFyuK9QYYm8ih0czHk8Nbs4K9Xpf_cNoKQeebvOgjBkM=w5120-h2880-rw"
+                "./Store/assets/1757949489711-logo.png",
+                "https://play-lh.googleusercontent.com/2NV6y38iZZKik5-5cfCe0nAFuVYy4ffs-MHH6YO2RwyeOOmdSDICD7otQBBIo2NCWGM=w5120-h2880-rw",
+                "https://play-lh.googleusercontent.com/T3ySddWl6bnfXSDskzMk22CBFyuK9QYYm8ih0czHk8Nbs4K9Xpf_cNoKQeebvOgjBkM=w5120-h2880-rw"
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.phx.boutique"
+        },
+        "geoville": {
+            "title": "GeoVille",
+            "description": "GeoVille est une application quiz testez vos connaissances sur les villes du monde.\r\nGeoVille se positionne comme une application de divertissement et d'apprentissage.\r\nTu peu regarder des annonces pour debloquer des niveaux et t'amuser d'avantage.",
+            "images": [
+                "./Store/assets/1757949656768-lg.png",
+                "https://play-lh.googleusercontent.com/iGUUpm_DrAUeKZxOtQdxqDbRpS3IEM6XX_Ze8DyP3FBk6wfDGwb68ly5hEylBNKA0Tg=w5120-h2880-rw",
+                "https://play-lh.googleusercontent.com/P3deecBdLi9TyepzoFgOmCdBxo7O6BJv505GcutaKQj2jAkDP0-scfZVdWUkQVtxLas=w5120-h2880-rw",
+                "https://play-lh.googleusercontent.com/sOR0r6a_geAuIUidZwcdg-YYIDOUiC-c5jgNB2dr-YYgBnyq4xZ7TlX7QmzgLO_I3Q=w5120-h2880-rw"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.viz.geoville"
+        },
+        "cavodi-": {
+            "title": "Cavodi ",
+            "description": "Cavodi est un carnet de voyage numérique qui vous permet de noter vos meilleures moment pendant vos voyage et vacances dans le monde, vous donnants ainsi la possibilité de le partager avec vos amis sur les réseaux sociaux.",
+            "images": [
+                "./Store/assets/1757949792657-logo.png","https://play-lh.googleusercontent.com/s3IFzDnOtVyzN6u0-mzT6AentxHVfePPHPoUC5_UryKb02clqCjINVR48JDXFu_UhpQv=w5120-h2880-rw","https://play-lh.googleusercontent.com/IHAwNi1s5uTTpq_HzXQ7A3G_vSMS_QZSipUbYerH7SrjWl07uKHElFcDU8HdwLmZPWk=w5120-h2880-rw","https://play-lh.googleusercontent.com/PEIX6rv82Eelby0szOvajGY9ajO_GSg7lxtu2GCbgim_Rye-bKausu1r_F7MQgbA91g=w5120-h2880-rw"
+            ],
+            "downloadLink": "https://play.google.com/store/apps/details?id=com.viz.cavodi"
         }
     }
 }
