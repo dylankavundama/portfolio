@@ -10856,3 +10856,32 @@ textarea.form-control-lg {
     /* object-fit: cover; pour remplir le cercle entièrement, en rognant les bords si nécessaire */
     border-radius: 0; /* Important : réinitialise le border-radius de l'image si elle en avait un */
 }
+
+
+.header-background {
+    /* Votre code précédent... */
+    background-image: url('https://www.tekoway.com/wp-content/uploads/2019/04/developper-votre-application-web-avec-des-frameworks@2x-80.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+    /* IMPORTANT : permet au pseudo-élément de se positionner par rapport à l'en-tête */
+    position: relative;
+    
+    /* Assure que le contenu (texte) est au-dessus de la superposition */
+    z-index: 1; 
+}
+
+/* Créer une superposition sombre et semi-transparente */
+.header-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Utilise RGBA pour un noir semi-transparent (0.5 = 50% d'opacité) */
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: -1; /* Place la superposition sous le texte mais au-dessus de l'image */
+}
