@@ -21,7 +21,7 @@ function createAppCard(appId, app) {
         </div>
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto app-details-btn" href="#${appId}" data-bs-toggle="modal" data-bs-target="#appDetailsModal">Voir plus</a>
+                <a class="btn btn-outline-dark mt-auto app-details-btn" href="#${appId}" data-bs-toggle="modal" data-bs-target="#appDetailsModal">voir plus</a>
             </div>
         </div>
     </div>
