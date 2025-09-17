@@ -59,6 +59,18 @@
             ],
             "downloadLink": "https://play.google.com/store/apps/details?id=com.viz"
         },
+                "https://lifechannel.vercel.app/": {
+            "title": "Lifechannel",
+            "description": "Votre source d'informations fiables et en temps réel, partout, tout le temps.",
+            "images": [ 
+                 "./Store/assets/life.png",
+                 "./Store/assets/1758126732074-a.jpg",
+                 "./Store/assets/1758126732078-b.jpg",
+                 "./Store/assets/1758126732082-c.jpg",
+                 "./Store/assets/1758126732086-d.jpg"
+            ],
+            "downloadLink": "https://lifechannel.vercel.app/"
+        },
         "wma+": {
             "title": "WMA+",
             "description": "Le meilleur de la musique, du divertissement et de la création africaine WMA+ est une plateforme premium développée par WMA HUB, dédiée à la diffusion, la promotion, la monétisation et l’expérience enrichie du contenu artistique et culturel africain. Pensée pour valoriser les talents émergents et confirmés, WMA+ combine le pouvoir du streaming, de la télévision digitale, du contenu exclusif et de l’accompagnement artistique pour offrir à chaque abonné une immersion totale dans l’univers de la création africaine moderne.",
@@ -109,18 +121,7 @@
                 "./Store/assets/1757958018095-logo.png"
             ],
             "downloadLink": "https://www.mosungi.org/"
-        },
-        "https://lifechannel.vercel.app/": {
-            "title": "Lifechannel",
-            "description": "Votre source d'informations fiables et en temps réel, partout, tout le temps.",
-            "images": [ 
-                 "./Store/assets/life.png",
-                 "./Store/assets/1758126732074-a.jpg",
-                 "./Store/assets/1758126732078-b.jpg",
-                 "./Store/assets/1758126732082-c.jpg",
-                 "./Store/assets/1758126732086-d.jpg"
-            ],
-            "downloadLink": "https://lifechannel.vercel.app/"
         }
+
     }
 }
