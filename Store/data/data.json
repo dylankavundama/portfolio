@@ -106,10 +106,21 @@
             "title": "Mosungi ",
             "description": "La Fondation Mosungi est une organisation humanitaire congolaise qui soutient les victimes de violences sexuelles liées aux conflits en RDC. Elle fournit des soins médicaux, psychologiques, sociaux et juridiques, promeut la justice et sensibilise les communautés. Elle propose aussi des formations en premiers secours et œuvre pour protéger les femmes et les enfants.",
             "images": [
-           
                 "./Store/assets/1757958018095-logo.png"
             ],
             "downloadLink": "https://www.mosungi.org/"
+        },
+        "https://lifechannel.vercel.app/": {
+            "title": "Lifechannel",
+            "description": "Votre source d'informations fiables et en temps réel, partout, tout le temps.",
+            "images": [
+                "..\\Store\\assets\\1758126732070-1001802314.jpg",
+                "..\\Store\\assets\\1758126732074-a.jpg",
+                "..\\Store\\assets\\1758126732078-b.jpg",
+                "..\\Store\\assets\\1758126732082-c.jpg",
+                "..\\Store\\assets\\1758126732086-d.jpg"
+            ],
+            "downloadLink": "https://lifechannel.vercel.app/"
         }
     }
 }
