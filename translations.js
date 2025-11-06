@@ -9,7 +9,8 @@ const translations = {
             accueil: "Accueil",
             aPropos: "À propos",
             competences: "Compétences",
-            projets: "Réalisation"
+            projets: "Réalisation",
+            blog: "Blog"
         },
         
         // Hero Section
@@ -57,8 +58,16 @@ const translations = {
             filterFintech: "Fintech",
             filterMobile: "Mobile",
             filterWeb: "Web",
+            filterGestion: "Gestion",
             filterCulture: "Culture",
             projectsFound: "projets"
+        },
+        
+        // Blog Section
+        blog: {
+            title: "MON BLOG",
+            description: "Découvrez mes articles sur le développement, les technologies et mes expériences.",
+            empty: "Aucun article pour le moment. Revenez bientôt !"
         },
         
         // YouTube Section
@@ -70,8 +79,13 @@ const translations = {
         
         // Footer
         footer: {
-            suivezMoi: "Suivez-moi sur",
-            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025"
+            description: "Développeur Fullstack Mobile passionné, créant des applications modernes et performantes pour le web et mobile.",
+            quickLinks: "Liens Rapides",
+            contact: "Contact",
+            whatsapp: "Discuter sur WhatsApp",
+            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025",
+            madeWith: "Fait avec",
+            inRDC: "en RDC"
         }
     },
     
@@ -81,7 +95,8 @@ const translations = {
             accueil: "Home",
             aPropos: "About",
             competences: "Skills",
-            projets: "Projects"
+            projets: "Projects",
+            blog: "Blog"
         },
         
         // Hero Section
@@ -129,8 +144,16 @@ const translations = {
             filterFintech: "Fintech",
             filterMobile: "Mobile",
             filterWeb: "Web",
+            filterGestion: "Management",
             filterCulture: "Culture",
             projectsFound: "projects"
+        },
+        
+        // Blog Section
+        blog: {
+            title: "MY BLOG",
+            description: "Discover my articles on development, technologies and my experiences.",
+            empty: "No articles yet. Come back soon!"
         },
         
         // YouTube Section
@@ -142,8 +165,13 @@ const translations = {
         
         // Footer
         footer: {
-            suivezMoi: "Follow me on",
-            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025"
+            description: "Passionate Fullstack Mobile developer, creating modern and performant applications for web and mobile.",
+            quickLinks: "Quick Links",
+            contact: "Contact",
+            whatsapp: "Chat on WhatsApp",
+            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025",
+            madeWith: "Made with",
+            inRDC: "in DRC"
         }
     }
 };

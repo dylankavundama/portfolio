@@ -1,28 +1,42 @@
 // ============================================
+// INITIALISATION AU CHARGEMENT
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    initLanguage();
+    initProjectFilters();
+});
+
+// ============================================
 // GESTION DU THÈME CLAIR/SOMBRE
 // ============================================
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-const htmlElement = document.documentElement;
-
-// Charger le thème sauvegardé
-const savedTheme = localStorage.getItem('theme') || 'light';
-if (savedTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    if (themeIcon) {
+function initTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    if (!themeToggle || !themeIcon) return;
+    
+    // Charger le thème sauvegardé
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
         themeIcon.classList.remove('fa-moon');
         themeIcon.classList.add('fa-sun');
     }
-}
-
-// Toggle du thème
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
+    
+    // Toggle du thème
+    themeToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         
-        // Changer l'icône
-        if (themeIcon) {
+        // Changer l'icône avec animation
+        themeIcon.style.transform = 'rotate(360deg)';
+        themeIcon.style.transition = 'transform 0.5s ease';
+        
+        setTimeout(() => {
             if (isDark) {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
@@ -30,17 +44,77 @@ if (themeToggle) {
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
             }
-        }
+            themeIcon.style.transform = 'rotate(0deg)';
+        }, 250);
         
         // Sauvegarder le thème
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 }
 
+
 // ============================================
 // GESTION DU MULTILINGUE
 // ============================================
 let currentLanguage = localStorage.getItem('language') || 'fr';
+
+function initLanguage() {
+    // Gestion du sélecteur de langue
+    const langToggle = document.getElementById('lang-toggle');
+    const langDropdown = document.getElementById('lang-dropdown');
+    const langOptions = document.querySelectorAll('.lang-option');
+    
+    if (!langToggle || !langDropdown) return;
+    
+    // Toggle au clic sur le bouton
+    langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const isActive = langDropdown.classList.contains('active');
+        
+        // Fermer tous les autres dropdowns
+        document.querySelectorAll('.lang-dropdown.active').forEach(dropdown => {
+            if (dropdown !== langDropdown) {
+                dropdown.classList.remove('active');
+            }
+        });
+        
+        // Toggle le dropdown actuel
+        langDropdown.classList.toggle('active', !isActive);
+    });
+    
+    // Sélection d'une langue
+    langOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const lang = option.getAttribute('data-lang');
+            if (lang && translations[lang]) {
+                updateLanguage(lang);
+                langDropdown.classList.remove('active');
+            }
+        });
+    });
+    
+    // Fermer le dropdown en cliquant ailleurs
+    document.addEventListener('click', (e) => {
+        if (langToggle && langDropdown) {
+            if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+                langDropdown.classList.remove('active');
+            }
+        }
+    });
+    
+    // Fermer avec Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && langDropdown.classList.contains('active')) {
+            langDropdown.classList.remove('active');
+        }
+    });
+    
+    // Initialiser la langue au chargement
+    updateLanguage(currentLanguage);
+}
 
 function updateLanguage(lang) {
     currentLanguage = lang;
@@ -86,36 +160,6 @@ function updateLanguage(lang) {
     });
 }
 
-// Gestion du sélecteur de langue
-const langToggle = document.getElementById('lang-toggle');
-const langDropdown = document.getElementById('lang-dropdown');
-const langOptions = document.querySelectorAll('.lang-option');
-
-if (langToggle && langDropdown) {
-    langToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langDropdown.classList.toggle('active');
-    });
-    
-    langOptions.forEach(option => {
-        option.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const lang = option.getAttribute('data-lang');
-            updateLanguage(lang);
-            langDropdown.classList.remove('active');
-        });
-    });
-    
-    // Fermer le dropdown en cliquant ailleurs
-    document.addEventListener('click', (e) => {
-        if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
-            langDropdown.classList.remove('active');
-        }
-    });
-}
-
-// Initialiser la langue au chargement
-updateLanguage(currentLanguage);
 
 // ============================================
 // ANIMATIONS ET INTERACTIONS
@@ -184,7 +228,7 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 // ============================================
-// ANIMATIONS AU SCROLL (Intersection Observer)
+// ANIMATIONS AU SCROLL (Intersection Observer) - OPTIMISÉ
 // ============================================
 const observerOptions = {
     threshold: 0.1,
@@ -200,26 +244,44 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observer les éléments à animer - S'assurer que tout est visible
-const elementsToAnimate = document.querySelectorAll(
-    '.skill-card, .project-card, .tech-item, .section-title, .about-content, .about-section, .skills-section, .projects-section, .youtube-section'
+// Observer uniquement les sections principales (pas chaque carte individuellement)
+const sectionsToAnimate = document.querySelectorAll(
+    '.section-title, .about-content, .about-section, .skills-section, .projects-section, .youtube-section'
 );
 
-elementsToAnimate.forEach(el => {
-    // S'assurer que l'élément est visible
+sectionsToAnimate.forEach(el => {
     el.style.opacity = '1';
     el.style.transform = 'translateY(0)';
-    el.classList.add('fade-in-up');
     observer.observe(el);
 });
 
-// Observer toutes les sections pour les animations
-const sections = document.querySelectorAll('section');
-sections.forEach(section => {
-    section.style.opacity = '1';
-    section.style.display = 'block';
-    observer.observe(section);
+// Observer les cartes de compétences et technologies (moins nombreuses)
+const skillCards = document.querySelectorAll('.skill-card, .tech-item');
+skillCards.forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+    observer.observe(el);
 });
+
+// Observer la section projets en une seule fois (plus performant)
+const projectsSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const projectCards = entry.target.querySelectorAll('.project-card:not(.hidden)');
+            projectCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, index * 50); // Délai réduit pour plus de fluidité
+            });
+            projectsSectionObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '100px' });
+
+const projectsSection = document.querySelector('.projects-section');
+if (projectsSection) {
+    projectsSectionObserver.observe(projectsSection);
+}
 
 // Fallback : S'assurer que tout est visible après le chargement
 window.addEventListener('load', () => {
@@ -260,20 +322,25 @@ window.addEventListener('load', () => {
 });
 
 // ============================================
-// ANIMATION DES CARTES DE PROJETS AU HOVER
+// ANIMATION DES CARTES DE PROJETS AU HOVER - OPTIMISÉ
 // ============================================
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-        this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-        this.style.boxShadow = '0 10px 30px rgba(60, 148, 231, 0.3)';
-    });
+// Utiliser la délégation d'événements pour de meilleures performances
+const projectsGrid = document.getElementById('projects-grid');
+if (projectsGrid) {
+    projectsGrid.addEventListener('mouseenter', function(e) {
+        const card = e.target.closest('.project-card');
+        if (card && !card.classList.contains('hidden')) {
+            card.style.willChange = 'transform, box-shadow';
+        }
+    }, true);
     
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-        this.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.1)';
-    });
-});
+    projectsGrid.addEventListener('mouseleave', function(e) {
+        const card = e.target.closest('.project-card');
+        if (card) {
+            card.style.willChange = 'auto';
+        }
+    }, true);
+}
 
 // ============================================
 // ANIMATION DES CARTES DE COMPÉTENCES
@@ -355,12 +422,9 @@ if (logo) {
 }
 
 // ============================================
-// ANIMATION STAGGER POUR LES PROJETS
+// ANIMATION STAGGER POUR LES PROJETS - SUPPRIMÉ
 // ============================================
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach((card, index) => {
-    card.style.animationDelay = `${index * 0.1}s`;
-});
+// Supprimé pour améliorer les performances - les animations sont gérées par l'observer
 
 // ============================================
 // ANIMATION STAGGER POUR LES TECHNOLOGIES
@@ -371,16 +435,27 @@ techItems.forEach((item, index) => {
 });
 
 // ============================================
-// PARALLAX EFFECT POUR LA SECTION HERO
+// PARALLAX EFFECT POUR LA SECTION HERO - OPTIMISÉ
 // ============================================
-window.addEventListener('scroll', () => {
+let ticking = false;
+const heroSection = document.querySelector('.hero-section');
+
+function updateParallax() {
+    if (!heroSection) return;
     const scrolled = window.pageYOffset;
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection && scrolled < window.innerHeight) {
-        heroSection.style.transform = `translateY(${scrolled * 0.5}px)`;
-        heroSection.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+    if (scrolled < window.innerHeight) {
+        heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
+        heroSection.style.opacity = Math.max(0.5, 1 - (scrolled / window.innerHeight) * 0.3);
     }
-});
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+}, { passive: true });
 
 // ============================================
 // ANIMATION DU TEXTE TYPOGRAPHIQUE
@@ -484,82 +559,119 @@ window.addEventListener('scroll', handleScroll, { passive: true });
 // ============================================
 // FILTRES ET RECHERCHE DE PROJETS
 // ============================================
-const projectCards = document.querySelectorAll('.project-card');
-const filterButtons = document.querySelectorAll('.filter-btn');
-const searchInput = document.getElementById('project-search');
-const projectsGrid = document.getElementById('projects-grid');
-const projectsCountText = document.getElementById('projects-count-text');
-
-let currentFilter = 'all';
-let currentSearch = '';
-
-// Fonction pour filtrer et rechercher les projets
-function filterProjects() {
-    let visibleCount = 0;
+function initProjectFilters() {
+    const projectCards = document.querySelectorAll('.project-card');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('project-search');
+    const projectsGrid = document.getElementById('projects-grid');
+    const projectsCountText = document.getElementById('projects-count-text');
     
-    projectCards.forEach(card => {
-        const category = card.getAttribute('data-category') || '';
-        const searchText = (card.getAttribute('data-search') || '').toLowerCase();
-        const cardTitle = (card.querySelector('h3')?.textContent || '').toLowerCase();
-        const cardDescription = (card.querySelector('p')?.textContent || '').toLowerCase();
-        
-        // Vérifier le filtre de catégorie
-        const matchesFilter = currentFilter === 'all' || 
-                            category.toLowerCase().includes(currentFilter.toLowerCase());
-        
-        // Vérifier la recherche
-        const matchesSearch = currentSearch === '' ||
-                            searchText.includes(currentSearch.toLowerCase()) ||
-                            cardTitle.includes(currentSearch.toLowerCase()) ||
-                            cardDescription.includes(currentSearch.toLowerCase());
-        
-        if (matchesFilter && matchesSearch) {
-            card.classList.remove('hidden');
-            visibleCount++;
-            // Ré-animer les cartes visibles
-            if (!card.classList.contains('animate-in')) {
-                card.classList.add('animate-in');
-            }
-        } else {
-            card.classList.add('hidden');
-            card.classList.remove('animate-in');
-        }
-    });
-    
-    // Mettre à jour le compteur
-    projectsCountText.textContent = visibleCount;
-    
-    // Afficher message si aucun résultat
-    if (visibleCount === 0) {
-        projectsGrid.classList.add('no-results');
-    } else {
-        projectsGrid.classList.remove('no-results');
+    // Vérifier que les éléments existent
+    if (!projectCards.length || !filterButtons.length || !searchInput || !projectsGrid || !projectsCountText) {
+        console.warn('Éléments de filtrage non trouvés');
+        return;
     }
-}
-
-// Gestion des filtres
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Retirer la classe active de tous les boutons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
+    
+    let currentFilter = 'all';
+    let currentSearch = '';
+    
+    // Fonction pour filtrer et rechercher les projets
+    function filterProjects() {
+        let visibleCount = 0;
         
-        // Ajouter la classe active au bouton cliqué
-        button.classList.add('active');
+        projectCards.forEach(card => {
+            const category = card.getAttribute('data-category') || '';
+            const searchText = (card.getAttribute('data-search') || '').toLowerCase();
+            const cardTitle = (card.querySelector('h3')?.textContent || '').toLowerCase();
+            const cardDescription = (card.querySelector('p')?.textContent || '').toLowerCase();
+            
+            // Vérifier le filtre de catégorie
+            const matchesFilter = currentFilter === 'all' || 
+                                category.toLowerCase().includes(currentFilter.toLowerCase());
+            
+            // Vérifier la recherche
+            const matchesSearch = currentSearch === '' ||
+                                searchText.includes(currentSearch.toLowerCase()) ||
+                                cardTitle.includes(currentSearch.toLowerCase()) ||
+                                cardDescription.includes(currentSearch.toLowerCase());
+            
+            if (matchesFilter && matchesSearch) {
+                card.style.display = '';
+                card.classList.remove('hidden');
+                visibleCount++;
+                // Ré-animer les cartes visibles avec requestAnimationFrame
+                if (!card.classList.contains('animate-in')) {
+                    requestAnimationFrame(() => {
+                        card.classList.add('animate-in');
+                    });
+                }
+            } else {
+                card.style.display = 'none';
+                card.classList.add('hidden');
+                card.classList.remove('animate-in');
+            }
+        });
         
-        // Mettre à jour le filtre actif
-        currentFilter = button.getAttribute('data-filter');
+        // Mettre à jour le compteur
+        if (projectsCountText) {
+            projectsCountText.textContent = visibleCount;
+        }
         
-        // Filtrer les projets
-        filterProjects();
+        // Afficher message si aucun résultat
+        if (visibleCount === 0) {
+            projectsGrid.classList.add('no-results');
+        } else {
+            projectsGrid.classList.remove('no-results');
+        }
+    }
+    
+    // S'assurer que le bouton "Tous" est actif par défaut
+    const allButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === 'all');
+    if (allButton && !allButton.classList.contains('active')) {
+        allButton.classList.add('active');
+    }
+    
+    // Gestion des filtres
+    filterButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Retirer la classe active de tous les boutons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+            
+            // Mettre à jour le filtre actif
+            const filterValue = button.getAttribute('data-filter');
+            currentFilter = filterValue || 'all';
+            
+            // Filtrer les projets
+            filterProjects();
+        });
     });
-});
-
-// Gestion de la recherche
-if (searchInput) {
+    
+    // Gestion de la recherche avec debounce optimisé
+    let searchTimeout;
+    let rafId;
     searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        filterProjects();
+        clearTimeout(searchTimeout);
+        if (rafId) cancelAnimationFrame(rafId);
+        
+        searchTimeout = setTimeout(() => {
+            currentSearch = e.target.value.trim();
+            rafId = requestAnimationFrame(() => {
+                filterProjects();
+            });
+        }, 200); // Délai réduit pour plus de réactivité
     });
+    
+    // Recherche en temps réel (optionnel, commenté pour performance)
+    // searchInput.addEventListener('input', (e) => {
+    //     currentSearch = e.target.value.trim();
+    //     filterProjects();
+    // });
     
     // Effacer la recherche avec Escape
     searchInput.addEventListener('keydown', (e) => {
@@ -569,11 +681,14 @@ if (searchInput) {
             filterProjects();
         }
     });
-}
-
-// Initialiser le compteur au chargement
-if (projectCards.length > 0) {
-    projectsCountText.textContent = projectCards.length;
+    
+    // Initialiser le compteur au chargement
+    if (projectCards.length > 0 && projectsCountText) {
+        projectsCountText.textContent = projectCards.length;
+    }
+    
+    // Initialiser l'affichage
+    filterProjects();
 }
 
 // ============================================
