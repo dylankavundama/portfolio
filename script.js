@@ -332,3 +332,98 @@ const handleScroll = debounce(() => {
 
 window.addEventListener('scroll', handleScroll, { passive: true });
 
+// ============================================
+// FILTRES ET RECHERCHE DE PROJETS
+// ============================================
+const projectCards = document.querySelectorAll('.project-card');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const searchInput = document.getElementById('project-search');
+const projectsGrid = document.getElementById('projects-grid');
+const projectsCountText = document.getElementById('projects-count-text');
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+// Fonction pour filtrer et rechercher les projets
+function filterProjects() {
+    let visibleCount = 0;
+    
+    projectCards.forEach(card => {
+        const category = card.getAttribute('data-category') || '';
+        const searchText = (card.getAttribute('data-search') || '').toLowerCase();
+        const cardTitle = (card.querySelector('h3')?.textContent || '').toLowerCase();
+        const cardDescription = (card.querySelector('p')?.textContent || '').toLowerCase();
+        
+        // Vérifier le filtre de catégorie
+        const matchesFilter = currentFilter === 'all' || 
+                            category.toLowerCase().includes(currentFilter.toLowerCase());
+        
+        // Vérifier la recherche
+        const matchesSearch = currentSearch === '' ||
+                            searchText.includes(currentSearch.toLowerCase()) ||
+                            cardTitle.includes(currentSearch.toLowerCase()) ||
+                            cardDescription.includes(currentSearch.toLowerCase());
+        
+        if (matchesFilter && matchesSearch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+            // Ré-animer les cartes visibles
+            if (!card.classList.contains('animate-in')) {
+                card.classList.add('animate-in');
+            }
+        } else {
+            card.classList.add('hidden');
+            card.classList.remove('animate-in');
+        }
+    });
+    
+    // Mettre à jour le compteur
+    projectsCountText.textContent = visibleCount;
+    
+    // Afficher message si aucun résultat
+    if (visibleCount === 0) {
+        projectsGrid.classList.add('no-results');
+    } else {
+        projectsGrid.classList.remove('no-results');
+    }
+}
+
+// Gestion des filtres
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Retirer la classe active de tous les boutons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Ajouter la classe active au bouton cliqué
+        button.classList.add('active');
+        
+        // Mettre à jour le filtre actif
+        currentFilter = button.getAttribute('data-filter');
+        
+        // Filtrer les projets
+        filterProjects();
+    });
+});
+
+// Gestion de la recherche
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        filterProjects();
+    });
+    
+    // Effacer la recherche avec Escape
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            currentSearch = '';
+            filterProjects();
+        }
+    });
+}
+
+// Initialiser le compteur au chargement
+if (projectCards.length > 0) {
+    projectsCountText.textContent = projectCards.length;
+}
+

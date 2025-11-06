@@ -16,7 +16,12 @@
     <header class="header">
         <div class="container nav-content">
             <div class="logo">Dylan</div>
-            <nav class="nav-links">
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-links" id="nav-links">
                 <a href="#accueil" data-i18n="nav.accueil">Accueil</a>
                 <a href="#a-propos" data-i18n="nav.aPropos">À propos</a>
                 <a href="#competences" data-i18n="nav.competences">Compétences</a>
@@ -37,7 +42,7 @@
                     <i class="fas fa-moon" id="theme-icon"></i>
                 </button>
                 <a href="https://wa.me/243977734735" target="_blank" class="btn contact-btn" data-i18n="hero.contactWhatsApp">
-                    Contactez-moi sur WhatsApp <i class="fab fa-whatsapp"></i>
+                    <span class="contact-text">Contactez-moi</span> <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
         </div>
@@ -290,20 +295,27 @@
 
 
 
-                    <div class="project-card">
+                    <div class="project-card" data-category="Fintech Web" data-search="yannexchange crypto monnaies goma rdc fintech">
                         <div class="project-image-placeholder" style="
             background-image: url('./asset/yann.jpg');
             background-size: contain; 
             background-repeat: no-repeat;
             background-color: white;
         "></div>
+                        <div class="project-badge">
+                            <i class="fas fa-coins"></i>
+                            <span>Fintech</span>
+                        </div>
                         <h3>YannExchange</h3>
                         <p>YannExchange est une plateforme d'échange de crypto-monnaies basée à Goma, en RDC. Elle vise
                             à faciliter l'accès aux outils financiers numériques et à promouvoir l'inclusion financière
                             en Afrique de l'Est.</p>
                         <div class="tags"><span>Fintech</span><span>Crypto</span><span>RDC</span></div>
-                        <a href="https://yannexchange.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
-                                class="fas fa-external-link-alt"></i></a>
+                        <div class="project-actions">
+                            <a href="https://yannexchange.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">
+                                <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="project-card">
                         <div class="project-image-placeholder" style="

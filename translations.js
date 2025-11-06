@@ -50,7 +50,15 @@ const translations = {
         // Projects Section
         projects: {
             title: "MES RÉALISATIONS",
-            voirProjet: "Voir le projet"
+            voirProjet: "Voir le projet",
+            searchPlaceholder: "Rechercher un projet...",
+            filterAll: "Tous",
+            filterEcommerce: "E-commerce",
+            filterFintech: "Fintech",
+            filterMobile: "Mobile",
+            filterWeb: "Web",
+            filterCulture: "Culture",
+            projectsFound: "projets"
         },
         
         // YouTube Section
@@ -114,7 +122,15 @@ const translations = {
         // Projects Section
         projects: {
             title: "MY PROJECTS",
-            voirProjet: "View project"
+            voirProjet: "View project",
+            searchPlaceholder: "Search for a project...",
+            filterAll: "All",
+            filterEcommerce: "E-commerce",
+            filterFintech: "Fintech",
+            filterMobile: "Mobile",
+            filterWeb: "Web",
+            filterCulture: "Culture",
+            projectsFound: "projects"
         },
         
         // YouTube Section
