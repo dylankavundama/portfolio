@@ -21,6 +21,39 @@
     gap: 20px;
 }
 
+body.dark-mode .admin-header {
+    background: var(--card-bg-dark);
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
 .admin-header h1 {
     color: var(--primary-color, #3c94e7);
     font-size: 2em;

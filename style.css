@@ -467,20 +467,47 @@ body.dark-mode .hero-section {
     padding: 80px 0;
     background-color: var(--background-light);
 }
+
+body.dark-mode .about-section {
+    background-color: var(--background-dark);
+}
+
 .about-content {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 50px;
 }
+
+.illustration {
+    flex-shrink: 0;
+}
+
 .illustration img {
     max-width: 350px;
     height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
+
+body.dark-mode .illustration img {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.illustration img:hover {
+    transform: scale(1.05);
+}
+
 .about-text {
     max-width: 600px;
     line-height: 1.8;
     font-size: 1.1em;
+    color: var(--text-light);
+}
+
+body.dark-mode .about-text {
+    color: var(--text-dark);
 }
 
 /* 4. Skills & Tech Section */

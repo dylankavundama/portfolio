@@ -12,7 +12,12 @@
     <div class="admin-container">
         <header class="admin-header">
             <h1><i class="fas fa-blog"></i> Administration du Blog</h1>
-            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Retour au site</a>
+            <div class="admin-header-actions">
+                <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Retour au site</a>
+                <button class="btn-logout" onclick="logout()" title="Déconnexion">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </div>
         </header>
 
         <div class="admin-content">
@@ -85,7 +90,14 @@
         </div>
     </div>
 
+    <script src="login.js"></script>
     <script src="admin.js"></script>
+    <script>
+        // Vérifier la session au chargement
+        if (!checkSession()) {
+            // Redirection gérée dans login.js
+        }
+    </script>
 </body>
 </html>
 
