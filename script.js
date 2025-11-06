@@ -1,4 +1,123 @@
 // ============================================
+// GESTION DU THÈME CLAIR/SOMBRE
+// ============================================
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const htmlElement = document.documentElement;
+
+// Charger le thème sauvegardé
+const savedTheme = localStorage.getItem('theme') || 'light';
+if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    if (themeIcon) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+    }
+}
+
+// Toggle du thème
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        
+        // Changer l'icône
+        if (themeIcon) {
+            if (isDark) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        // Sauvegarder le thème
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+}
+
+// ============================================
+// GESTION DU MULTILINGUE
+// ============================================
+let currentLanguage = localStorage.getItem('language') || 'fr';
+
+function updateLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('language', lang);
+    document.documentElement.setAttribute('lang', lang);
+    
+    // Mettre à jour le texte du bouton
+    const currentLangSpan = document.getElementById('current-lang');
+    if (currentLangSpan) {
+        currentLangSpan.textContent = lang.toUpperCase();
+    }
+    
+    // Traduire tous les éléments
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let translation = translations[lang];
+        
+        for (const k of keys) {
+            translation = translation?.[k];
+        }
+        
+        if (translation) {
+            if (element.tagName === 'INPUT' && element.hasAttribute('data-i18n-placeholder')) {
+                element.placeholder = translation;
+            } else {
+                // Préserver les icônes et autres éléments HTML
+                const textContent = element.textContent.trim();
+                const hasIcon = element.querySelector('i, span');
+                if (hasIcon) {
+                    const icon = element.querySelector('i');
+                    const span = element.querySelector('span');
+                    if (span && span.textContent.trim() === textContent.split(' ').slice(-1)[0]) {
+                        span.textContent = translation.split(' ').slice(-1)[0];
+                    } else {
+                        element.innerHTML = translation + (icon ? ' ' + icon.outerHTML : '');
+                    }
+                } else {
+                    element.textContent = translation;
+                }
+            }
+        }
+    });
+}
+
+// Gestion du sélecteur de langue
+const langToggle = document.getElementById('lang-toggle');
+const langDropdown = document.getElementById('lang-dropdown');
+const langOptions = document.querySelectorAll('.lang-option');
+
+if (langToggle && langDropdown) {
+    langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+    });
+    
+    langOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const lang = option.getAttribute('data-lang');
+            updateLanguage(lang);
+            langDropdown.classList.remove('active');
+        });
+    });
+    
+    // Fermer le dropdown en cliquant ailleurs
+    document.addEventListener('click', (e) => {
+        if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove('active');
+        }
+    });
+}
+
+// Initialiser la langue au chargement
+updateLanguage(currentLanguage);
+
+// ============================================
 // ANIMATIONS ET INTERACTIONS
 // ============================================
 
@@ -81,14 +200,44 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observer les éléments à animer
+// Observer les éléments à animer - S'assurer que tout est visible
 const elementsToAnimate = document.querySelectorAll(
-    '.skill-card, .project-card, .tech-item, .section-title, .about-content, .hero-content > *'
+    '.skill-card, .project-card, .tech-item, .section-title, .about-content, .about-section, .skills-section, .projects-section, .youtube-section'
 );
 
 elementsToAnimate.forEach(el => {
+    // S'assurer que l'élément est visible
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
     el.classList.add('fade-in-up');
     observer.observe(el);
+});
+
+// Observer toutes les sections pour les animations
+const sections = document.querySelectorAll('section');
+sections.forEach(section => {
+    section.style.opacity = '1';
+    section.style.display = 'block';
+    observer.observe(section);
+});
+
+// Fallback : S'assurer que tout est visible après le chargement
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        // Forcer l'affichage de tous les éléments
+        document.querySelectorAll('.section-title, .skill-card, .project-card, .tech-item, .about-content, .youtube-section, .youtube-intro, .video-container, .youtube-cta').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            el.style.display = '';
+        });
+        
+        // S'assurer que toutes les sections sont visibles
+        sections.forEach(section => {
+            section.style.opacity = '1';
+            section.style.display = 'block';
+            section.style.visibility = 'visible';
+        });
+    }, 100);
 });
 
 // ============================================
@@ -425,5 +574,37 @@ if (searchInput) {
 // Initialiser le compteur au chargement
 if (projectCards.length > 0) {
     projectsCountText.textContent = projectCards.length;
+}
+
+// ============================================
+// MENU BURGER MOBILE
+// ============================================
+const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (mobileMenuToggle && navLinks) {
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Fermer le menu quand on clique en dehors
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 }
 
