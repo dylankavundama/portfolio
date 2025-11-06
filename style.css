@@ -1,6 +1,6 @@
 /* Variables de couleur et base */
 :root {
-    --primary-color: #3c94e7; /*   --primary-color: #E74C3C; */
+    --primary-color: #3c94e7;
     --secondary-color: #333;
     --background-light: #f7f7f7;
     --background-dark: #1e1e1e;
@@ -10,6 +10,8 @@
     --card-bg-dark: #2a2a2a;
     --border-color-light: #eee;
     --border-color-dark: #444;
+    --animation-speed: 0.3s;
+    --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Base pour le thème clair */
@@ -20,6 +22,8 @@ body {
     background-color: var(--background-light);
     color: var(--text-light);
     transition: background-color 0.3s, color 0.3s;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 /* Thème sombre (activé par JS) */
@@ -57,6 +61,29 @@ body.dark-mode input, body.dark-mode textarea {
     margin-bottom: 1.5em;
     text-transform: uppercase;
     font-weight: 800;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+.section-title.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    margin: 20px auto 0;
+    opacity: 0;
+    transform: scaleX(0);
+    transition: all 0.6s ease-out;
+}
+.section-title.animate-in::after {
+    opacity: 1;
+    transform: scaleX(1);
 }
 .section-title span {
     color: var(--primary-color);
@@ -76,8 +103,24 @@ body.dark-mode input, body.dark-mode textarea {
     cursor: pointer;
     text-decoration: none;
     font-weight: bold;
-    transition: background-color 0.3s, opacity 0.3s;
+    transition: all var(--animation-speed) var(--animation-easing);
     display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+.btn .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 .btn-primary {
     background-color: var(--primary-color);
@@ -113,6 +156,12 @@ body.dark-mode .btn-secondary:hover {
     background-color: var(--card-bg-light);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    transition: all var(--animation-speed) var(--animation-easing);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+body.dark-mode .header {
+    background-color: rgba(30, 30, 30, 0.95);
 }
 .nav-content {
     display: flex;
@@ -124,13 +173,44 @@ body.dark-mode .btn-secondary:hover {
     font-weight: bold;
     font-size: 1.5em;
     color: var(--primary-color);
+    transition: transform var(--animation-speed) var(--animation-easing);
+    cursor: pointer;
+    position: relative;
+}
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--animation-speed) var(--animation-easing);
+}
+.logo:hover::after {
+    width: 100%;
 }
 .nav-links a {
     color: var(--secondary-color);
     text-decoration: none;
     margin-left: 25px;
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all var(--animation-speed) var(--animation-easing);
+    position: relative;
+    padding: 5px 0;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--animation-speed) var(--animation-easing);
+}
+.nav-links a:hover::after {
+    width: 100%;
 }
 .nav-links a:hover {
     color: var(--primary-color);
@@ -157,6 +237,7 @@ body.dark-mode .theme-toggle-btn {
     background-color: white;
     padding: 100px 0;
     overflow: hidden;
+    position: relative;
 }
 body.dark-mode .hero-section {
     background-color: var(--background-dark);
@@ -165,6 +246,46 @@ body.dark-mode .hero-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+}
+.text-content {
+    opacity: 0;
+    animation: fadeInLeft 1s ease-out forwards;
+}
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.hero-content h1 .letter-animate {
+    display: inline-block;
+    opacity: 0;
+    animation: letterFadeIn 0.5s ease-out forwards;
+}
+@keyframes letterFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotateX(90deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
 }
 .hero-content h1 {
     font-size: 4em;
@@ -221,10 +342,24 @@ body.dark-mode .hero-section {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     text-align: left;
-    transition: transform 0.3s;
+    transition: all var(--animation-speed) var(--animation-easing);
+    opacity: 0;
+    transform: translateY(30px);
+}
+.skill-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 .skill-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(60, 148, 231, 0.2);
+}
+.skill-card i {
+    transition: transform var(--animation-speed) var(--animation-easing);
+}
+.skill-card:hover i {
+    transform: scale(1.2) rotate(5deg);
 }
 .skill-card i {
     font-size: 2em;
@@ -275,7 +410,30 @@ body.dark-mode .filter-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: opacity 0.3s, transform 0.3s;
+    transition: all var(--animation-speed) var(--animation-easing);
+    opacity: 0;
+    transform: scale(0.8);
+}
+.tech-item.animate-in {
+    opacity: 1;
+    transform: scale(1);
+    animation: scaleIn 0.5s ease-out forwards;
+}
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.tech-item img {
+    transition: transform var(--animation-speed) var(--animation-easing);
+}
+.tech-item:hover img {
+    transform: scale(1.1);
 }
 .tech-item img {
     width: 50px;
@@ -304,20 +462,30 @@ body.dark-mode .projects-section {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    transition: all var(--animation-speed) var(--animation-easing);
+    opacity: 0;
+    transform: translateY(30px);
+}
+.project-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(60, 148, 231, 0.3);
 }
- .project-image-placeholder {
+.project-image-placeholder {
     height: 200px;
     width: 100%;
-    background-size: 100%; /* La largeur de l'image est de 80% de la largeur du conteneur */
+    background-size: 100%;
     background-position: center;
- 
-    background-color: #ddd; 
+    background-color: #ddd;
+    transition: transform var(--animation-speed) var(--animation-easing);
 }
-/* Vous pouvez aussi utiliser des pixels: background-size: 150px; */
+.project-card:hover .project-image-placeholder {
+    transform: scale(1.05);
+}
 .project-card h3, .project-card p, .project-card .tags, .project-card .btn {
     padding: 0 20px;
 }
@@ -435,8 +603,13 @@ body.dark-mode .footer {
 body.dark-mode .social-links a {
     color: var(--text-dark);
 }
+.social-links a {
+    transition: all var(--animation-speed) var(--animation-easing);
+    display: inline-block;
+}
 .social-links a:hover {
     color: var(--primary-color);
+    transform: translateY(-5px) scale(1.2);
 }
 .footer-center p {
     margin: 5px 0;
@@ -449,42 +622,134 @@ body.dark-mode .social-links a {
     right: 20px;
     background-color: var(--primary-color);
     color: white;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     text-align: center;
-    line-height: 40px;
+    line-height: 50px;
     font-size: 1.2em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    display: none; /* Caché par défaut, géré par JS */
+    box-shadow: 0 4px 15px rgba(60, 148, 231, 0.4);
+    display: none;
     z-index: 999;
+    cursor: pointer;
+    transition: all var(--animation-speed) var(--animation-easing);
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+}
+.back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(60, 148, 231, 0.6);
+    background-color: #2d7dd2;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 1. Conteneur pour l'alignement */
 .image-content {
-    /* Centre le conteneur sur la page si nécessaire */
     display: flex;
     justify-content: center; 
     align-items: center;
-    /* Vous pouvez ajuster cette hauteur selon votre besoin, ou l'enlever */
-    height: 100%; 
+    height: 100%;
+    position: relative;
+    opacity: 0;
+    animation: fadeInRight 1s ease-out 0.3s forwards;
 }
 
 /* 2. Style de l'image elle-même */
 .image-content img {
-    /* DÉFINITION DE LA TAILLE ET DU FORMAT (par exemple, 300x300) */
-    width: 300px; /* Largeur souhaitée */
-    height: 300px; /* Hauteur souhaitée */
-    
-    /* Pour s'assurer que l'image est bien carrée et centrée */
-    object-fit: cover; 
-    
-    /* Rendre l'image parfaitement ronde (optionnel, pour un look avatar) */
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
     border-radius: 50%;
-    
-    /* Ajouter une bordure pour le style (optionnel) */
-    border: 5px solid #000; /* Bordure noire pour le style N&B */
+    border: 5px solid var(--primary-color);
+    transition: all var(--animation-speed) var(--animation-easing);
+    box-shadow: 0 10px 30px rgba(60, 148, 231, 0.3);
+    position: relative;
+    z-index: 1;
 }
+.image-content::before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    opacity: 0.3;
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.1;
+    }
+}
+.image-content:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(60, 148, 231, 0.4);
+}
+/* Animations générales */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+.fade-in-up.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animation pour les sections */
+section {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet de particules animées en arrière-plan (optionnel) */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(60, 148, 231, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(60, 148, 231, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-20px) translateX(20px);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     .hero-content {

@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dylan Kavundama | Fullstack Mobilr Developer </title>
+    <title>Dylan Kavundama | Fullstack Mobile Developer </title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_yt.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="translations.js"></script>
 </head>
 
 <body>
@@ -16,16 +17,28 @@
         <div class="container nav-content">
             <div class="logo">Dylan</div>
             <nav class="nav-links">
-                <a href="#accueil">Accueil</a>
-                <a href="#a-propos">À propos</a>
-                <a href="#competences">Compétences</a>
-                <a href="#projets">Réalisation</a>
+                <a href="#accueil" data-i18n="nav.accueil">Accueil</a>
+                <a href="#a-propos" data-i18n="nav.aPropos">À propos</a>
+                <a href="#competences" data-i18n="nav.competences">Compétences</a>
+                <a href="#projets" data-i18n="nav.projets">Réalisation</a>
             </nav>
             <div class="nav-actions">
-                <a href="https://wa.me/243977734735" target="_blank" class="btn contact-btn">
+                <div class="language-selector">
+                    <button id="lang-toggle" class="lang-toggle-btn" aria-label="Change language">
+                        <i class="fas fa-globe"></i>
+                        <span id="current-lang">FR</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button class="lang-option" data-lang="fr">🇫🇷 Français</button>
+                        <button class="lang-option" data-lang="en">🇬🇧 English</button>
+                    </div>
+                </div>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <a href="https://wa.me/243977734735" target="_blank" class="btn contact-btn" data-i18n="hero.contactWhatsApp">
                     Contactez-moi sur WhatsApp <i class="fab fa-whatsapp"></i>
                 </a>
-                <!-- <button id="theme-toggle" class="theme-toggle-btn"><i class="fas fa-moon"></i></button> -->
             </div>
         </div>
     </header>
@@ -34,14 +47,14 @@
         <section id="accueil" class="hero-section">
             <div class="container hero-content">
                 <div class="text-content">
-                    <p>Hello, Je suis</p>
-                    <h1>Dylan<br><span>Fullstack Mobile Developer</span></h1>
-                    <p class="tagline">Explorez mes projets et compétences pour en savoir plus sur mon travail.</p>
+                    <p data-i18n="hero.hello">Hello, Je suis</p>
+                    <h1><span data-i18n="hero.title">Dylan</span><br><span data-i18n="hero.subtitle">Fullstack Mobile Developer</span></h1>
+                    <p class="tagline" data-i18n="hero.tagline">Explorez mes projets et compétences pour en savoir plus sur mon travail.</p>
                     <div class="hero-actions">
-                        <a href="https://wa.me/243977734735" target="_blank" class="btn btn-primary">
+                        <a href="https://wa.me/243977734735" target="_blank" class="btn btn-primary" data-i18n="hero.contactWhatsApp">
                             Contactez-moi sur WhatsApp <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="./dylan_cv.pdf" class="btn btn-secondary" target="_blank">Voir mon CV <i
+                        <a href="./dylan_cv.pdf" class="btn btn-secondary" target="_blank" data-i18n="hero.voirCV">Voir mon CV <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
@@ -53,17 +66,17 @@
 
         <section id="a-propos" class="about-section">
             <div class="container">
-                <h2 class="section-title">À PROPOS DE MOI</h2>
+                <h2 class="section-title" data-i18n="about.title">À PROPOS DE MOI</h2>
                 <div class="about-content">
                     <div class="illustration">
                         <img src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg?semt=ais_hybrid&w=740&q=80"
                             alt="Illustration d'un développeur">
                     </div>
-                    <p class="about-text">
+                    <p class="about-text" data-i18n="about.text">
                         Développeur mobile senior passionné, je conçois des applications modernes, performantes et
-                        intuitives en alliant front-end, back-end et sens du design. Créatif et polyvalent, j’apporte
+                        intuitives en alliant front-end, back-end et sens du design. Créatif et polyvalent, j'apporte
                         une touche visuelle et technique unique à chacun de mes projets grâce à ma maîtrise du
-                        développement mobile multiplateforme et de l’expérience utilisateur (UX/UI).
+                        développement mobile multiplateforme et de l'expérience utilisateur (UX/UI).
                     </p>
                 </div>
             </div>
@@ -71,27 +84,27 @@
 
         <section id="competences" class="skills-section">
             <div class="container">
-                <h2 class="section-title">MES COMPÉTENCES</h2>
-                <p class="section-description">
+                <h2 class="section-title" data-i18n="skills.title">MES COMPÉTENCES</h2>
+                <p class="section-description" data-i18n="skills.description">
                     En tant que développeur mobile senior, je conçois des applications modernes, performantes et
-                    ergonomiques en alliant front-end et back-end. Mon expertise couvre le développement d’interfaces
-                    utilisateurs intuitives, la gestion des données locales et distantes, ainsi que l’intégration d’API
+                    ergonomiques en alliant front-end et back-end. Mon expertise couvre le développement d'interfaces
+                    utilisateurs intuitives, la gestion des données locales et distantes, ainsi que l'intégration d'API
                     pour offrir une expérience fluide et complète sur toutes les plateformes.
                 </p>
 
                 <div class="skills-grid">
                     <div class="skill-card">
                         <i class="fas fa-code icon-dev"></i>
-                        <h3>Frontend Development</h3>
-                        <p> Capacité à concevoir et développer des applications mobiles et web modernes avec Flutter,
-                            HTML, CSS et JavaScript. Expérience solide en interfaces responsives, intégration d’API
+                        <h3 data-i18n="skills.frontend.title">Frontend Development</h3>
+                        <p data-i18n="skills.frontend.description"> Capacité à concevoir et développer des applications mobiles et web modernes avec Flutter,
+                            HTML, CSS et JavaScript. Expérience solide en interfaces responsives, intégration d'API
                             RESTful et gestion optimisée des données pour une expérience utilisateur fluide et cohérente
                             sur toutes les plateformes.</p>
                     </div>
                     <div class="skill-card">
                         <i class="fas fa-server icon-dev"></i>
-                        <h3>Backend Development</h3>
-                        <p>Compétence dans la conception et la gestion de serveurs, bases de données et API avec
+                        <h3 data-i18n="skills.backend.title">Backend Development</h3>
+                        <p data-i18n="skills.backend.description">Compétence dans la conception et la gestion de serveurs, bases de données et API avec
                             Node.js, Dart, PHP, et avec des Technologies comme Firebase et Supabase. Expérience avérée
                             dans
                             la mise en place de
@@ -103,14 +116,14 @@
 
                     <div class="skill-card">
                         <i class="fas fa-tasks icon-proj"></i>
-                        <h3>Gestion de Projet</h3>
-                        <p>Capacité à planifier, organiser et superviser des projets de développement web et mobile en
+                        <h3 data-i18n="skills.gestion.title">Gestion de Projet</h3>
+                        <p data-i18n="skills.gestion.description">Capacité à planifier, organiser et superviser des projets de développement web et mobile en
                             appliquant des méthodologies agiles telles que Kanban et Scrum, pour assurer une livraison
                             efficace, structurée et alignée sur les objectifs métier.</p>
                     </div>
                 </div>
 
-                <h2 class="section-title mt-4">Les Technologies que j'utilise</h2>
+                <h2 class="section-title mt-4" data-i18n="skills.technologiesTitle">Les Technologies que j'utilise</h2>
 
 
                 <div class="tech-grid">
@@ -213,31 +226,66 @@
 
         <section id="projets" class="projects-section">
             <div class="container">
-                <h2 class="section-title">MES rEALiSations</h2>
-                <div class="projects-grid">
-                    <div class="project-card">
+                <h2 class="section-title" data-i18n="projects.title">MES RÉALISATIONS</h2>
+                
+                <!-- Barre de recherche et filtres -->
+                <div class="projects-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="project-search" placeholder="Rechercher un projet..." data-i18n-placeholder="projects.searchPlaceholder">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all" data-i18n="projects.filterAll">Tous</button>
+                        <button class="filter-btn" data-filter="E-commerce" data-i18n="projects.filterEcommerce">E-commerce</button>
+                        <button class="filter-btn" data-filter="Fintech" data-i18n="projects.filterFintech">Fintech</button>
+                        <button class="filter-btn" data-filter="Mobile" data-i18n="projects.filterMobile">Mobile</button>
+                        <button class="filter-btn" data-filter="Web" data-i18n="projects.filterWeb">Web</button>
+                        <button class="filter-btn" data-filter="Culture" data-i18n="projects.filterCulture">Culture</button>
+                    </div>
+                    <div class="projects-count">
+                        <span id="projects-count-text">15</span> <span data-i18n="projects.projectsFound">projets</span>
+                    </div>
+                </div>
+                
+                <div class="projects-grid" id="projects-grid">
+                    <div class="project-card" data-category="E-commerce Mobile" data-search="soko fast boutique vente ligne electronique">
                         <div class="project-image-placeholder" style="
             background-image: url('./asset/soko.png');
             background-size: contain; 
             background-repeat: no-repeat;
             background-color: white;
         "></div>
+                        <div class="project-badge">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Mobile</span>
+                        </div>
                         <h3>Soko Fast</h3>
                         <p>boutique de vente en ligne spécialisée dans la vente de produits electronique.</p>
                         <div class="tags"><span>E-commerce</span><span>RDC</span><span>Électronique</span></div>
-                        <a href="https://play.google.com/store/apps/details?id=com.sokofast.btc" class="btn btn-project">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                        <div class="project-actions">
+                            <a href="https://play.google.com/store/apps/details?id=com.sokofast.btc" class="btn btn-project" data-i18n="projects.voirProjet" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card" data-category="Web Culture" data-search="wma hub plateforme internationale musique distribution streaming">
                         <div class="project-image-placeholder"
                             style="background-image: url('./asset/1757933453145-placeholder.jpg');"></div>
+                        <div class="project-badge">
+                            <i class="fas fa-globe"></i>
+                            <span>Web</span>
+                        </div>
                         <h3>WMA Hub</h3>
                         <p>WMA Hub est une plateforme internationale essentielle qui facilite la promotion, la gestion
                             et la distribution de contenus audiovisuels,en
                             assurant l'accès au marché mondial du streaming et le paiement rapide des droits d'auteur.
                         </p>
                         <div class="tags"><span>Musique</span><span>Distribution</span><span>Afrique</span></div>
-                        <a href="https://wmahub.com/" class="btn btn-project" target="_blank">Voir le projet <i
-                                class="fas fa-external-link-alt"></i></a>
+                        <div class="project-actions">
+                            <a href="https://wmahub.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">
+                                <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
+                            </a>
+                        </div>
                     </div>
 
 
@@ -254,7 +302,7 @@
                             à faciliter l'accès aux outils financiers numériques et à promouvoir l'inclusion financière
                             en Afrique de l'Est.</p>
                         <div class="tags"><span>Fintech</span><span>Crypto</span><span>RDC</span></div>
-                        <a href="https://yannexchange.com/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://yannexchange.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -269,7 +317,7 @@
                             la vente des outils et appareil electronique & accesoires informatique.</p>
                         <div class="tags"><span>E-commerce</span><span>RDC</span><span>Électronique</span></div>
                         <a href="https://play.google.com/store/apps/details?id=com.phx.boutique" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
 
 
@@ -286,7 +334,7 @@
                             partager avec vos amis.</p>
                         <div class="tags"><span>Mobile</span><span>Voyage</span><span>Réseau Social</span></div>
                         <a href="https://play.google.com/store/apps/details?id=com.viz.cavodi" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
  
 
@@ -302,7 +350,7 @@
          <p>Films, animations & documentaires gratuitement en illimité.</p>
                         <div class="tags"><span>Culture</span><span>Art</span><span>Réalité Virtuelle</span></div>
                         <a href="https://gayux.vercel.app/" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
 
                     <div class="project-card">
@@ -318,7 +366,7 @@
                             réalité virtuel.</p>
                         <div class="tags"><span>Culture</span><span>Art</span><span>Réalité Virtuelle</span></div>
                         <a href="https://play.google.com/store/apps/details?id=com.viz" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
 
                     <div class="project-card">
@@ -331,7 +379,7 @@
                         <h3>Lifechannel</h3>
                         <p>Votre source d'informations fiables et en temps réel, partout, tout le temps.</p>
                         <div class="tags"><span>Actualités</span><span>Média</span><span>Web</span></div>
-                        <a href="https://lifechannel.vercel.app/" class="btn btn-project" target="_blank">Voir le projet
+                        <a href="https://lifechannel.vercel.app/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet
                             <i class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -346,7 +394,7 @@
                             opérations liées à la vente de produits et à la gestion quotidienne de l’activité
                             commerciale (gestion des stocks, rapports, etc.).</p>
                         <div class="tags"><span>Gestion</span><span>ERP</span><span>Commerce</span></div>
-                        <a href="https://winnercompany.net/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://winnercompany.net/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -361,7 +409,7 @@
                             positionne comme une application de divertissement et d'apprentissage.</p>
                         <div class="tags"><span>Mobile</span><span>Quiz</span><span>Éducatif</span></div>
                         <a href="https://play.google.com/store/apps/details?id=com.viz.geoville" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
 
 
@@ -380,7 +428,7 @@
                             et de gérer leurs finances de manière sécurisée.</p>
                         <div class="tags"><span>Mobile</span><span>Paiement</span><span>Fintech</span></div>
                         <a href="https://mbiyopay.com/" class="btn btn-project"
-                            target="_blank">Voir le projet <i class="fas fa-external-link-alt"></i></a>
+                            target="_blank" data-i18n="projects.voirProjet">Voir le projet <i class="fas fa-external-link-alt"></i></a>
                     </div>
 
 
@@ -392,7 +440,7 @@
                             Congo (RDC). Il s'agit d'une place de marché en ligne pour l'achat et la vente de biens,
                             principalement destinée à l'est du pays.</p>
                         <div class="tags"><span>E-commerce</span><span>RDC</span><span>Marketplace</span></div>
-                        <a href="https://easykivu.com/wp/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://easykivu.com/wp/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -403,7 +451,7 @@
                             plateforme premium dédiée à la diffusion, la promotion, la monétisation et l’expérience
                             enrichie du contenu artistique et culturel africain.</p>
                         <div class="tags"><span>Streaming</span><span>Musique</span><span>Afrique</span></div>
-                        <a href="https://wmaplus.vercel.app/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://wmaplus.vercel.app/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -414,7 +462,7 @@
                             d'exploitation (Android, iOS, Web, etc.) à partir d'une seule base de code. Cela réduit les
                             coûts et le temps de développement.</p>
                         <div class="tags"><span>E-commerce</span><span>Multiplateforme</span><span>Mobile</span></div>
-                        <a href="https://babutik.com/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://babutik.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
                     <div class="project-card">
@@ -429,7 +477,7 @@
                             vêtements et accessoires pour hommes, femmes, enfants, ainsi que des parfums, sacs,
                             chaussures, et quelques articles électroniques.</p>
                         <div class="tags"><span>E-commerce</span><span>Mode</span><span>Retail</span></div>
-                        <a href="https://joyfashions.shop/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://joyfashions.shop/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
 
@@ -445,7 +493,7 @@
                             violences sexuelles liées aux conflits en RDC. Elle fournit des soins médicaux,
                             psychologiques, sociaux et juridiques, et promeut la justice.</p>
                         <div class="tags"><span>Humanitaire</span><span>RDC</span><span>ONG</span></div>
-                        <a href="https://www.mosungi.org/" class="btn btn-project" target="_blank">Voir le projet <i
+                        <a href="https://www.mosungi.org/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
 
@@ -459,9 +507,9 @@
 
         <section id="youtube" class="youtube-section">
             <div class="container">
-                <h2 class="section-title">MA CHAÎNE YOUTUBE 📺</h2>
+                <h2 class="section-title" data-i18n="youtube.title">MA CHAÎNE YOUTUBE 📺</h2>
 
-                <p class="youtube-intro">
+                <p class="youtube-intro" data-i18n="youtube.intro">
                     Découvrez mes derniers tutoriels, analyses et astuces en développement mobile et web. Abonnez-vous
                     pour rester informé des meilleures pratiques et nouveautés du coding !
                 </p>
@@ -474,7 +522,7 @@
                 </div>
 
                 <div class="youtube-cta">
-                    <a href="https://www.youtube.com/@DYLANKAVUNDAMA/featured" target="_blank" class="btn btn-youtube">
+                    <a href="https://www.youtube.com/@DYLANKAVUNDAMA/featured" target="_blank" class="btn btn-youtube" data-i18n="youtube.sAbonner">
                         S'ABONNER À LA CHAÎNE <i class="fab fa-youtube"></i>
                     </a>
                 </div>
@@ -488,7 +536,7 @@
             <div class="footer-left">
                 <div class="logo">Dylan Kavundama</div>
                 <div class="social-links">
-                    <p>Suivez-moi sur</p>
+                    <p data-i18n="footer.suivezMoi">Suivez-moi sur</p>
                     <a href="https://github.com/dylankavundama" target="_blank"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/dylan-kavundama-61b34a208/" target="_blank"><i
                             class="fab fa-linkedin"></i></a>
@@ -505,7 +553,7 @@
 
             </div>
             <div class="footer-right">
-                <p>Designed & Built by Dylan Kavundama Copyright © 2025</p>
+                <p data-i18n="footer.copyright">Designed & Built by Dylan Kavundama Copyright © 2025</p>
             </div>
         </div>
         <a href="#accueil" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
