@@ -16,7 +16,7 @@ const translations = {
         // Hero Section
         hero: {
             hello: "Hello, Je suis",
-            title: "Dylan",
+            title: "Dylan ",
             subtitle: "Fullstack Mobile Developer",
             tagline: "Explorez mes projets et compétences pour en savoir plus sur mon travail.",
             contactWhatsApp: "Contactez-moi sur WhatsApp",
@@ -117,7 +117,7 @@ const translations = {
         // Hero Section
         hero: {
             hello: "Hello, I'm",
-            title: "Dylan",
+            title: "Dylan ",
             subtitle: "Fullstack Mobile Developer",
             tagline: "Explore my projects and skills to learn more about my work.",
             contactWhatsApp: "Contact me on WhatsApp",
