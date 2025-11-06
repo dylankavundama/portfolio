@@ -10,9 +10,14 @@ const DEFAULT_PASSWORD = '0000';
 const AUTH_KEY = 'blog_auth';
 const SESSION_KEY = 'blog_session';
 
-// Vérifier si l'utilisateur est déjà connecté
+// Vérifier si l'utilisateur est déjà connecté (uniquement sur login.html)
 document.addEventListener('DOMContentLoaded', () => {
-    // Vérifier la session
+    // Ne pas exécuter cette vérification si on est déjà sur admin.html
+    if (window.location.pathname.includes('admin.html')) {
+        return;
+    }
+    
+    // Vérifier la session uniquement sur login.html
     const session = localStorage.getItem(SESSION_KEY);
     if (session) {
         const sessionData = JSON.parse(session);

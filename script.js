@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initLanguage();
     initProjectFilters();
+    initTestimonials();
 });
 
 // ============================================
@@ -185,19 +186,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const header = document.querySelector('.header');
 let lastScroll = 0;
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
+// Fonction debounce pour optimiser les performances
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+if (header) {
+    const handleScroll = debounce(() => {
+        const currentScroll = window.pageYOffset;
+        
+        // Ajouter une ombre au header quand on scroll
+        if (currentScroll > 50) {
+            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            header.style.transition = 'box-shadow 0.3s ease';
+        } else {
+            header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+        }
+        
+        lastScroll = currentScroll;
+    }, 10);
     
-    // Ajouter une ombre au header quand on scroll
-    if (currentScroll > 50) {
-        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-        header.style.transition = 'box-shadow 0.3s ease';
-    } else {
-        header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-    }
-    
-    lastScroll = currentScroll;
-});
+    window.addEventListener('scroll', handleScroll, { passive: true });
+}
 
 // ============================================
 // BACK TO TOP BUTTON
@@ -246,7 +264,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observer uniquement les sections principales (pas chaque carte individuellement)
 const sectionsToAnimate = document.querySelectorAll(
-    '.section-title, .about-content, .about-section, .skills-section, .projects-section, .youtube-section'
+    '.section-title, .about-content, .about-section, .skills-section, .projects-section, .testimonials-section, .youtube-section'
 );
 
 sectionsToAnimate.forEach(el => {
@@ -278,6 +296,26 @@ const projectsSectionObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1, rootMargin: '100px' });
 
+// Observer la section testimonials pour animer les cartes
+const testimonialsSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const testimonialCards = entry.target.querySelectorAll('.testimonial-card');
+            testimonialCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, index * 100); // Délai pour animation séquentielle
+            });
+            testimonialsSectionObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '100px' });
+
+const testimonialsSection = document.querySelector('.testimonials-section');
+if (testimonialsSection) {
+    testimonialsSectionObserver.observe(testimonialsSection);
+}
+
 const projectsSection = document.querySelector('.projects-section');
 if (projectsSection) {
     projectsSectionObserver.observe(projectsSection);
@@ -287,7 +325,7 @@ if (projectsSection) {
 window.addEventListener('load', () => {
     setTimeout(() => {
         // Forcer l'affichage de tous les éléments
-        document.querySelectorAll('.section-title, .skill-card, .project-card, .tech-item, .about-content, .youtube-section, .youtube-intro, .video-container, .youtube-cta').forEach(el => {
+        document.querySelectorAll('.section-title, .skill-card, .project-card, .testimonial-card, .tech-item, .about-content, .youtube-section, .youtube-intro, .video-container, .youtube-cta').forEach(el => {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
             el.style.display = '';
@@ -721,5 +759,172 @@ if (mobileMenuToggle && navLinks) {
             document.body.style.overflow = '';
         }
     });
+}
+
+// ============================================
+// GESTION DES AVIS CLIENTS
+// ============================================
+function initTestimonials() {
+    const testimonialForm = document.getElementById('testimonial-form');
+    const testimonialsGrid = document.getElementById('testimonials-grid');
+    
+    if (!testimonialForm || !testimonialsGrid) return;
+    
+    // Charger les avis au démarrage
+    loadTestimonials();
+    
+    // Gérer la soumission du formulaire
+    testimonialForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitTestimonial();
+    });
+}
+
+// Charger les avis depuis localStorage
+function loadTestimonials() {
+    const testimonialsGrid = document.getElementById('testimonials-grid');
+    if (!testimonialsGrid) return;
+    
+    // Récupérer les avis depuis localStorage
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials') || '[]');
+    
+    // Garder uniquement l'avis exemple (celui avec data-testimonial-id="example")
+    const exampleCard = testimonialsGrid.querySelector('[data-testimonial-id="example"]');
+    const exampleHTML = exampleCard ? exampleCard.outerHTML : '';
+    
+    // Vider la grille
+    testimonialsGrid.innerHTML = '';
+    
+    // Réinsérer l'avis exemple s'il existe
+    if (exampleHTML) {
+        testimonialsGrid.insertAdjacentHTML('beforeend', exampleHTML);
+    }
+    
+    // Ajouter les avis sauvegardés
+    savedTestimonials.forEach((testimonial, index) => {
+        const card = createTestimonialCard(testimonial, `saved-${index}`);
+        testimonialsGrid.appendChild(card);
+    });
+    
+    // Animer les nouvelles cartes
+    setTimeout(() => {
+        testimonialsGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('animate-in');
+            }, index * 100);
+        });
+    }, 100);
+}
+
+// Créer une carte d'avis
+function createTestimonialCard(testimonial, id) {
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.setAttribute('data-testimonial-id', id);
+    
+    // Générer les étoiles selon la note
+    const stars = Array.from({ length: 5 }, (_, i) => {
+        const isFilled = i < testimonial.rating;
+        return `<i class="fas fa-star" style="color: ${isFilled ? '#ffc107' : '#ddd'};"></i>`;
+    }).join('');
+    
+    // Récupérer l'initiale du nom pour l'avatar
+    const initial = testimonial.name.charAt(0).toUpperCase();
+    
+    card.innerHTML = `
+        <div class="testimonial-header">
+            <div class="testimonial-avatar" style="font-size: 1.2em; font-weight: bold;">
+                ${initial}
+            </div>
+            <div class="testimonial-info">
+                <h4>${escapeHtml(testimonial.name)}</h4>
+                ${testimonial.role ? `<p class="testimonial-role">${escapeHtml(testimonial.role)}</p>` : ''}
+            </div>
+        </div>
+        <div class="testimonial-rating">
+            ${stars}
+        </div>
+        <p class="testimonial-text">
+            "${escapeHtml(testimonial.text)}"
+        </p>
+    `;
+    
+    return card;
+}
+
+// Soumettre un nouvel avis
+function submitTestimonial() {
+    const form = document.getElementById('testimonial-form');
+    if (!form) return;
+    
+    const formData = new FormData(form);
+    const name = formData.get('name').trim();
+    const role = formData.get('role').trim();
+    const rating = parseInt(formData.get('rating'));
+    const text = formData.get('text').trim();
+    
+    // Validation
+    if (!name || !rating || !text) {
+        showTestimonialMessage('error', translations[currentLanguage].testimonials.errorMessage);
+        return;
+    }
+    
+    // Créer l'objet avis
+    const testimonial = {
+        name,
+        role: role || '',
+        rating,
+        text,
+        date: new Date().toISOString()
+    };
+    
+    // Sauvegarder dans localStorage
+    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials') || '[]');
+    savedTestimonials.push(testimonial);
+    localStorage.setItem('testimonials', JSON.stringify(savedTestimonials));
+    
+    // Réinitialiser le formulaire
+    form.reset();
+    
+    // Recharger les avis
+    loadTestimonials();
+    
+    // Afficher le message de succès
+    showTestimonialMessage('success', translations[currentLanguage].testimonials.successMessage);
+    
+    // Scroll vers les avis
+    setTimeout(() => {
+        document.getElementById('avis')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
+}
+
+// Afficher un message de succès/erreur
+function showTestimonialMessage(type, message) {
+    // Supprimer les messages existants
+    const existingMessages = document.querySelectorAll('.testimonial-message');
+    existingMessages.forEach(msg => msg.remove());
+    
+    // Créer le nouveau message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `testimonial-message ${type}`;
+    messageDiv.textContent = message;
+    
+    // Insérer le message dans le formulaire
+    const form = document.getElementById('testimonial-form');
+    if (form) {
+        form.insertBefore(messageDiv, form.firstChild);
+        
+        // Supprimer le message après 5 secondes
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 5000);
+    }
+}
+
+// Fonction pour échapper le HTML (sécurité)
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 

@@ -30,7 +30,9 @@ function loadBlogArticles() {
         return new Date(b.date) - new Date(a.date);
     });
 
-    blogGrid.innerHTML = sortedArticles.map(article => `
+    blogGrid.innerHTML = sortedArticles.map(article => {
+        const views = getArticleViews(article.id);
+        return `
         <article class="blog-card" data-id="${article.id}">
             <div class="blog-card-image">
                 <img src="${escapeHtml(article.image)}" 
@@ -38,19 +40,24 @@ function loadBlogArticles() {
                      loading="lazy"
                      onerror="this.src='https://via.placeholder.com/400x250?text=Image+non+disponible'">
                 <div class="blog-card-overlay">
-                    <a href="${escapeHtml(article.link)}" target="_blank" class="blog-card-link">
-                        <i class="fas fa-external-link-alt"></i> Lire l'article
+                    <a href="blog-detail.html?id=${article.id}" class="blog-card-link">
+                        <i class="fas fa-eye"></i> Voir les détails
                     </a>
                 </div>
             </div>
             <div class="blog-card-content">
-                <div class="blog-card-date">
-                    <i class="fas fa-calendar"></i> ${formatDate(article.date)}
+                <div class="blog-card-meta">
+                    <div class="blog-card-date">
+                        <i class="fas fa-calendar"></i> ${formatDate(article.date)}
+                    </div>
+                    <div class="blog-card-views">
+                        <i class="fas fa-eye"></i> ${views} ${views === 1 ? 'vue' : 'vues'}
+                    </div>
                 </div>
                 <h3 class="blog-card-title">${escapeHtml(article.title)}</h3>
                 <p class="blog-card-description">${escapeHtml(article.description)}</p>
                 <div class="blog-card-footer">
-                    <a href="${escapeHtml(article.link)}" target="_blank" class="blog-card-read-more">
+                    <a href="blog-detail.html?id=${article.id}" class="blog-card-read-more">
                         Lire la suite <i class="fas fa-arrow-right"></i>
                     </a>
                     <div class="blog-share-buttons">
@@ -73,7 +80,8 @@ function loadBlogArticles() {
                 </div>
             </div>
         </article>
-    `).join('');
+    `;
+    }).join('');
 
     // Animer les cartes au scroll
     const blogCards = document.querySelectorAll('.blog-card');
@@ -111,6 +119,19 @@ function formatDate(dateString) {
         month: 'long',
         day: 'numeric'
     });
+}
+
+// Gestion des vues
+const VIEWS_KEY = 'blog_views';
+
+function getViews() {
+    const views = localStorage.getItem(VIEWS_KEY);
+    return views ? JSON.parse(views) : {};
+}
+
+function getArticleViews(articleId) {
+    const views = getViews();
+    return views[articleId] || 0;
 }
 
 // Fonction de partage d'article

@@ -4,11 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dylan Kavundama | Fullstack Mobile Developer </title>
+    <meta name="description" content="Portfolio de Dylan Kavundama - Développeur Fullstack Mobile spécialisé en Flutter, React Native, Node.js et développement d'applications web et mobiles modernes.">
+    <meta name="keywords" content="Dylan Kavundama, développeur mobile, Flutter, React Native, Fullstack Developer, portfolio, applications mobiles, développement web">
+    <meta name="author" content="Dylan Kavundama">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dylankavundama.com/">
+    <meta property="og:title" content="Dylan Kavundama | Fullstack Mobile Developer">
+    <meta property="og:description" content="Portfolio de Dylan Kavundama - Développeur Fullstack Mobile spécialisé en Flutter, React Native, Node.js et développement d'applications web et mobiles modernes.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Dylan Kavundama | Fullstack Mobile Developer">
+    <meta property="twitter:description" content="Portfolio de Dylan Kavundama - Développeur Fullstack Mobile spécialisé en Flutter, React Native, Node.js et développement d'applications web et mobiles modernes.">
+    
+    <title>Dylan Kavundama | Fullstack Mobile Developer</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="translations.js" as="script">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_yt.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="translations.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    
+    <!-- Scripts -->
+    <script src="translations.js" defer></script>
 </head>
 
 <body>
@@ -65,7 +89,7 @@
                     </div>
                 </div>
                 <div class="image-content">
-                    <img src="asset/b.jpg" alt="Dylan Kavundama Portrait">
+                    <img src="asset/b.jpg" alt="Dylan Kavundama Portrait" loading="lazy" width="400" height="400">
                 </div>
             </div>
         </section>
@@ -76,7 +100,7 @@
                 <div class="about-content">
                     <div class="illustration">
                         <img src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg?semt=ais_hybrid&w=740&q=80"
-                            alt="Illustration d'un développeur">
+                            alt="Illustration d'un développeur" loading="lazy" width="600" height="400">
                     </div>
                     <p class="about-text" data-i18n="about.text">
                         Développeur mobile senior passionné, je conçois des applications modernes, performantes et
@@ -427,7 +451,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="project-card">
+                    <div class="project-card" data-category="Gestion" data-search="winnercompany gestion boutique système administration stocks rapports erp commerce">
                         <div class="project-image-placeholder" style="
             background-image: url('https://winnercompany.net/assets/logo.png');
             background-size: contain; 
@@ -435,8 +459,8 @@
             background-color: white;
         "></div>
                         <h3>Winnercompany</h3>
-                        <p>Un système de gestion d’une boutique permettant d’administrer et de contrôler les différentes
-                            opérations liées à la vente de produits et à la gestion quotidienne de l’activité
+                        <p>Un système de gestion d'une boutique permettant d'administrer et de contrôler les différentes
+                            opérations liées à la vente de produits et à la gestion quotidienne de l'activité
                             commerciale (gestion des stocks, rapports, etc.).</p>
                         <div class="tags"><span>Gestion</span><span>ERP</span><span>Commerce</span></div>
                         <a href="https://winnercompany.net/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
@@ -594,6 +618,77 @@
             </div>
         </section>
 
+        <section id="avis" class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="testimonials.title">AVIS DE MES CLIENTS</h2>
+                <p class="section-description" data-i18n="testimonials.description">
+                    Découvrez ce que mes clients disent de mon travail et de leur expérience de collaboration.
+                </p>
+                
+                <!-- Formulaire d'ajout d'avis -->
+                <div class="testimonial-form-container">
+                    <h3 data-i18n="testimonials.addTitle">Ajoutez votre avis</h3>
+                    <form id="testimonial-form" class="testimonial-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="testimonial-name" data-i18n="testimonials.nameLabel">Nom complet *</label>
+                                <input type="text" id="testimonial-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="testimonial-role" data-i18n="testimonials.roleLabel">Poste / Entreprise</label>
+                                <input type="text" id="testimonial-role" name="role" placeholder="Ex: CEO, Easykivu">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonial-rating" data-i18n="testimonials.ratingLabel">Note *</label>
+                            <div class="rating-input">
+                                <input type="radio" id="star5" name="rating" value="5" required>
+                                <label for="star5" class="star-label"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" class="star-label"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3" class="star-label"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" class="star-label"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" class="star-label"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="testimonial-text" data-i18n="testimonials.textLabel">Votre avis *</label>
+                            <textarea id="testimonial-text" name="text" rows="4" required placeholder="Partagez votre expérience..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-i18n="testimonials.submitBtn">Publier mon avis</button>
+                    </form>
+                </div>
+                
+                <div class="testimonials-grid" id="testimonials-grid">
+                    <!-- Les avis seront chargés dynamiquement ici -->
+                    <div class="testimonial-card" data-testimonial-id="example">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Jean Mukamba</h4>
+                                <p class="testimonial-role">CEO, Easykivu</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Dylan a développé notre plateforme e-commerce avec un professionnalisme remarquable. L'application est performante, intuitive et répond parfaitement à nos besoins. Un développeur talentueux et fiable !"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="youtube" class="youtube-section">
             <div class="container">
                 <h2 class="section-title" data-i18n="youtube.title">MA CHAÎNE YOUTUBE 📺</h2>
@@ -691,11 +786,6 @@
         <div class="footer-bottom">
             <div class="container">
                 <p class="copyright" data-i18n="footer.copyright">Designed & Built by Dylan Kavundama Copyright © 2025</p>
-                <div class="footer-badges">
-                    <span class="badge" data-i18n="footer.madeWith">Fait avec</span>
-                    <i class="fas fa-heart"></i>
-                    <span data-i18n="footer.inRDC">en RDC</span>
-                </div>
             </div>
         </div>
         

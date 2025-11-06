@@ -70,6 +70,20 @@ const translations = {
             empty: "Aucun article pour le moment. Revenez bientôt !"
         },
         
+        // Testimonials Section
+        testimonials: {
+            title: "AVIS DE MES CLIENTS",
+            description: "Découvrez ce que mes clients disent de mon travail et de leur expérience de collaboration.",
+            addTitle: "Ajoutez votre avis",
+            nameLabel: "Nom complet *",
+            roleLabel: "Poste / Entreprise",
+            ratingLabel: "Note *",
+            textLabel: "Votre avis *",
+            submitBtn: "Publier mon avis",
+            successMessage: "Merci ! Votre avis a été publié avec succès.",
+            errorMessage: "Une erreur est survenue. Veuillez réessayer."
+        },
+        
         // YouTube Section
         youtube: {
             title: "MA CHAÎNE YOUTUBE 📺",
@@ -154,6 +168,20 @@ const translations = {
             title: "MY BLOG",
             description: "Discover my articles on development, technologies and my experiences.",
             empty: "No articles yet. Come back soon!"
+        },
+        
+        // Testimonials Section
+        testimonials: {
+            title: "CLIENT TESTIMONIALS",
+            description: "Discover what my clients say about my work and their collaboration experience.",
+            addTitle: "Add your testimonial",
+            nameLabel: "Full name *",
+            roleLabel: "Position / Company",
+            ratingLabel: "Rating *",
+            textLabel: "Your testimonial *",
+            submitBtn: "Publish my testimonial",
+            successMessage: "Thank you! Your testimonial has been published successfully.",
+            errorMessage: "An error occurred. Please try again."
         },
         
         // YouTube Section
