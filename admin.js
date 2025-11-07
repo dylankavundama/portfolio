@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Charger les articles existants
     loadArticles();
+    
+    // Charger les statistiques de visites
+    loadSiteStats();
 
     // Gestion du formulaire
     const form = document.getElementById('blog-form');
@@ -285,6 +288,62 @@ function showNotification(message, type = 'success') {
             document.body.removeChild(notification);
         }, 300);
     }, 3000);
+}
+
+// ============================================
+// STATISTIQUES DES VISITES DU SITE
+// ============================================
+const SITE_VISITS_KEY = 'site_visits';
+const SITE_VISITORS_KEY = 'site_visitors';
+
+// Charger et afficher les statistiques
+function loadSiteStats() {
+    // Total des visites
+    const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0');
+    const totalVisitsEl = document.getElementById('total-visits');
+    if (totalVisitsEl) {
+        totalVisitsEl.textContent = totalVisits.toLocaleString('fr-FR');
+    }
+    
+    // Visiteurs uniques (nombre de jours différents avec visites)
+    const visitors = JSON.parse(localStorage.getItem(SITE_VISITORS_KEY) || '[]');
+    const uniqueVisitorsEl = document.getElementById('unique-visitors');
+    if (uniqueVisitorsEl) {
+        uniqueVisitorsEl.textContent = visitors.length.toLocaleString('fr-FR');
+    }
+    
+    // Visites aujourd'hui
+    const today = new Date().toISOString().split('T')[0];
+    const visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
+    const todayVisits = visits[today] || 0;
+    const todayVisitsEl = document.getElementById('today-visits');
+    if (todayVisitsEl) {
+        todayVisitsEl.textContent = todayVisits.toLocaleString('fr-FR');
+    }
+    
+    // Visites cette semaine
+    const weekVisits = getWeekVisits(visits);
+    const weekVisitsEl = document.getElementById('week-visits');
+    if (weekVisitsEl) {
+        weekVisitsEl.textContent = weekVisits.toLocaleString('fr-FR');
+    }
+}
+
+// Calculer les visites de la semaine
+function getWeekVisits(visits) {
+    const today = new Date();
+    const weekAgo = new Date(today);
+    weekAgo.setDate(today.getDate() - 7);
+    
+    let weekTotal = 0;
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        weekTotal += visits[dateStr] || 0;
+    }
+    
+    return weekTotal;
 }
 
 // Ajouter les animations CSS si elles n'existent pas

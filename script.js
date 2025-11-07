@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initProjectFilters();
     initTestimonials();
+    trackSiteVisit(); // Tracker les visites du site
 });
 
 // ============================================
@@ -926,5 +927,63 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// ============================================
+// TRACKING DES VISITES DU SITE
+// ============================================
+const SITE_VISITS_KEY = 'site_visits';
+const SITE_VISITORS_KEY = 'site_visitors';
+const LAST_VISIT_KEY = 'last_visit_date';
+
+// Tracker une visite du site
+function trackSiteVisit() {
+    // Ne tracker que sur la page index.html
+    if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
+        return;
+    }
+
+    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+    
+    // Récupérer les statistiques existantes
+    let visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
+    let visitors = JSON.parse(localStorage.getItem(SITE_VISITORS_KEY) || '[]');
+    const lastVisit = localStorage.getItem(LAST_VISIT_KEY);
+    
+    // Incrémenter le compteur total de visites
+    const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0') + 1;
+    localStorage.setItem('site_total_visits', totalVisits.toString());
+    
+    // Compter les visites par jour
+    if (!visits[today]) {
+        visits[today] = 0;
+    }
+    visits[today]++;
+    localStorage.setItem(SITE_VISITS_KEY, JSON.stringify(visits));
+    
+    // Gérer les visiteurs uniques (basé sur la date de dernière visite)
+    if (lastVisit !== today) {
+        // Nouveau visiteur pour aujourd'hui
+        if (!visitors.includes(today)) {
+            visitors.push(today);
+            localStorage.setItem(SITE_VISITORS_KEY, JSON.stringify(visitors));
+        }
+        localStorage.setItem(LAST_VISIT_KEY, today);
+    }
+    
+    // Enregistrer la date et l'heure de la visite
+    const visitHistory = JSON.parse(localStorage.getItem('site_visit_history') || '[]');
+    visitHistory.push({
+        date: today,
+        timestamp: new Date().toISOString(),
+        page: window.location.pathname
+    });
+    
+    // Garder seulement les 100 dernières visites
+    if (visitHistory.length > 100) {
+        visitHistory.shift();
+    }
+    
+    localStorage.setItem('site_visit_history', JSON.stringify(visitHistory));
 }
 

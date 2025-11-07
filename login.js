@@ -67,6 +67,19 @@ function handleLogin(e) {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+    const loginBtn = document.getElementById('login-btn');
+    const loginBox = document.querySelector('.login-box');
+
+    // Masquer les messages précédents
+    if (errorMessage) errorMessage.classList.remove('show');
+    if (successMessage) successMessage.classList.remove('show');
+
+    // Activer l'état de chargement
+    if (loginBtn) {
+        loginBtn.classList.add('loading');
+        loginBtn.innerHTML = '<i class="fas fa-spinner"></i><span>Connexion...</span>';
+    }
 
     // Récupérer les identifiants sauvegardés ou utiliser les valeurs par défaut
     const savedAuth = localStorage.getItem(AUTH_KEY);
@@ -83,50 +96,66 @@ function handleLogin(e) {
         localStorage.setItem(AUTH_KEY, JSON.stringify(authData));
     }
 
-    // Vérifier les identifiants
-    if (username === authData.username && password === authData.password) {
-        // Créer une session valide pour 24 heures
-        const sessionData = {
-            username: username,
-            expires: new Date().getTime() + (24 * 60 * 60 * 1000) // 24 heures
-        };
-        localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    // Simuler un délai pour l'animation (meilleure UX)
+    setTimeout(() => {
+        // Vérifier les identifiants
+        if (username === authData.username && password === authData.password) {
+            // Créer une session valide pour 24 heures
+            const sessionData = {
+                username: username,
+                expires: new Date().getTime() + (24 * 60 * 60 * 1000) // 24 heures
+            };
+            localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
 
-        // Afficher un message de succès
-        showSuccessMessage();
+            // Afficher un message de succès
+            if (successMessage) {
+                successMessage.classList.add('show');
+            }
 
-        // Rediriger vers la page d'administration après un court délai
-        setTimeout(() => {
-            window.location.href = 'admin.html';
-        }, 500);
-    } else {
-        // Afficher l'erreur
-        if (errorMessage) {
-            errorMessage.classList.add('show');
-            errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Identifiants incorrects';
+            // Animation de succès
+            if (loginBox) {
+                loginBox.style.animation = 'pulse 0.5s ease';
+            }
+
+            // Rediriger vers la page d'administration après un court délai
+            setTimeout(() => {
+                window.location.href = 'admin.html';
+            }, 1000);
+        } else {
+            // Réinitialiser le bouton
+            if (loginBtn) {
+                loginBtn.classList.remove('loading');
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>Se connecter</span>';
+            }
+
+            // Afficher l'erreur
+            if (errorMessage) {
+                errorMessage.classList.add('show');
+            }
+
+            // Effacer le champ mot de passe
+            const passwordInput = document.getElementById('password');
+            if (passwordInput) {
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+
+            // Animation de secousse
+            if (loginBox) {
+                loginBox.style.animation = 'shake 0.5s ease';
+                setTimeout(() => {
+                    loginBox.style.animation = '';
+                }, 500);
+            }
         }
-
-        // Effacer le champ mot de passe
-        document.getElementById('password').value = '';
-
-        // Animation de secousse
-        const loginBox = document.querySelector('.login-box');
-        loginBox.style.animation = 'shake 0.5s ease';
-        setTimeout(() => {
-            loginBox.style.animation = '';
-        }, 500);
-    }
+    }, 800); // Délai pour l'animation de chargement
 }
 
-// Afficher un message de succès
+// Afficher un message de succès (fonction conservée pour compatibilité)
 function showSuccessMessage() {
-    const errorMessage = document.getElementById('error-message');
-    if (errorMessage) {
-        errorMessage.style.background = '#d4edda';
-        errorMessage.style.color = '#155724';
-        errorMessage.style.borderLeftColor = '#28a745';
-        errorMessage.innerHTML = '<i class="fas fa-check-circle"></i> Connexion réussie, redirection...';
-        errorMessage.classList.add('show');
+    const successMessage = document.getElementById('success-message');
+    if (successMessage) {
+        successMessage.classList.add('show');
     }
 }
 
