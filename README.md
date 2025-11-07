@@ -101,7 +101,7 @@ portfolio/
 
 1. **Cloner le repository**
    ```bash
-   git clone https://github.com/votre-username/portfolio.git
+   git clone https://github.com/dylankavundama/portfolio.git
    cd portfolio
    ```
 
@@ -191,7 +191,7 @@ vercel
 ### GitHub Pages
 1. Activer GitHub Pages dans les paramètres du repository
 2. Sélectionner la branche `main`
-3. Le site sera disponible à `https://username.github.io/portfolio`
+3. Le site sera disponible à `https://dylankavundama.github.io/portfolio`
 
 ## 📝 Projets Présentés
 
@@ -241,7 +241,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 **⭐ Si ce projet vous a aidé, n'hésitez pas à mettre une étoile ! ⭐**
 
-Fait avec ❤️ par [Dylan Kavundama](https://github.com/votre-username)
+Fait avec ❤️ par [Dylan Kavundama](https://github.com/dylankavundama)
 
 </div>
 
