@@ -34,6 +34,7 @@ Portfolio professionnel moderne et responsive présentant mes compétences, proj
 - 🛠️ **Technologies** - Grille interactive de 30+ technologies
 - 🎯 **Réalisations** - 16+ projets avec filtres et recherche
 - 📝 **Blog** - Articles avec système de lecture et statistiques
+- 💬 **Témoignages** - Avis clients avec système de notation et formulaire
 - 📺 **YouTube** - Intégration de chaîne YouTube
 
 ### 🔐 Administration
@@ -43,28 +44,50 @@ Portfolio professionnel moderne et responsive présentant mes compétences, proj
 - 📈 **Suivi des lectures** - Compteur de vues par article
 
 ### 🎯 Fonctionnalités Avancées
-- 🔍 **Recherche de projets** - Recherche en temps réel
-- 🏷️ **Filtres par catégorie** - E-commerce, Fintech, Mobile, Web, etc.
+- 🔍 **Recherche de projets** - Recherche en temps réel avec debounce
+- 🏷️ **Filtres par catégorie** - E-commerce, Fintech, Mobile, Web, Gestion, Culture, etc.
 - 📱 **Compteur de projets** - Affichage dynamique du nombre de projets
 - 🌐 **SEO optimisé** - Meta tags, Open Graph, Twitter Cards
-- ⚡ **Performance** - Lazy loading, optimisations CSS/JS
+- ⚡ **Performance** - Lazy loading, optimisations CSS/JS, Intersection Observer
+- 📤 **Partage social** - Partage d'articles sur Facebook, Twitter, LinkedIn, WhatsApp
+- 📈 **Analytics** - Suivi des visites, visiteurs uniques, statistiques quotidiennes et hebdomadaires
 
 ## 🛠️ Technologies Utilisées
 
 ### Frontend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 - **HTML5** - Structure sémantique
 - **CSS3** - Variables CSS, Grid, Flexbox, Animations
 - **JavaScript (Vanilla)** - Pas de framework, performance optimale
 - **Font Awesome** - Icônes vectorielles
 
+### Mobile Development
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat&logo=dart&logoColor=white)
+- **Flutter** - Développement mobile multiplateforme
+- **React Native** - Applications mobiles cross-platform
+- **Dart** - Langage de programmation Flutter
+
 ### Backend & Stockage
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php&logoColor=white)
+- **Node.js** - Runtime JavaScript côté serveur
+- **PHP** - Langage de programmation backend
 - **LocalStorage** - Stockage des données (articles, thème, langue, session)
 - **JavaScript ES6+** - Modules, async/await, classes
 
 ### Outils & Services
+![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=flat&logo=visual-studio-code&logoColor=white)
 - **Git/GitHub** - Version control
 - **Vercel/Netlify** - Déploiement (recommandé)
 - **WhatsApp Business API** - Intégration contact
+- **Firebase** - Services backend
+- **Analytics** - Suivi des statistiques
 
 ## 📁 Structure du Projet
 
@@ -164,9 +187,9 @@ Modifier la section projets dans `index.html` ou utiliser le format JSON dans `s
 
 ## 📊 Statistiques
 
-- **16+ Projets** présentés
-- **30+ Technologies** affichées
-- **Sections** : 7 principales
+- **16 Projets** présentés (E-commerce, Fintech, Culture, Gestion, etc.)
+- **30+ Technologies** affichées (Flutter, React Native, Node.js, PHP, etc.)
+- **Sections** : 8 principales (Hero, À Propos, Compétences, Technologies, Réalisations, Blog, Témoignages, YouTube)
 - **Langues** : 2 (FR/EN)
 - **Thèmes** : 2 (Clair/Sombre)
 
@@ -195,15 +218,32 @@ vercel
 
 ## 📝 Projets Présentés
 
-- **Soko Fast** - E-commerce mobile (Android)
-- **U-System** - Système de gestion
-- **Millantech** - Application mobile
-- **Cavodi** - Plateforme mobile
-- **Lifechannel** - Application culturelle
-- **Viz** - Application mobile
-- **GeoVille** - Application géolocalisation
-- **WMA+** - Application mobile
-- Et plus...
+### 🛒 E-commerce
+- **[Soko Fast](https://play.google.com/store/apps/details?id=com.sokofast.btc)** - Boutique de vente en ligne spécialisée dans les produits électroniques (Android)
+- **[Millantech](https://play.google.com/store/apps/details?id=com.phx.boutique)** - Boutique en ligne à Bunia, RDC (Android)
+- **[Easykivu](https://easykivu.com/wp/)** - Marketplace e-commerce pour l'est de la RDC
+- **[Babutik](https://babutik.com/)** - Application e-commerce multiplateforme
+- **[joyfashions](https://joyfashions.shop/)** - Boutique de mode en ligne
+
+### 💰 Fintech
+- **[YannExchange](https://yannexchange.com/)** - Plateforme d'échange de crypto-monnaies à Goma, RDC
+- **[MbiyoPay](https://mbiyopay.com/)** - Application de paiement mobile sécurisée
+
+### 🎵 Culture & Média
+- **[WMA Hub](https://wmahub.com/)** - Plateforme internationale de distribution musicale
+- **[WMA+](https://wmaplus.vercel.app/)** - Plateforme premium de streaming musical africain
+- **[Viz](https://play.google.com/store/apps/details?id=com.viz)** - Parc numérique artistique avec réalité virtuelle
+- **[Gayux](https://gayux.vercel.app/)** - Plateforme de films et documentaires gratuits
+- **[Lifechannel](https://lifechannel.vercel.app/)** - Source d'informations en temps réel
+
+### 📊 Gestion & ERP
+- **[U-System](https://manager.shopushindi.com/)** - Système de gestion complet pour vente de véhicules
+- **[Winnercompany](https://winnercompany.net/)** - Système de gestion de boutique avec ERP
+
+### 🌍 Autres
+- **[Cavodi](https://play.google.com/store/apps/details?id=com.viz.cavodi)** - Carnet de voyage numérique
+- **[GeoVille](https://play.google.com/store/apps/details?id=com.viz.geoville)** - Application quiz sur les villes du monde
+- **[Mosungi](https://www.mosungi.org/)** - Site web pour fondation humanitaire congolaise
 
 ## 🤝 Contribution
 
@@ -224,10 +264,9 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 **Dylan Kavundama**
 
 - 🌐 Site Web: [dylankavundama.com](https://dylankavundama.com)
-- 💼 LinkedIn: [Votre LinkedIn](https://linkedin.com/in/votre-profil)
-- 🐦 Twitter: [@VotreTwitter](https://twitter.com/votre-handle)
 - 📧 Email: contact@dylankavundama.com
 - 💬 WhatsApp: [+243 977 734 735](https://wa.me/243977734735)
+- 🐙 GitHub: [@dylankavundama](https://github.com/dylankavundama)
 
 ## 🙏 Remerciements
 
