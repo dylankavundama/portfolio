@@ -1422,6 +1422,21 @@ body.dark-mode .project-card h3 {
     line-height: 1.6;
     color: var(--text-light);
     opacity: 0.9;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+    word-wrap: break-word;
+}
+
+.project-card p.expanded {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
 }
 
 body.dark-mode .project-card p {
@@ -1455,6 +1470,53 @@ body.dark-mode .project-card .tags span {
 .project-card .tags span:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(60, 148, 231, 0.3);
+}
+
+.project-description-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.project-read-more {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.project-read-more:hover {
+    opacity: 1;
+    color: var(--secondary-color);
+}
+
+.project-read-more:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+body.dark-mode .project-read-more {
+    color: var(--primary-color);
+}
+
+body.dark-mode .project-read-more:hover {
+    color: var(--secondary-color);
+}
+
+/* Responsive pour les boutons "Lire plus" */
+@media (max-width: 768px) {
+    .project-read-more {
+        font-size: 0.8em;
+        margin-top: 6px;
+    }
 }
 
 .project-actions {

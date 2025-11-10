@@ -60,7 +60,9 @@ const translations = {
             filterWeb: "Web",
             filterGestion: "Gestion",
             filterCulture: "Culture",
-            projectsFound: "projets"
+            projectsFound: "projets",
+            readMore: "Lire plus",
+            readLess: "Lire moins"
         },
         
         // Blog Section
@@ -161,7 +163,9 @@ const translations = {
             filterWeb: "Web",
             filterGestion: "Management",
             filterCulture: "Culture",
-            projectsFound: "projects"
+            projectsFound: "projects",
+            readMore: "Read more",
+            readLess: "Read less"
         },
         
         // Blog Section
