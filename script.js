@@ -143,10 +143,6 @@ function updateLanguage(lang) {
         if (translation) {
             if (element.tagName === 'INPUT' && element.hasAttribute('data-i18n-placeholder')) {
                 element.placeholder = translation;
-            } else if (element.classList.contains('project-read-more')) {
-                // Mettre à jour les boutons "Lire plus/Lire moins"
-                const isExpanded = element.getAttribute('data-expanded') === 'true';
-                updateButtonText(element, isExpanded);
             } else {
                 // Préserver les icônes et autres éléments HTML
                 const textContent = element.textContent.trim();
@@ -165,6 +161,9 @@ function updateLanguage(lang) {
             }
         }
     });
+    
+    // Déclencher l'événement de changement de langue
+    window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
 }
 
 
@@ -993,142 +992,205 @@ function trackSiteVisit() {
 }
 
 // ============================================
-// GESTION DES DESCRIPTIONS DE PROJETS (LIRE PLUS/LIRE MOINS)
+// GESTION DU CLIC SUR L'IMAGE DU PROJET
 // ============================================
 function initProjectReadMore() {
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
-        const descriptionWrapper = card.querySelector('.project-description-wrapper');
-        if (!descriptionWrapper) return;
+        const projectImage = card.querySelector('.project-image-placeholder');
         
-        const description = descriptionWrapper.querySelector('p');
-        const readMoreBtn = descriptionWrapper.querySelector('.project-read-more');
+        if (!projectImage) return;
         
-        if (!description || !readMoreBtn) return;
+        // Rendre l'image cliquable
+        projectImage.style.cursor = 'pointer';
+        projectImage.setAttribute('role', 'button');
+        projectImage.setAttribute('tabindex', '0');
         
-        // Vérifier si la description dépasse 4 lignes
-        const checkIfOverflow = () => {
-            // Réinitialiser pour mesurer - retirer la classe expanded et masquer le bouton
-            description.classList.remove('expanded');
-            readMoreBtn.style.display = 'none';
-            
-            // Forcer le reflow pour obtenir les bonnes dimensions
-            void description.offsetHeight;
-            
-            // Créer un clone temporaire sans limitation pour comparer les hauteurs
-            const tempDiv = document.createElement('div');
-            const styles = window.getComputedStyle(description);
-            
-            // Copier tous les styles pertinents
-            tempDiv.style.cssText = `
-                position: absolute;
-                visibility: hidden;
-                top: -9999px;
-                left: -9999px;
-                width: ${description.offsetWidth}px;
-                font-size: ${styles.fontSize};
-                font-family: ${styles.fontFamily};
-                font-weight: ${styles.fontWeight};
-                line-height: ${styles.lineHeight};
-                padding: ${styles.padding};
-                margin: ${styles.margin};
-                word-wrap: break-word;
-                white-space: normal;
-                overflow: visible;
-                display: block;
-            `;
-            
-            tempDiv.textContent = description.textContent.trim();
-            document.body.appendChild(tempDiv);
-            
-            // Attendre un frame pour que le navigateur calcule la hauteur
-            requestAnimationFrame(() => {
-                const fullHeight = tempDiv.offsetHeight;
-                const limitedHeight = description.offsetHeight;
-                
-                document.body.removeChild(tempDiv);
-                
-                // Si la hauteur complète est supérieure à la hauteur limitée, afficher le bouton
-                // On ajoute une marge de 3px pour les arrondis et les variations de rendu
-                if (fullHeight > limitedHeight + 3) {
-                    readMoreBtn.style.display = 'inline-block';
-                    readMoreBtn.style.visibility = 'visible';
-                    readMoreBtn.setAttribute('data-expanded', 'false');
-                    updateButtonText(readMoreBtn, false);
-                } else {
-                    // S'assurer que le bouton est masqué si pas nécessaire
-                    readMoreBtn.style.display = 'none';
-                }
-            });
+        // Mettre à jour l'aria-label selon la langue
+        const updateAriaLabel = () => {
+            const currentLang = localStorage.getItem('language') || 'fr';
+            const translations = window.translations || {};
+            if (translations[currentLang] && translations[currentLang].projects) {
+                projectImage.setAttribute('aria-label', translations[currentLang].projects.readMore || 'Voir les détails du projet');
+            } else {
+                projectImage.setAttribute('aria-label', 'Voir les détails du projet');
+            }
         };
+        updateAriaLabel();
         
-        // S'assurer que le bouton est initialisé
-        if (!readMoreBtn.hasAttribute('data-expanded')) {
-            readMoreBtn.setAttribute('data-expanded', 'false');
-        }
+        // Écouter les changements de langue
+        window.addEventListener('languageChanged', updateAriaLabel);
         
-        // Gérer le clic sur le bouton
-        readMoreBtn.addEventListener('click', function(e) {
+        // Gérer le clic sur l'image - Ouvrir le modal
+        const openModal = (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
-            const isExpanded = this.getAttribute('data-expanded') === 'true';
-            
-            if (isExpanded) {
-                // Réduire
-                description.classList.remove('expanded');
-                this.setAttribute('data-expanded', 'false');
-                updateButtonText(this, false);
-                
-                // Scroll doux vers le haut de la description
-                setTimeout(() => {
-                    description.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 100);
-            } else {
-                // Étendre
-                description.classList.add('expanded');
-                this.setAttribute('data-expanded', 'true');
-                updateButtonText(this, true);
+            openProjectModal(card);
+        };
+        
+        projectImage.addEventListener('click', openModal);
+        
+        // Gérer la touche Enter pour l'accessibilité
+        projectImage.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal(e);
             }
-        });
-        
-        // Vérifier au chargement - avec plusieurs tentatives pour s'assurer que les styles sont appliqués
-        setTimeout(checkIfOverflow, 50);
-        setTimeout(checkIfOverflow, 200);
-        setTimeout(checkIfOverflow, 500);
-        
-        // Observer les changements de taille (responsive)
-        if (window.ResizeObserver) {
-            const resizeObserver = new ResizeObserver(() => {
-                setTimeout(checkIfOverflow, 100);
-            });
-            resizeObserver.observe(description);
-        }
-        
-        // Ré-vérifier après le chargement complet de la page
-        window.addEventListener('load', () => {
-            setTimeout(checkIfOverflow, 100);
         });
     });
 }
 
-// Fonction pour mettre à jour le texte du bouton selon la langue
-function updateButtonText(button, isExpanded) {
-    const currentLang = localStorage.getItem('language') || 'fr';
-    const translations = window.translations || {};
+// ============================================
+// GESTION DU MODAL DE PROJET
+// ============================================
+function openProjectModal(projectCard) {
+    const modal = document.getElementById('project-modal');
+    const modalOverlay = document.getElementById('project-modal-overlay');
+    const modalClose = document.getElementById('project-modal-close');
+    const modalImage = document.getElementById('project-modal-image');
+    const modalBadge = document.getElementById('project-modal-badge');
+    const modalTitle = document.getElementById('modal-title');
+    const modalTags = document.getElementById('project-modal-tags');
+    const modalDescription = document.getElementById('project-modal-description');
+    const modalLink = document.getElementById('project-modal-link');
     
-    if (translations[currentLang] && translations[currentLang].projects) {
-        if (isExpanded) {
-            button.textContent = translations[currentLang].projects.readLess || 'Lire moins';
-            button.setAttribute('data-i18n', 'projects.readLess');
-        } else {
-            button.textContent = translations[currentLang].projects.readMore || 'Lire plus';
-            button.setAttribute('data-i18n', 'projects.readMore');
+    if (!modal) return;
+    
+    // Récupérer les informations du projet
+    const projectImage = projectCard.querySelector('.project-image-placeholder');
+    const projectBadgeElement = projectCard.querySelector('.project-badge');
+    const projectTitle = projectCard.querySelector('h3');
+    const projectTags = projectCard.querySelector('.tags');
+    const projectDescription = projectCard.querySelector('.project-description-wrapper p');
+    // Chercher le lien dans project-actions ou directement dans la carte
+    const projectLink = projectCard.querySelector('.project-actions a') || 
+                        projectCard.querySelector('.btn-project') ||
+                        projectCard.querySelector('a.btn');
+    
+    // Remplir le modal avec les données
+    if (projectImage) {
+        const bgImage = window.getComputedStyle(projectImage).backgroundImage;
+        modalImage.style.backgroundImage = bgImage;
+    }
+    
+    if (projectBadgeElement) {
+        modalBadge.innerHTML = projectBadgeElement.innerHTML;
+        modalBadge.style.display = 'flex';
+    } else {
+        modalBadge.style.display = 'none';
+    }
+    
+    if (projectTitle) {
+        modalTitle.textContent = projectTitle.textContent;
+    }
+    
+    if (projectTags) {
+        modalTags.innerHTML = projectTags.innerHTML;
+    }
+    
+    if (projectDescription) {
+        modalDescription.textContent = projectDescription.textContent;
+    }
+    
+    if (projectLink && projectLink.href && projectLink.href !== '#' && projectLink.href !== window.location.href + '#') {
+        // Mettre à jour le href du lien
+        modalLink.href = projectLink.href;
+        modalLink.style.display = 'inline-flex';
+        modalLink.style.pointerEvents = 'auto';
+        modalLink.style.cursor = 'pointer';
+        
+        // Mettre à jour le texte du lien selon la langue
+        const currentLang = localStorage.getItem('language') || 'fr';
+        const translations = window.translations || {};
+        if (translations[currentLang] && translations[currentLang].projects) {
+            const linkSpan = modalLink.querySelector('span');
+            if (linkSpan) {
+                linkSpan.textContent = translations[currentLang].projects.voirProjet || 'Voir le projet';
+            }
+        }
+        
+        // Nettoyer les anciens event listeners en clonant le lien
+        const newLink = modalLink.cloneNode(true);
+        modalLink.parentNode.replaceChild(newLink, modalLink);
+        
+        // Récupérer la nouvelle référence du lien
+        const updatedModalLink = document.getElementById('project-modal-link');
+        
+        // Réappliquer les styles et attributs
+        if (updatedModalLink) {
+            updatedModalLink.href = projectLink.href;
+            updatedModalLink.style.display = 'inline-flex';
+            updatedModalLink.style.pointerEvents = 'auto';
+            updatedModalLink.style.cursor = 'pointer';
+            
+            // S'assurer que le clic sur le lien fonctionne
+            updatedModalLink.addEventListener('click', function(e) {
+                e.stopPropagation(); // Empêcher la propagation vers le modalContent et l'overlay
+                // Le lien fonctionnera normalement (navigation vers l'URL)
+            });
         }
     } else {
-        // Fallback si les traductions ne sont pas disponibles
-        button.textContent = isExpanded ? 'Lire moins' : 'Lire plus';
+        modalLink.href = '#';
+        modalLink.style.display = 'none';
     }
+    
+    // Afficher le modal
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    // Fermer le modal au clic sur l'overlay (une seule fois)
+    const overlayClickHandler = (e) => {
+        // Ne fermer que si on clique directement sur l'overlay, pas sur le contenu
+        if (e.target === modalOverlay) {
+            closeProjectModal();
+            modalOverlay.removeEventListener('click', overlayClickHandler);
+        }
+    };
+    modalOverlay.addEventListener('click', overlayClickHandler);
+    
+    // Empêcher la fermeture quand on clique sur le contenu du modal (mais pas sur les liens)
+    const modalContent = document.querySelector('.project-modal-content');
+    if (modalContent) {
+        // Utiliser once: true pour éviter les doublons, ou vérifier si le listener existe déjà
+        const handleContentClick = (e) => {
+            // Ne pas bloquer les clics sur les liens ou les boutons
+            if (e.target.tagName === 'A' || e.target.closest('a') || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                return; // Laisser le lien/bouton fonctionner normalement
+            }
+            e.stopPropagation();
+        };
+        
+        // Retirer l'ancien listener s'il existe
+        modalContent.removeEventListener('click', handleContentClick);
+        // Ajouter le nouveau listener
+        modalContent.addEventListener('click', handleContentClick);
+    }
+    
+    // Fermer le modal au clic sur le bouton de fermeture (une seule fois)
+    const closeClickHandler = () => {
+        closeProjectModal();
+        modalClose.removeEventListener('click', closeClickHandler);
+    };
+    modalClose.addEventListener('click', closeClickHandler);
+    
+    // Fermer le modal avec la touche Escape
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            closeProjectModal();
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('project-modal');
+    
+    if (!modal) return;
+    
+    // Masquer le modal
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
 }
 
