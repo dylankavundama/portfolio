@@ -785,40 +785,53 @@ function initTestimonials() {
     });
 }
 
-// Charger les avis depuis localStorage
-function loadTestimonials() {
+// Charger les avis depuis l'API Supabase
+async function loadTestimonials() {
     const testimonialsGrid = document.getElementById('testimonials-grid');
     if (!testimonialsGrid) return;
     
-    // Récupérer les avis depuis localStorage
-    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials') || '[]');
-    
-    // Garder uniquement l'avis exemple (celui avec data-testimonial-id="example")
-    const exampleCard = testimonialsGrid.querySelector('[data-testimonial-id="example"]');
-    const exampleHTML = exampleCard ? exampleCard.outerHTML : '';
-    
-    // Vider la grille
-    testimonialsGrid.innerHTML = '';
-    
-    // Réinsérer l'avis exemple s'il existe
-    if (exampleHTML) {
-        testimonialsGrid.insertAdjacentHTML('beforeend', exampleHTML);
-    }
-    
-    // Ajouter les avis sauvegardés
-    savedTestimonials.forEach((testimonial, index) => {
-        const card = createTestimonialCard(testimonial, `saved-${index}`);
-        testimonialsGrid.appendChild(card);
-    });
-    
-    // Animer les nouvelles cartes
-    setTimeout(() => {
-        testimonialsGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
-            setTimeout(() => {
-                card.classList.add('animate-in');
-            }, index * 100);
+    try {
+        // Afficher un loader
+        testimonialsGrid.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
+        
+        const response = await fetch('/api/testimonials');
+        
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des témoignages');
+        }
+        
+        const testimonials = await response.json();
+        
+        // Garder uniquement l'avis exemple (celui avec data-testimonial-id="example")
+        const exampleCard = testimonialsGrid.querySelector('[data-testimonial-id="example"]');
+        const exampleHTML = exampleCard ? exampleCard.outerHTML : '';
+        
+        // Vider la grille
+        testimonialsGrid.innerHTML = '';
+        
+        // Réinsérer l'avis exemple s'il existe
+        if (exampleHTML) {
+            testimonialsGrid.insertAdjacentHTML('beforeend', exampleHTML);
+        }
+        
+        // Ajouter les témoignages depuis l'API
+        testimonials.forEach((testimonial, index) => {
+            const card = createTestimonialCard(testimonial, testimonial.id || `api-${index}`);
+            testimonialsGrid.appendChild(card);
         });
-    }, 100);
+        
+        // Animer les nouvelles cartes
+        setTimeout(() => {
+            testimonialsGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, index * 100);
+            });
+        }, 100);
+    } catch (error) {
+        console.error('Erreur lors du chargement des témoignages:', error);
+        testimonialsGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">Erreur lors du chargement des témoignages.</div>';
+    }
 }
 
 // Créer une carte d'avis
@@ -858,7 +871,7 @@ function createTestimonialCard(testimonial, id) {
 }
 
 // Soumettre un nouvel avis
-function submitTestimonial() {
+async function submitTestimonial() {
     const form = document.getElementById('testimonial-form');
     if (!form) return;
     
@@ -874,33 +887,41 @@ function submitTestimonial() {
         return;
     }
     
-    // Créer l'objet avis
-    const testimonial = {
-        name,
-        role: role || '',
-        rating,
-        text,
-        date: new Date().toISOString()
-    };
-    
-    // Sauvegarder dans localStorage
-    const savedTestimonials = JSON.parse(localStorage.getItem('testimonials') || '[]');
-    savedTestimonials.push(testimonial);
-    localStorage.setItem('testimonials', JSON.stringify(savedTestimonials));
-    
-    // Réinitialiser le formulaire
-    form.reset();
-    
-    // Recharger les avis
-    loadTestimonials();
-    
-    // Afficher le message de succès
-    showTestimonialMessage('success', translations[currentLanguage].testimonials.successMessage);
-    
-    // Scroll vers les avis
-    setTimeout(() => {
-        document.getElementById('avis')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
+    try {
+        // Envoyer le témoignage à l'API
+        const response = await fetch('/api/testimonials', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                role: role || null,
+                rating,
+                text
+            })
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Erreur lors de l\'envoi du témoignage');
+        }
+        
+        // Réinitialiser le formulaire
+        form.reset();
+        
+        // Afficher le message de succès
+        showTestimonialMessage('success', 'Merci ! Votre témoignage a été soumis et sera publié après modération.');
+        
+        // Note : On ne recharge pas les témoignages car le nouveau n'est pas encore approuvé
+        // Scroll vers les avis
+        setTimeout(() => {
+            document.getElementById('avis')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 500);
+    } catch (error) {
+        console.error('Erreur:', error);
+        showTestimonialMessage('error', error.message || translations[currentLanguage].testimonials.errorMessage);
+    }
 }
 
 // Afficher un message de succès/erreur

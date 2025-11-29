@@ -1,9 +1,9 @@
 // ============================================
 // GESTION DE LA PAGE DE DÉTAIL DU BLOG
+// Utilise Supabase via les API routes Vercel
 // ============================================
 
-const STORAGE_KEY = 'blog_articles';
-const VIEWS_KEY = 'blog_views';
+const API_BASE_URL = '/api/blog';
 
 // Initialiser au chargement
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Charger l'article depuis l'URL
-function loadBlogArticle() {
+async function loadBlogArticle() {
     const urlParams = new URLSearchParams(window.location.search);
     const articleId = urlParams.get('id');
     
@@ -21,71 +21,26 @@ function loadBlogArticle() {
         return;
     }
 
-    const articles = getBlogArticles();
-    const article = articles.find(a => a.id === articleId);
-
-    if (!article) {
-        showError('Article non trouvé');
-        return;
-    }
-
-    // Incrémenter le compteur de vues
-    incrementViews(articleId);
-
-    // Afficher l'article
-    displayArticle(article);
-}
-
-// Récupérer les articles
-function getBlogArticles() {
-    const articles = localStorage.getItem(STORAGE_KEY);
-    return articles ? JSON.parse(articles) : [];
-}
-
-// Récupérer les vues
-function getViews() {
-    const views = localStorage.getItem(VIEWS_KEY);
-    return views ? JSON.parse(views) : {};
-}
-
-// Sauvegarder les vues
-function saveViews(views) {
-    localStorage.setItem(VIEWS_KEY, JSON.stringify(views));
-}
-
-// Incrémenter le compteur de vues
-function incrementViews(articleId) {
-    const views = getViews();
-    
-    if (!views[articleId]) {
-        views[articleId] = 0;
-    }
-    
-    views[articleId]++;
-    saveViews(views);
-    
-    // Mettre à jour les vues dans l'article
-    updateArticleViews(articleId, views[articleId]);
-}
-
-// Mettre à jour les vues dans l'article
-function updateArticleViews(articleId, viewCount) {
-    const articles = getBlogArticles();
-    const articleIndex = articles.findIndex(a => a.id === articleId);
-    
-    if (articleIndex !== -1) {
-        if (!articles[articleIndex].views) {
-            articles[articleIndex].views = 0;
+    try {
+        // Charger l'article depuis l'API (cela incrémente aussi les vues automatiquement)
+        const response = await fetch(`${API_BASE_URL}/${articleId}`);
+        
+        if (!response.ok) {
+            if (response.status === 404) {
+                showError('Article non trouvé');
+                return;
+            }
+            throw new Error('Erreur lors du chargement de l\'article');
         }
-        articles[articleIndex].views = viewCount;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
-    }
-}
 
-// Obtenir le nombre de vues
-function getArticleViews(articleId) {
-    const views = getViews();
-    return views[articleId] || 0;
+        const article = await response.json();
+
+        // Afficher l'article
+        displayArticle(article);
+    } catch (error) {
+        console.error('Erreur:', error);
+        showError('Erreur lors du chargement de l\'article');
+    }
 }
 
 // Afficher l'article
@@ -93,7 +48,7 @@ function displayArticle(article) {
     const articleContainer = document.getElementById('blog-article');
     if (!articleContainer) return;
 
-    const views = getArticleViews(article.id);
+    const views = article.views || 0;
     const formattedDate = formatDate(article.date);
 
     articleContainer.innerHTML = `
@@ -153,11 +108,13 @@ function displayArticle(article) {
 }
 
 // Fonction de partage pour la page de détail
-function shareArticleDetail(articleId, platform) {
-    const articles = getBlogArticles();
-    const article = articles.find(a => a.id === articleId);
-    
-    if (!article) return;
+async function shareArticleDetail(articleId, platform) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${articleId}`);
+        if (!response.ok) return;
+        
+        const article = await response.json();
+        if (!article) return;
     
     const url = encodeURIComponent(article.link);
     const title = encodeURIComponent(article.title);

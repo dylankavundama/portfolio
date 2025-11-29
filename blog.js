@@ -1,37 +1,45 @@
 // ============================================
 // GESTION DE LA SECTION BLOG
+// Utilise Supabase via les API routes Vercel
 // ============================================
 
-const STORAGE_KEY = 'blog_articles';
+const API_BASE_URL = '/api/blog';
 
 // Charger et afficher les articles sur la page principale
 document.addEventListener('DOMContentLoaded', () => {
     loadBlogArticles();
 });
 
-function loadBlogArticles() {
-    const articles = getBlogArticles();
+async function loadBlogArticles() {
     const blogGrid = document.getElementById('blog-grid');
     const blogEmpty = document.getElementById('blog-empty');
 
     if (!blogGrid) return;
 
-    if (articles.length === 0) {
-        if (blogGrid) blogGrid.style.display = 'none';
-        if (blogEmpty) blogEmpty.style.display = 'block';
-        return;
-    }
+    try {
+        // Afficher un loader
+        blogGrid.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
 
-    if (blogEmpty) blogEmpty.style.display = 'none';
-    if (blogGrid) blogGrid.style.display = 'grid';
+        const response = await fetch(API_BASE_URL);
+        
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des articles');
+        }
 
-    // Trier les articles par date (plus récents en premier)
-    const sortedArticles = articles.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-    });
+        const articles = await response.json();
 
-    blogGrid.innerHTML = sortedArticles.map(article => {
-        const views = getArticleViews(article.id);
+        if (articles.length === 0) {
+            if (blogGrid) blogGrid.style.display = 'none';
+            if (blogEmpty) blogEmpty.style.display = 'block';
+            return;
+        }
+
+        if (blogEmpty) blogEmpty.style.display = 'none';
+        if (blogGrid) blogGrid.style.display = 'grid';
+
+        // Les articles sont déjà triés par date (plus récents en premier) depuis l'API
+        blogGrid.innerHTML = articles.map(article => {
+            const views = article.views || 0;
         return `
         <article class="blog-card" data-id="${article.id}">
             <div class="blog-card-image">
@@ -101,9 +109,18 @@ function loadBlogArticles() {
     });
 }
 
-function getBlogArticles() {
-    const articles = localStorage.getItem(STORAGE_KEY);
-    return articles ? JSON.parse(articles) : [];
+// Fonction pour récupérer les articles depuis l'API
+async function getBlogArticles() {
+    try {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des articles');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors du chargement des articles:', error);
+        return [];
+    }
 }
 
 function escapeHtml(text) {
@@ -121,25 +138,16 @@ function formatDate(dateString) {
     });
 }
 
-// Gestion des vues
-const VIEWS_KEY = 'blog_views';
-
-function getViews() {
-    const views = localStorage.getItem(VIEWS_KEY);
-    return views ? JSON.parse(views) : {};
-}
-
-function getArticleViews(articleId) {
-    const views = getViews();
-    return views[articleId] || 0;
-}
+// Les vues sont maintenant gérées directement par l'API Supabase
+// Plus besoin de localStorage pour les vues
 
 // Fonction de partage d'article
-function shareArticle(articleId, platform) {
-    const articles = getBlogArticles();
-    const article = articles.find(a => a.id === articleId);
-    
-    if (!article) return;
+async function shareArticle(articleId, platform) {
+    try {
+        const articles = await getBlogArticles();
+        const article = articles.find(a => a.id === articleId);
+        
+        if (!article) return;
     
     const url = encodeURIComponent(article.link);
     const title = encodeURIComponent(article.title);
