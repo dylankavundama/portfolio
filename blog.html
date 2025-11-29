@@ -40,7 +40,7 @@
     <header class="header">
         <div class="container nav-content">
             <div class="logo">
-                <a href="index.html">Your Dev 243</a>
+                <a href="index.html">Dylan Dev 243</a>
             </div>
             <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
                 <span></span>
@@ -99,8 +99,14 @@
                     </div>
                 </div>
 
+                <!-- Loader -->
+                <div class="blog-loader active" id="blog-loader">
+                    <div class="loader-spinner"></div>
+                    <p>Chargement des articles...</p>
+                </div>
+
                 <!-- Grille d'articles -->
-                <div class="blog-grid" id="blog-grid">
+                <div class="blog-grid" id="blog-grid" style="display: none;">
                     <!-- Les articles seront chargés dynamiquement -->
                 </div>
                 
@@ -108,12 +114,6 @@
                 <div class="blog-empty" id="blog-empty" style="display: none;">
                     <i class="fas fa-blog"></i>
                     <p data-i18n="blog.empty">Aucun article pour le moment. Revenez bientôt !</p>
-                </div>
-
-                <!-- Loader -->
-                <div class="blog-loader" id="blog-loader">
-                    <div class="loader-spinner"></div>
-                    <p>Chargement des articles...</p>
                 </div>
             </div>
         </section>
