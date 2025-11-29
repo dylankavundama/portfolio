@@ -81,10 +81,12 @@ function displayArticle(article) {
             </div>
             
             <div class="blog-detail-actions">
+                ${article.link ? `
                 <a href="${escapeHtml(article.link)}" target="_blank" class="blog-detail-link">
                     <i class="fas fa-external-link-alt"></i>
                     <span>Lire l'article complet</span>
                 </a>
+                ` : ''}
                 <div class="blog-detail-share">
                     <span class="blog-detail-share-label">Partager :</span>
                     <div class="blog-detail-share-buttons">
@@ -116,32 +118,36 @@ async function shareArticleDetail(articleId, platform) {
         const article = await response.json();
         if (!article) return;
     
-    const url = encodeURIComponent(article.link);
-    const title = encodeURIComponent(article.title);
-    const currentUrl = encodeURIComponent(window.location.href);
+        // Utiliser le lien de l'article s'il existe, sinon l'URL actuelle
+        const shareUrl = article.link || window.location.href;
+        const url = encodeURIComponent(shareUrl);
+        const title = encodeURIComponent(article.title);
     
-    let shareUrl = '';
+        let shareLink = '';
     
-    switch(platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'linkedin':
-            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=${title}%20${url}`;
-            window.open(shareUrl, '_blank');
-            break;
+        switch(platform) {
+            case 'facebook':
+                shareLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'twitter':
+                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'linkedin':
+                shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'whatsapp':
+                shareLink = `https://wa.me/?text=${title}%20${url}`;
+                window.open(shareLink, '_blank');
+                break;
+        }
+    } catch (error) {
+        console.error('Erreur lors du partage:', error);
     }
 }
 

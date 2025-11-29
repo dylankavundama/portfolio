@@ -149,45 +149,51 @@ async function shareArticle(articleId, platform) {
         
         if (!article) return;
     
-    const url = encodeURIComponent(article.link);
-    const title = encodeURIComponent(article.title);
-    const description = encodeURIComponent(article.description);
+        // Utiliser le lien de l'article s'il existe, sinon l'URL de la page de détail
+        const shareUrl = article.link || `${window.location.origin}/blog-detail.html?id=${articleId}`;
+        const url = encodeURIComponent(shareUrl);
+        const title = encodeURIComponent(article.title);
+        const description = encodeURIComponent(article.description);
     
-    let shareUrl = '';
+        let shareLink = '';
     
-    switch(platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'linkedin':
-            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            break;
-            
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=${title}%20${url}`;
-            window.open(shareUrl, '_blank');
-            break;
-            
-        case 'copy':
-            // Copier le lien dans le presse-papiers
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(article.link).then(() => {
-                    showShareNotification('Lien copié dans le presse-papiers !');
-                }).catch(() => {
-                    fallbackCopyTextToClipboard(article.link);
-                });
-            } else {
-                fallbackCopyTextToClipboard(article.link);
-            }
-            break;
+        switch(platform) {
+            case 'facebook':
+                shareLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'twitter':
+                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'linkedin':
+                shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                window.open(shareLink, '_blank', 'width=600,height=400');
+                break;
+                
+            case 'whatsapp':
+                shareLink = `https://wa.me/?text=${title}%20${url}`;
+                window.open(shareLink, '_blank');
+                break;
+                
+            case 'copy':
+                // Copier le lien dans le presse-papiers
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        showShareNotification('Lien copié dans le presse-papiers !');
+                    }).catch(() => {
+                        fallbackCopyTextToClipboard(shareUrl);
+                    });
+                } else {
+                    fallbackCopyTextToClipboard(shareUrl);
+                }
+                break;
+        }
+    } catch (error) {
+        console.error('Erreur lors du partage:', error);
+        showShareNotification('Erreur lors du partage', 'error');
     }
 }
 

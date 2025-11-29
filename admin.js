@@ -84,11 +84,12 @@ async function handleFormSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
+    const linkValue = formData.get('link')?.trim();
     const articleData = {
         image: formData.get('image'),
         title: formData.get('title'),
         description: formData.get('description'),
-        link: formData.get('link'),
+        link: linkValue || null, // null si vide
         date: formData.get('date'),
         category: formData.get('category') || 'general'
     };
