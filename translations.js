@@ -69,12 +69,14 @@ const translations = {
         blog: {
             title: "MON BLOG",
             description: "Découvrez mes articles sur le développement, les technologies et mes expériences.",
-            empty: "Aucun article pour le moment. Revenez bientôt !"
+            empty: "Aucun article pour le moment. Revenez bientôt !",
+            searchPlaceholder: "Rechercher un article...",
+            viewAll: "Voir tous les articles"
         },
         
         // Testimonials Section
         testimonials: {
-            title: "AVIS DE MES CLIENTS",
+            title: "AVIS CLIENTS",
             description: "Découvrez ce que mes clients disent de mon travail et de leur expérience de collaboration.",
             addTitle: "Ajoutez votre avis",
             nameLabel: "Nom complet *",
@@ -172,7 +174,9 @@ const translations = {
         blog: {
             title: "MY BLOG",
             description: "Discover my articles on development, technologies and my experiences.",
-            empty: "No articles yet. Come back soon!"
+            empty: "No articles yet. Come back soon!",
+            searchPlaceholder: "Search for an article...",
+            viewAll: "View all articles"
         },
         
         // Testimonials Section

@@ -962,7 +962,7 @@ const SITE_VISITORS_KEY = 'site_visitors';
 const LAST_VISIT_KEY = 'last_visit_date';
 
 // Tracker une visite du site
-function trackSiteVisit() {
+async function trackSiteVisit() {
     // Ne tracker que sur la page index.html
     if (!window.location.pathname.includes('index.html') && window.location.pathname !== '/') {
         return;
@@ -970,46 +970,41 @@ function trackSiteVisit() {
 
     const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
     
-    // Récupérer les statistiques existantes
-    let visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
-    let visitors = JSON.parse(localStorage.getItem(SITE_VISITORS_KEY) || '[]');
-    const lastVisit = localStorage.getItem(LAST_VISIT_KEY);
+    // Générer ou récupérer un ID de visiteur unique
+    let visitorId = localStorage.getItem('visitor_id');
+    if (!visitorId) {
+        visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('visitor_id', visitorId);
+    }
     
-    // Incrémenter le compteur total de visites
+    // Envoyer la visite à l'API (en arrière-plan, ne pas bloquer)
+    try {
+        await fetch('/api/stats/visit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                date: today,
+                page: window.location.pathname,
+                visitorId: visitorId
+            })
+        });
+    } catch (error) {
+        // Erreur silencieuse - ne pas bloquer l'expérience utilisateur
+        console.error('Erreur lors de l\'enregistrement de la visite:', error);
+    }
+    
+    // Garder aussi un cache local pour l'affichage immédiat (fallback)
     const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0') + 1;
     localStorage.setItem('site_total_visits', totalVisits.toString());
     
-    // Compter les visites par jour
+    let visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
     if (!visits[today]) {
         visits[today] = 0;
     }
     visits[today]++;
     localStorage.setItem(SITE_VISITS_KEY, JSON.stringify(visits));
-    
-    // Gérer les visiteurs uniques (basé sur la date de dernière visite)
-    if (lastVisit !== today) {
-        // Nouveau visiteur pour aujourd'hui
-        if (!visitors.includes(today)) {
-            visitors.push(today);
-            localStorage.setItem(SITE_VISITORS_KEY, JSON.stringify(visitors));
-        }
-        localStorage.setItem(LAST_VISIT_KEY, today);
-    }
-    
-    // Enregistrer la date et l'heure de la visite
-    const visitHistory = JSON.parse(localStorage.getItem('site_visit_history') || '[]');
-    visitHistory.push({
-        date: today,
-        timestamp: new Date().toISOString(),
-        page: window.location.pathname
-    });
-    
-    // Garder seulement les 100 dernières visites
-    if (visitHistory.length > 100) {
-        visitHistory.shift();
-    }
-    
-    localStorage.setItem('site_visit_history', JSON.stringify(visitHistory));
 }
 
 // ============================================

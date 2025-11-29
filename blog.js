@@ -7,8 +7,18 @@ const API_BASE_URL = '/api/blog';
 
 // Charger et afficher les articles sur la page principale
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('blog.js chargé, démarrage du chargement des articles...');
     loadBlogArticles();
 });
+
+// Fallback si DOMContentLoaded a déjà été déclenché
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadBlogArticles);
+} else {
+    // DOM déjà chargé
+    console.log('DOM déjà chargé, chargement immédiat des articles...');
+    loadBlogArticles();
+}
 
 async function loadBlogArticles() {
     const blogGrid = document.getElementById('blog-grid');
@@ -19,27 +29,51 @@ async function loadBlogArticles() {
     try {
         // Afficher un loader
         blogGrid.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
+        if (blogEmpty) blogEmpty.style.display = 'none';
 
         const response = await fetch(API_BASE_URL);
         
         if (!response.ok) {
-            throw new Error('Erreur lors du chargement des articles');
+            const errorData = await response.json().catch(() => ({ error: 'Erreur inconnue' }));
+            console.error('Erreur API blog:', errorData);
+            throw new Error(errorData.error || `Erreur ${response.status} lors du chargement des articles`);
         }
 
         const articles = await response.json();
+        console.log('Articles reçus:', articles);
+        console.log('Nombre d\'articles:', articles ? articles.length : 0);
 
-        if (articles.length === 0) {
-            if (blogGrid) blogGrid.style.display = 'none';
-            if (blogEmpty) blogEmpty.style.display = 'block';
+        if (!articles || articles.length === 0) {
+            console.log('Aucun article trouvé, affichage du message vide');
+            blogGrid.style.display = 'none';
+            if (blogEmpty) {
+                blogEmpty.style.display = 'flex';
+                blogEmpty.style.flexDirection = 'column';
+                blogEmpty.style.alignItems = 'center';
+                blogEmpty.style.justifyContent = 'center';
+                blogEmpty.style.padding = '60px 20px';
+                blogEmpty.style.textAlign = 'center';
+            }
             return;
         }
 
         if (blogEmpty) blogEmpty.style.display = 'none';
-        if (blogGrid) blogGrid.style.display = 'grid';
+        blogGrid.style.display = 'grid';
+
+        console.log('Affichage de', articles.length, 'article(s)');
+
+        // Limiter à 3 articles sur la page d'accueil (pour l'aperçu)
+        const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname === '/';
+        const articlesToShow = isIndexPage ? articles.slice(0, 3) : articles;
 
         // Les articles sont déjà triés par date (plus récents en premier) depuis l'API
-        blogGrid.innerHTML = articles.map(article => {
+        const articlesHTML = articlesToShow.map(article => {
             const views = article.views || 0;
+            // S'assurer que tous les champs nécessaires existent
+            if (!article.id || !article.title || !article.description || !article.image) {
+                console.warn('Article incomplet:', article);
+                return ''; // Ignorer les articles incomplets
+            }
         return `
         <article class="blog-card" data-id="${article.id}">
             <div class="blog-card-image">
@@ -89,7 +123,10 @@ async function loadBlogArticles() {
             </div>
         </article>
     `;
-    }).join('');
+        }).filter(html => html !== '').join(''); // Filtrer les articles incomplets
+        
+        console.log('HTML généré, longueur:', articlesHTML.length);
+        blogGrid.innerHTML = articlesHTML;
 
     // Animer les cartes au scroll
     const blogCards = document.querySelectorAll('.blog-card');
@@ -107,6 +144,20 @@ async function loadBlogArticles() {
     blogCards.forEach(card => {
         blogObserver.observe(card);
     });
+    } catch (error) {
+        console.error('Erreur lors du chargement des articles:', error);
+        
+        // Afficher un message d'erreur
+        blogGrid.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #e74c3c;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px; color: #e74c3c;"></i>
+                <h3 style="margin-bottom: 10px;">Erreur de chargement</h3>
+                <p style="color: #666;">${error.message}</p>
+                <p style="color: #999; font-size: 14px; margin-top: 10px;">Vérifiez la console pour plus de détails.</p>
+            </div>
+        `;
+        if (blogEmpty) blogEmpty.style.display = 'none';
+    }
 }
 
 // Fonction pour récupérer les articles depuis l'API
@@ -130,12 +181,22 @@ function escapeHtml(text) {
 }
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    try {
+        // Gérer le format de date YYYY-MM-DD ou ISO
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+            // Si la date n'est pas valide, retourner la date brute
+            return dateString;
+        }
+        return date.toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    } catch (error) {
+        console.error('Erreur formatDate:', error, dateString);
+        return dateString; // Retourner la date brute en cas d'erreur
+    }
 }
 
 // Les vues sont maintenant gérées directement par l'API Supabase

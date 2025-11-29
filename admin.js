@@ -364,58 +364,62 @@ function showNotification(message, type = 'success') {
 
 // ============================================
 // STATISTIQUES DES VISITES DU SITE
+// Utilise Supabase via les API routes Vercel
 // ============================================
-const SITE_VISITS_KEY = 'site_visits';
-const SITE_VISITORS_KEY = 'site_visitors';
+const STATS_API_URL = '/api/stats';
 
 // Charger et afficher les statistiques
-function loadSiteStats() {
-    // Total des visites
-    const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0');
-    const totalVisitsEl = document.getElementById('total-visits');
-    if (totalVisitsEl) {
-        totalVisitsEl.textContent = totalVisits.toLocaleString('fr-FR');
+async function loadSiteStats() {
+    try {
+        const response = await fetch(STATS_API_URL);
+        
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des statistiques');
+        }
+        
+        const stats = await response.json();
+        
+        // Total des visites
+        const totalVisitsEl = document.getElementById('total-visits');
+        if (totalVisitsEl) {
+            totalVisitsEl.textContent = (stats.totalVisits || 0).toLocaleString('fr-FR');
+        }
+        
+        // Visiteurs uniques
+        const uniqueVisitorsEl = document.getElementById('unique-visitors');
+        if (uniqueVisitorsEl) {
+            uniqueVisitorsEl.textContent = (stats.uniqueVisitors || 0).toLocaleString('fr-FR');
+        }
+        
+        // Visites aujourd'hui
+        const todayVisitsEl = document.getElementById('today-visits');
+        if (todayVisitsEl) {
+            todayVisitsEl.textContent = (stats.todayVisits || 0).toLocaleString('fr-FR');
+        }
+        
+        // Visites cette semaine
+        const weekVisitsEl = document.getElementById('week-visits');
+        if (weekVisitsEl) {
+            weekVisitsEl.textContent = (stats.weekVisits || 0).toLocaleString('fr-FR');
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement des statistiques:', error);
+        
+        // Fallback : utiliser les données locales si disponibles
+        const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0');
+        const totalVisitsEl = document.getElementById('total-visits');
+        if (totalVisitsEl) {
+            totalVisitsEl.textContent = totalVisits.toLocaleString('fr-FR');
+        }
+        
+        const today = new Date().toISOString().split('T')[0];
+        const visits = JSON.parse(localStorage.getItem('site_visits') || '{}');
+        const todayVisits = visits[today] || 0;
+        const todayVisitsEl = document.getElementById('today-visits');
+        if (todayVisitsEl) {
+            todayVisitsEl.textContent = todayVisits.toLocaleString('fr-FR');
+        }
     }
-    
-    // Visiteurs uniques (nombre de jours différents avec visites)
-    const visitors = JSON.parse(localStorage.getItem(SITE_VISITORS_KEY) || '[]');
-    const uniqueVisitorsEl = document.getElementById('unique-visitors');
-    if (uniqueVisitorsEl) {
-        uniqueVisitorsEl.textContent = visitors.length.toLocaleString('fr-FR');
-    }
-    
-    // Visites aujourd'hui
-    const today = new Date().toISOString().split('T')[0];
-    const visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
-    const todayVisits = visits[today] || 0;
-    const todayVisitsEl = document.getElementById('today-visits');
-    if (todayVisitsEl) {
-        todayVisitsEl.textContent = todayVisits.toLocaleString('fr-FR');
-    }
-    
-    // Visites cette semaine
-    const weekVisits = getWeekVisits(visits);
-    const weekVisitsEl = document.getElementById('week-visits');
-    if (weekVisitsEl) {
-        weekVisitsEl.textContent = weekVisits.toLocaleString('fr-FR');
-    }
-}
-
-// Calculer les visites de la semaine
-function getWeekVisits(visits) {
-    const today = new Date();
-    const weekAgo = new Date(today);
-    weekAgo.setDate(today.getDate() - 7);
-    
-    let weekTotal = 0;
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() - i);
-        const dateStr = date.toISOString().split('T')[0];
-        weekTotal += visits[dateStr] || 0;
-    }
-    
-    return weekTotal;
 }
 
 // Ajouter les animations CSS si elles n'existent pas

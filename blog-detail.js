@@ -161,7 +161,7 @@ function showError(message) {
             <i class="fas fa-exclamation-triangle"></i>
             <h2>${message}</h2>
             <p>L'article que vous recherchez n'existe pas ou a été supprimé.</p>
-            <a href="index.html#blog">Retour au blog</a>
+            <a href="blog.html">Retour au blog</a>
         </div>
     `;
 }

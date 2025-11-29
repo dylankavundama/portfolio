@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détail de l'article - Dylan Kavundama</title>
+    <meta name="description" content="Blog de Dylan Kavundama - Articles sur le développement, les technologies et expériences en développement mobile et web.">
+    <meta name="keywords" content="Dylan Kavundama, blog, développement, technologies, Flutter, Node.js, articles">
+    <meta name="author" content="Dylan Kavundama">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dylankavundama.com/blog.html">
+    <meta property="og:title" content="Blog - Dylan Kavundama | Fullstack Mobile Developer">
+    <meta property="og:description" content="Découvrez mes articles sur le développement, les technologies et mes expériences.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Blog - Dylan Kavundama | Fullstack Mobile Developer">
+    <meta property="twitter:description" content="Découvrez mes articles sur le développement, les technologies et mes expériences.">
+    
+    <title>Blog - Dylan Kavundama | Fullstack Mobile Developer</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="translations.js" as="script">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blog-detail.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="translations.js"></script>
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    
+    <!-- Scripts -->
+    <script src="translations.js" defer></script>
 </head>
+
 <body>
+
     <header class="header">
         <div class="container nav-content">
             <div class="logo">
-                <a href="index.html">Dylan</a>
+                <a href="index.html">Your Dev 243</a>
             </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <nav class="nav-links" id="nav-links">
                 <a href="index.html#accueil" data-i18n="nav.accueil">Accueil</a>
                 <a href="index.html#a-propos" data-i18n="nav.aPropos">À propos</a>
                 <a href="index.html#competences" data-i18n="nav.competences">Compétences</a>
                 <a href="index.html#projets" data-i18n="nav.projets">Réalisation</a>
-                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+                <a href="blog.html" data-i18n="nav.blog" class="active">Blog</a>
             </nav>
             <div class="nav-actions">
                 <div class="language-selector">
@@ -36,24 +68,55 @@
                 <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
                     <i class="fas fa-moon" id="theme-icon"></i>
                 </button>
+                <a href="https://wa.me/243977734735" target="_blank" class="btn contact-btn" data-i18n="hero.contactWhatsApp">
+                    <span class="contact-text">Contactez-moi</span> <i class="fab fa-whatsapp"></i>
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="blog-detail-main">
-        <div class="container">
-            <a href="blog.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> Retour au blog
-            </a>
-
-            <article class="blog-detail-article" id="blog-article">
-                <!-- Le contenu sera chargé dynamiquement -->
-                <div class="blog-loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Chargement de l'article...</p>
+    <main class="blog-page-main">
+        <!-- Hero Section du Blog -->
+        <section class="blog-hero">
+            <div class="container">
+                <div class="blog-hero-content">
+                    <h1 class="blog-hero-title" data-i18n="blog.title">MON BLOG</h1>
+                    <p class="blog-hero-description" data-i18n="blog.description">
+                        Découvrez mes articles sur le développement, les technologies et mes expériences.
+                    </p>
                 </div>
-            </article>
-        </div>
+            </div>
+        </section>
+
+        <!-- Section Articles -->
+        <section class="blog-articles-section">
+            <div class="container">
+                <!-- Filtres et recherche (optionnel pour le futur) -->
+                <div class="blog-controls" id="blog-controls" style="display: none;">
+                    <div class="blog-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="blog-search-input" placeholder="Rechercher un article..." data-i18n-placeholder="blog.searchPlaceholder">
+                    </div>
+                </div>
+
+                <!-- Grille d'articles -->
+                <div class="blog-grid" id="blog-grid">
+                    <!-- Les articles seront chargés dynamiquement -->
+                </div>
+                
+                <!-- Message vide -->
+                <div class="blog-empty" id="blog-empty" style="display: none;">
+                    <i class="fas fa-blog"></i>
+                    <p data-i18n="blog.empty">Aucun article pour le moment. Revenez bientôt !</p>
+                </div>
+
+                <!-- Loader -->
+                <div class="blog-loader" id="blog-loader">
+                    <div class="loader-spinner"></div>
+                    <p>Chargement des articles...</p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -84,7 +147,7 @@
                     <li><a href="index.html#a-propos" data-i18n="nav.aPropos">À propos</a></li>
                     <li><a href="index.html#competences" data-i18n="nav.competences">Compétences</a></li>
                     <li><a href="index.html#projets" data-i18n="nav.projets">Réalisation</a></li>
-                    <li><a href="index.html#blog" data-i18n="nav.blog">Blog</a></li>
+                    <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
                 </ul>
             </div>
 
@@ -113,13 +176,14 @@
             </div>
         </div>
         
-        <a href="#accueil" class="back-to-top" id="backToTop" aria-label="Retour en haut">
+        <a href="#top" class="back-to-top" id="backToTop" aria-label="Retour en haut">
             <i class="fas fa-arrow-up"></i>
         </a>
     </footer>
 
     <script src="script.js"></script>
-    <script src="blog-detail.js"></script>
+    <script src="blog-page.js"></script>
 </body>
+
 </html>
 

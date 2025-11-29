@@ -23,6 +23,12 @@ CREATE TABLE IF NOT EXISTS blog_articles (
 -- Activer Row Level Security (RLS)
 ALTER TABLE blog_articles ENABLE ROW LEVEL SECURITY;
 
+-- Supprimer les politiques existantes si elles existent
+DROP POLICY IF EXISTS "Anyone can read blog articles" ON blog_articles;
+DROP POLICY IF EXISTS "Allow insert with service role" ON blog_articles;
+DROP POLICY IF EXISTS "Allow update with service role" ON blog_articles;
+DROP POLICY IF EXISTS "Allow delete with service role" ON blog_articles;
+
 -- Politique : Tout le monde peut lire
 CREATE POLICY "Anyone can read blog articles"
   ON blog_articles FOR SELECT
@@ -63,6 +69,12 @@ CREATE TABLE IF NOT EXISTS testimonials (
 -- Activer Row Level Security (RLS)
 ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
 
+-- Supprimer les politiques existantes si elles existent
+DROP POLICY IF EXISTS "Anyone can read approved testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Anyone can insert testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Allow update with service role" ON testimonials;
+DROP POLICY IF EXISTS "Allow delete with service role" ON testimonials;
+
 -- Politique : Tout le monde peut lire les témoignages approuvés
 CREATE POLICY "Anyone can read approved testimonials"
   ON testimonials FOR SELECT
@@ -87,6 +99,40 @@ CREATE POLICY "Allow delete with service role"
 CREATE INDEX IF NOT EXISTS idx_testimonials_approved ON testimonials(approved, created_at DESC);
 
 -- ============================================
+-- TABLE : site_visits
+-- ============================================
+CREATE TABLE IF NOT EXISTS site_visits (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  date DATE NOT NULL,
+  page TEXT DEFAULT '/',
+  visitor_id TEXT,
+  timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Activer Row Level Security (RLS)
+ALTER TABLE site_visits ENABLE ROW LEVEL SECURITY;
+
+-- Supprimer les politiques existantes si elles existent
+DROP POLICY IF EXISTS "Anyone can insert visits" ON site_visits;
+DROP POLICY IF EXISTS "Allow read with service role" ON site_visits;
+
+-- Politique : Tout le monde peut insérer des visites
+CREATE POLICY "Anyone can insert visits"
+  ON site_visits FOR INSERT
+  WITH CHECK (true);
+
+-- Politique : Seuls les admins peuvent lire (via service role)
+CREATE POLICY "Allow read with service role"
+  ON site_visits FOR SELECT
+  USING (true);
+
+-- Index pour améliorer les performances
+CREATE INDEX IF NOT EXISTS idx_site_visits_date ON site_visits(date DESC);
+CREATE INDEX IF NOT EXISTS idx_site_visits_created_at ON site_visits(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_site_visits_visitor_id ON site_visits(visitor_id);
+
+-- ============================================
 -- FONCTION : Mettre à jour updated_at automatiquement
 -- ============================================
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -96,6 +142,9 @@ BEGIN
     RETURN NEW;
 END;
 $$ language 'plpgsql';
+
+-- Supprimer le trigger s'il existe
+DROP TRIGGER IF EXISTS update_blog_articles_updated_at ON blog_articles;
 
 -- Trigger pour blog_articles
 CREATE TRIGGER update_blog_articles_updated_at 

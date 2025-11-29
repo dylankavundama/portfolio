@@ -50,7 +50,7 @@
                 <a href="#a-propos" data-i18n="nav.aPropos">À propos</a>
                 <a href="#competences" data-i18n="nav.competences">Compétences</a>
                 <a href="#projets" data-i18n="nav.projets">Réalisation</a>
-                <a href="#blog" data-i18n="nav.blog">Blog</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
             </nav>
             <div class="nav-actions">
                 <div class="language-selector">
@@ -695,7 +695,7 @@
 
         <section id="avis" class="testimonials-section">
             <div class="container">
-                <h2 class="section-title" data-i18n="testimonials.title">AVIS DE MES CLIENTS</h2>
+                <h2 class="section-title" data-i18n="testimonials.title">AVIS CLIENTS</h2>
                 <p class="section-description" data-i18n="testimonials.description">
                     Découvrez ce que mes clients disent de mon travail et de leur expérience de collaboration.
                 </p>
@@ -795,6 +795,7 @@
                     Découvrez mes articles sur le développement, les technologies et mes expériences.
                 </p>
                 
+                <!-- Aperçu des 3 derniers articles -->
                 <div class="blog-grid" id="blog-grid">
                     <!-- Les articles seront chargés dynamiquement -->
                 </div>
@@ -802,6 +803,13 @@
                 <div class="blog-empty" id="blog-empty" style="display: none;">
                     <i class="fas fa-blog"></i>
                     <p data-i18n="blog.empty">Aucun article pour le moment. Revenez bientôt !</p>
+                </div>
+                
+                <!-- Lien vers la page blog complète -->
+                <div class="blog-view-all" style="text-align: center; margin-top: 40px;">
+                    <a href="blog.html" class="btn btn-primary" data-i18n="blog.viewAll">
+                        Voir tous les articles <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </section>

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { SUPABASE_URL, SUPABASE_SERVICE_KEY } = process.env;
+  const { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_KEY } = process.env;
   const { id } = req.query;
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
@@ -31,10 +31,12 @@ export default async function handler(req, res) {
   // GET : Récupérer un article spécifique
   if (req.method === 'GET') {
     try {
+      // Utiliser la clé anon pour la lecture (respecte les politiques RLS)
+      const apiKey = SUPABASE_ANON_KEY || SUPABASE_SERVICE_KEY;
       const response = await fetch(`${SUPABASE_URL}/rest/v1/blog_articles?id=eq.${id}&select=*`, {
         headers: {
-          'apikey': SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+          'apikey': apiKey,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         }
       });
