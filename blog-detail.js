@@ -35,6 +35,9 @@ async function loadBlogArticle() {
 
         const article = await response.json();
 
+        // Mettre à jour les meta tags Open Graph pour le partage social
+        updateOpenGraphTags(article);
+
         // Afficher l'article
         displayArticle(article);
     } catch (error) {
@@ -109,6 +112,91 @@ function displayArticle(article) {
     `;
 }
 
+// Mettre à jour les meta tags Open Graph pour le partage social
+function updateOpenGraphTags(article) {
+    // Titre
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+        ogTitle = document.createElement('meta');
+        ogTitle.setAttribute('property', 'og:title');
+        document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute('content', article.title);
+
+    // Description
+    let ogDescription = document.querySelector('meta[property="og:description"]');
+    if (!ogDescription) {
+        ogDescription = document.createElement('meta');
+        ogDescription.setAttribute('property', 'og:description');
+        document.head.appendChild(ogDescription);
+    }
+    ogDescription.setAttribute('content', article.description || article.title);
+
+    // Image
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) {
+        ogImage = document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImage);
+    }
+    ogImage.setAttribute('content', article.image);
+
+    // URL
+    const shareUrl = article.link || window.location.href;
+    let ogUrl = document.querySelector('meta[property="og:url"]');
+    if (!ogUrl) {
+        ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        document.head.appendChild(ogUrl);
+    }
+    ogUrl.setAttribute('content', shareUrl);
+
+    // Type
+    let ogType = document.querySelector('meta[property="og:type"]');
+    if (!ogType) {
+        ogType = document.createElement('meta');
+        ogType.setAttribute('property', 'og:type');
+        document.head.appendChild(ogType);
+    }
+    ogType.setAttribute('content', 'article');
+
+    // Twitter Cards
+    let twitterCard = document.querySelector('meta[name="twitter:card"]');
+    if (!twitterCard) {
+        twitterCard = document.createElement('meta');
+        twitterCard.setAttribute('name', 'twitter:card');
+        document.head.appendChild(twitterCard);
+    }
+    twitterCard.setAttribute('content', 'summary_large_image');
+
+    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (!twitterTitle) {
+        twitterTitle = document.createElement('meta');
+        twitterTitle.setAttribute('name', 'twitter:title');
+        document.head.appendChild(twitterTitle);
+    }
+    twitterTitle.setAttribute('content', article.title);
+
+    let twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    if (!twitterDescription) {
+        twitterDescription = document.createElement('meta');
+        twitterDescription.setAttribute('name', 'twitter:description');
+        document.head.appendChild(twitterDescription);
+    }
+    twitterDescription.setAttribute('content', article.description || article.title);
+
+    let twitterImage = document.querySelector('meta[name="twitter:image"]');
+    if (!twitterImage) {
+        twitterImage = document.createElement('meta');
+        twitterImage.setAttribute('name', 'twitter:image');
+        document.head.appendChild(twitterImage);
+    }
+    twitterImage.setAttribute('content', article.image);
+
+    // Mettre à jour le titre de la page
+    document.title = `${article.title} - Dylan Kavundama`;
+}
+
 // Fonction de partage pour la page de détail
 async function shareArticleDetail(articleId, platform) {
     try {
@@ -122,27 +210,34 @@ async function shareArticleDetail(articleId, platform) {
         const shareUrl = article.link || window.location.href;
         const url = encodeURIComponent(shareUrl);
         const title = encodeURIComponent(article.title);
+        const description = encodeURIComponent((article.description || article.title).substring(0, 200));
+        const image = encodeURIComponent(article.image || '');
     
         let shareLink = '';
     
         switch(platform) {
             case 'facebook':
+                // Facebook utilise les meta tags Open Graph, mais on peut aussi passer l'URL
                 shareLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'twitter':
-                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                // Twitter avec description et image via les Cards
+                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}%20-%20${description}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'linkedin':
+                // LinkedIn utilise les meta tags Open Graph
                 shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'whatsapp':
-                shareLink = `https://wa.me/?text=${title}%20${url}`;
+                // WhatsApp avec titre, description et URL
+                const whatsappText = `${title}%0A%0A${description}%0A%0A${url}`;
+                shareLink = `https://wa.me/?text=${whatsappText}`;
                 window.open(shareLink, '_blank');
                 break;
         }

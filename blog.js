@@ -214,41 +214,48 @@ async function shareArticle(articleId, platform) {
         const shareUrl = article.link || `${window.location.origin}/blog-detail.html?id=${articleId}`;
         const url = encodeURIComponent(shareUrl);
         const title = encodeURIComponent(article.title);
-        const description = encodeURIComponent(article.description);
+        const description = encodeURIComponent((article.description || article.title).substring(0, 200));
+        const image = encodeURIComponent(article.image || '');
     
         let shareLink = '';
     
         switch(platform) {
             case 'facebook':
+                // Facebook utilise les meta tags Open Graph de la page de destination
                 shareLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'twitter':
-                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                // Twitter avec titre et description
+                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}%20-%20${description}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'linkedin':
+                // LinkedIn utilise les meta tags Open Graph de la page de destination
                 shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
                 window.open(shareLink, '_blank', 'width=600,height=400');
                 break;
                 
             case 'whatsapp':
-                shareLink = `https://wa.me/?text=${title}%20${url}`;
+                // WhatsApp avec titre, description et URL
+                const whatsappText = `${title}%0A%0A${description}%0A%0A${url}`;
+                shareLink = `https://wa.me/?text=${whatsappText}`;
                 window.open(shareLink, '_blank');
                 break;
                 
             case 'copy':
-                // Copier le lien dans le presse-papiers
+                // Copier le lien dans le presse-papiers avec titre et description
+                const copyText = `${article.title}\n\n${article.description || ''}\n\n${shareUrl}`;
                 if (navigator.clipboard) {
-                    navigator.clipboard.writeText(shareUrl).then(() => {
+                    navigator.clipboard.writeText(copyText).then(() => {
                         showShareNotification('Lien copié dans le presse-papiers !');
                     }).catch(() => {
-                        fallbackCopyTextToClipboard(shareUrl);
+                        fallbackCopyTextToClipboard(copyText);
                     });
                 } else {
-                    fallbackCopyTextToClipboard(shareUrl);
+                    fallbackCopyTextToClipboard(copyText);
                 }
                 break;
         }
