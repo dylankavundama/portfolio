@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (descriptionTextarea && charCount) {
         descriptionTextarea.addEventListener('input', () => {
             const count = descriptionTextarea.value.length;
-            charCount.textContent = `${count} / 500 caractères`;
+            charCount.textContent = `${count} / 1000 caractères`;
             
-            if (count > 450) {
+            if (count > 900) {
                 charCount.style.color = '#e74c3c';
-            } else if (count > 400) {
+            } else if (count > 800) {
                 charCount.style.color = '#f39c12';
             } else {
                 charCount.style.color = 'var(--primary-color, #3c94e7)';
@@ -153,7 +153,7 @@ async function handleFormSubmit(e) {
         // Réinitialiser le compteur
         const charCount = document.getElementById('char-count');
         if (charCount) {
-            charCount.textContent = '0 / 500 caractères';
+            charCount.textContent = '0 / 1000 caractères';
             charCount.style.color = 'var(--primary-color, #3c94e7)';
         }
 
@@ -265,7 +265,7 @@ async function editArticle(id) {
     const charCount = document.getElementById('char-count');
     if (charCount) {
         const count = article.description.length;
-        charCount.textContent = `${count} / 500 caractères`;
+        charCount.textContent = `${count} / 1000 caractères`;
     }
 
     // Stocker l'ID de l'article en cours d'édition

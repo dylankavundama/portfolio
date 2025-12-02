@@ -435,28 +435,6 @@ body.dark-mode .hero-section {
     opacity: 0;
     animation: letterFadeIn 0.5s ease-out forwards;
 }
-@keyframes slideInUp {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideOutDown {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-}
-
 @keyframes letterFadeIn {
     from {
         opacity: 0;
@@ -1062,20 +1040,6 @@ body.dark-mode .testimonial-info h4 {
     opacity: 0.2;
     font-family: Georgia, serif;
     line-height: 1;
-}
-
-.testimonial-share-buttons {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(60, 148, 231, 0.1);
-}
-
-body.dark-mode .testimonial-share-buttons {
-    border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .testimonial-text {
