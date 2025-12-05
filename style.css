@@ -1385,7 +1385,7 @@ body.dark-mode .project-card {
     font-size: 0.9em;
 }
 .project-image-placeholder {
-    height: 220px;
+    height: 180px;
     width: 100%;
     background-size: cover;
     background-position: center;
@@ -1418,8 +1418,8 @@ body.dark-mode .project-card {
 }
 
 .project-card h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 8px;
     font-size: 1.4em;
     color: var(--text-light);
 }
@@ -1430,12 +1430,12 @@ body.dark-mode .project-card h3 {
 
 .project-card p {
     font-size: 0.95em;
-    margin-bottom: 15px;
-    line-height: 1.6;
+    margin-bottom: 12px;
+    line-height: 1.5;
     color: var(--text-light);
     opacity: 0.9;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1456,7 +1456,7 @@ body.dark-mode .project-card p {
     opacity: 0.8;
 }
 .project-card .tags {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     min-height: 30px;
 }
 
@@ -1751,7 +1751,7 @@ body.dark-mode .project-modal-footer {
 
 .project-actions {
     margin-top: auto;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .project-card .btn-project {
@@ -1762,7 +1762,7 @@ body.dark-mode .project-modal-footer {
     text-align: center;
     background: linear-gradient(135deg, var(--primary-color), #2d7dd2);
     color: white;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 8px;
     width: 100%;
     transition: all var(--animation-speed) var(--animation-easing);
