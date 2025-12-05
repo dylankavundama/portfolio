@@ -52,6 +52,7 @@ const translations = {
         projects: {
             title: "MES RÉALISATIONS",
             voirProjet: "Voir le projet",
+            projetPrive: "Projet privé",
             searchPlaceholder: "Rechercher un projet...",
             filterAll: "Tous",
             filterEcommerce: "E-commerce",
@@ -157,6 +158,7 @@ const translations = {
         projects: {
             title: "MY PROJECTS",
             voirProjet: "View project",
+            projetPrive: "Private project",
             searchPlaceholder: "Search for a project...",
             filterAll: "All",
             filterEcommerce: "E-commerce",

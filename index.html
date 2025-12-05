@@ -274,7 +274,7 @@
                         <button class="filter-btn" data-filter="Culture" data-i18n="projects.filterCulture">Culture</button>
                     </div>
                     <div class="projects-count">
-                        <span id="projects-count-text">19</span> <span data-i18n="projects.projectsFound">projets</span>
+                        <span id="projects-count-text">20</span> <span data-i18n="projects.projectsFound">projets</span>
                     </div>
                 </div>
                 
@@ -470,7 +470,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="project-card" data-category="Gestion" data-search="winnercompany gestion boutique système administration stocks rapports erp commerce">
+                    <div class="project-card" data-category="Gestion" data-search="winnercompany gestion boutique système administration stocks rapports erp commerce" data-type="private">
                         <div class="project-image-placeholder" style="
             background-image: url('https://winnercompany.net/assets/logo.png');
             background-size: contain; 
@@ -484,8 +484,11 @@
                                 commerciale (gestion des stocks, rapports, etc.).</p>
                         </div>
                         <div class="tags"><span>Gestion</span><span>ERP</span><span>Commerce</span></div>
-                        <a href="https://winnercompany.net/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
-                                class="fas fa-external-link-alt"></i></a>
+                        <div class="project-actions">
+                            <span class="project-private" data-i18n="projects.projetPrive">
+                                <i class="fas fa-lock"></i> Projet privé
+                            </span>
+                        </div>
                     </div>
                     <div class="project-card" data-category="Mobile" data-search="geoville application quiz villes monde divertissement apprentissage">
                         <div class="project-image-placeholder" style="
@@ -573,6 +576,29 @@
                         <a href="https://babutik.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">Voir le projet <i
                                 class="fas fa-external-link-alt"></i></a>
                     </div>
+                    <div class="project-card" data-category="E-commerce Web" data-search="shopushindi e-commerce vente vehicules boutique en ligne">
+                        <div class="project-image-placeholder" style="
+            background-image: url('./asset/shopus.png');
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-color: #f5f5f5;
+            background-position: center;
+        "></div>
+                        <div class="project-badge">
+                            <i class="fas fa-globe"></i>
+                            <span>Web</span>
+                        </div>
+                        <h3>Shopushindi</h3>
+                        <div class="project-description-wrapper">
+                            <p>Shopushindi est une boutique e-commerce moderne spécialisée dans la vente de véhicules et d'accessoires automobiles. La boutique offre une expérience d'achat en ligne intuitive et sécurisée, permettant aux clients de parcourir un large catalogue de véhicules neufs et d'occasion. Le site web intègre des fonctionnalités avancées de recherche et de filtrage pour faciliter la découverte de véhicules selon les critères spécifiques des clients. La boutique garantit une transaction sécurisée et un accompagnement client de qualité tout au long du processus d'achat.</p>
+                        </div>
+                        <div class="tags"><span>E-commerce</span><span>Web</span><span>Véhicules</span></div>
+                        <div class="project-actions">
+                            <a href="https://shopushindi.com/index.html" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">
+                                <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
+                            </a>
+                        </div>
+                    </div>
                     <div class="project-card">
                         <div class="project-image-placeholder" style="
             background-image: url('./asset/1757951921308-2.png');
@@ -609,30 +635,6 @@
                         <div class="tags"><span>Humanitaire</span><span>RDC</span><span>ONG</span></div>
                         <div class="project-actions">
                             <a href="https://www.mosungi.org/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">
-                                <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-category="Web Gestion" data-search="u-system shopushindi manager gestion boutique administration e-commerce">
-                        <div class="project-image-placeholder" style="
-            background-image: url('./asset/ush.png');
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-color: #f5f5f5;
-            background-position: center;
-        "></div>
-                        <div class="project-badge">
-                            <i class="fas fa-cog"></i>
-                            <span>Gestion</span>
-                        </div>
-                        <h3>U-System</h3>
-                        <div class="project-description-wrapper">
-                            <p>U-System est un système de gestion complet pour la vente de véhicules. Il permet de gérer les stocks de véhicules, les commandes, les clients, les dépôts et les paiements échelonnés. Le dashboard offre une vue d'ensemble avec statistiques en temps réel, suivi des paiements par tranches, gestion des dépôts clients et historique complet des transactions.</p>
-                        </div>
-                        <div class="tags"><span>Gestion</span><span>E-commerce</span><span>Web</span><span>ERP</span></div>
-                        <div class="project-actions">
-                            <a href="https://manager.shopushindi.com/" class="btn btn-project" target="_blank" data-i18n="projects.voirProjet">
                                 <i class="fas fa-external-link-alt"></i> <span>Voir le projet</span>
                             </a>
                         </div>
@@ -685,9 +687,29 @@
                         </div>
                     </div>
 
-
-
-
+                    <div class="project-card" data-category="Web Gestion" data-search="u-system shopushindi manager gestion boutique administration e-commerce" data-type="private">
+                        <div class="project-image-placeholder" style="
+            background-image: url('./asset/ush.png');
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-color: #f5f5f5;
+            background-position: center;
+        "></div>
+                        <div class="project-badge">
+                            <i class="fas fa-cog"></i>
+                            <span>Gestion</span>
+                        </div>
+                        <h3>U-System</h3>
+                        <div class="project-description-wrapper">
+                            <p>U-System est un système de gestion complet pour la vente de véhicules. Il permet de gérer les stocks de véhicules, les commandes, les clients, les dépôts et les paiements échelonnés. Le dashboard offre une vue d'ensemble avec statistiques en temps réel, suivi des paiements par tranches, gestion des dépôts clients et historique complet des transactions.</p>
+                        </div>
+                        <div class="tags"><span>Gestion</span><span>E-commerce</span><span>Web</span><span>ERP</span></div>
+                        <div class="project-actions">
+                            <span class="project-private" data-i18n="projects.projetPrive">
+                                <i class="fas fa-lock"></i> Projet privé
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
             </div>

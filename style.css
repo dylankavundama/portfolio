@@ -1779,6 +1779,27 @@ body.dark-mode .project-modal-footer {
     font-weight: 600;
 }
 
+/* Style pour les projets privés */
+.project-private {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    color: #e74c3c;
+    padding: 12px 24px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: default;
+    user-select: none;
+}
+
+.project-private i {
+    font-size: 1em;
+}
+
 /* 6. Contact Section */
 .contact-section {
     padding: 80px 0;
