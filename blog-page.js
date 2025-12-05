@@ -12,8 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initMobileMenu();
     initBackToTop();
-    loadBlogArticles();
+    // Délai pour s'assurer que le DOM est complètement prêt
+    setTimeout(() => {
+        loadBlogArticles();
+    }, 100);
 });
+
+// Fallback si DOMContentLoaded a déjà été déclenché
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            loadBlogArticles();
+        }, 100);
+    });
+} else if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    // DOM déjà chargé
+    console.log('DOM déjà chargé, chargement immédiat des articles...');
+    setTimeout(() => {
+        loadBlogArticles();
+    }, 100);
+}
 
 // ============================================
 // GESTION DU THÈME
@@ -200,17 +218,29 @@ async function loadBlogArticles() {
     const blogEmpty = document.getElementById('blog-empty');
     const blogLoader = document.getElementById('blog-loader');
 
-    if (!blogGrid) return;
+    if (!blogGrid) {
+        console.error('Élément blog-grid non trouvé dans le DOM');
+        return;
+    }
+
+    console.log('Début du chargement des articles...');
 
     try {
         // Afficher le loader
         if (blogLoader) {
             blogLoader.classList.add('active');
         }
-        blogGrid.style.display = 'none';
-        if (blogEmpty) blogEmpty.style.display = 'none';
+        if (blogGrid) {
+            blogGrid.style.display = 'none';
+        }
+        if (blogEmpty) {
+            blogEmpty.style.display = 'none';
+        }
 
+        console.log('Tentative de récupération des articles depuis:', API_BASE_URL);
         const response = await fetch(API_BASE_URL);
+        
+        console.log('Réponse reçue, status:', response.status);
         
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ error: 'Erreur inconnue' }));
@@ -242,7 +272,10 @@ async function loadBlogArticles() {
         }
 
         if (blogEmpty) blogEmpty.style.display = 'none';
-        blogGrid.style.display = 'grid';
+        
+        if (blogGrid) {
+            blogGrid.style.display = 'grid';
+        }
 
         console.log('Affichage de', articles.length, 'article(s)');
 
@@ -308,7 +341,12 @@ async function loadBlogArticles() {
         }).filter(html => html !== '').join('');
         
         console.log('HTML généré, longueur:', articlesHTML.length);
-        blogGrid.innerHTML = articlesHTML;
+        
+        if (blogGrid && articlesHTML) {
+            blogGrid.innerHTML = articlesHTML;
+        } else {
+            console.error('Impossible d\'afficher les articles: blogGrid ou articlesHTML manquant');
+        }
 
         // Animer les cartes au scroll
         const blogCards = document.querySelectorAll('.blog-card');
@@ -333,18 +371,24 @@ async function loadBlogArticles() {
         // Cacher le loader
         if (blogLoader) {
             blogLoader.classList.remove('active');
+            blogLoader.style.display = 'none';
         }
         
         // Afficher un message d'erreur
-        blogGrid.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #e74c3c; grid-column: 1 / -1;">
-                <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px; color: #e74c3c;"></i>
-                <h3 style="margin-bottom: 10px;">Erreur de chargement</h3>
-                <p style="color: #666;">${error.message}</p>
-                <p style="color: #999; font-size: 14px; margin-top: 10px;">Vérifiez la console pour plus de détails.</p>
-            </div>
-        `;
-        blogGrid.style.display = 'grid';
+        if (blogGrid) {
+            blogGrid.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #e74c3c; grid-column: 1 / -1;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; margin-bottom: 20px; color: #e74c3c;"></i>
+                    <h3 style="margin-bottom: 10px;">Erreur de chargement</h3>
+                    <p style="color: #666; margin-bottom: 10px;">${escapeHtml(error.message)}</p>
+                    <p style="color: #999; font-size: 14px; margin-top: 10px;">Vérifiez la console pour plus de détails.</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary-color, #3c94e7); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-redo"></i> Réessayer
+                    </button>
+                </div>
+            `;
+            blogGrid.style.display = 'grid';
+        }
         if (blogEmpty) blogEmpty.style.display = 'none';
     }
 }
