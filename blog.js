@@ -210,33 +210,34 @@ async function shareArticle(articleId, platform) {
         
         if (!article) return;
     
-        // Utiliser le lien de l'article s'il existe, sinon l'URL de la page de détail
-        const shareUrl = article.link || `${window.location.origin}/blog-detail.html?id=${articleId}`;
+        // Toujours utiliser l'URL de la page de détail pour rediriger vers le blog
+        const baseUrl = window.location.origin;
+        const shareUrl = `${baseUrl}/blog-detail.html?id=${articleId}`;
         const url = encodeURIComponent(shareUrl);
         const title = encodeURIComponent(article.title);
-        const description = encodeURIComponent(article.description);
+        const description = encodeURIComponent(article.description || '');
     
         let shareLink = '';
     
         switch(platform) {
             case 'facebook':
                 shareLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-                window.open(shareLink, '_blank', 'width=600,height=400');
+                window.open(shareLink, '_blank', 'width=600,height=400,noopener,noreferrer');
                 break;
                 
             case 'twitter':
-                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-                window.open(shareLink, '_blank', 'width=600,height=400');
+                shareLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}${description ? `&description=${description}` : ''}`;
+                window.open(shareLink, '_blank', 'width=600,height=400,noopener,noreferrer');
                 break;
                 
             case 'linkedin':
                 shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-                window.open(shareLink, '_blank', 'width=600,height=400');
+                window.open(shareLink, '_blank', 'width=600,height=400,noopener,noreferrer');
                 break;
                 
             case 'whatsapp':
-                shareLink = `https://wa.me/?text=${title}%20${url}`;
-                window.open(shareLink, '_blank');
+                shareLink = `https://wa.me/?text=${title}%20-%20${description}%20${url}`;
+                window.open(shareLink, '_blank', 'noopener,noreferrer');
                 break;
                 
             case 'copy':
