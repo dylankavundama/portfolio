@@ -128,8 +128,7 @@ function displayArticle(article) {
             </div>
             
             <div class="blog-detail-body">
-                <p>${escapeHtml(article.description)}</p>
-                <p>Pour lire l'article complet, cliquez sur le lien ci-dessous.</p>
+                ${article.link ? '<p>Pour lire l\'article complet, cliquez sur le lien ci-dessous.</p>' : '<p>Cet article est disponible sur cette page.</p>'}
             </div>
             
             <div class="blog-detail-actions">
