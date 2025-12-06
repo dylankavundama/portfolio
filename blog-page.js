@@ -5,8 +5,8 @@
 
 const API_BASE_URL = '/api/blog';
 
-// Initialisation au chargement
-document.addEventListener('DOMContentLoaded', () => {
+// Fonction d'initialisation
+function initBlogPage() {
     console.log('blog-page.js chargé, démarrage du chargement des articles...');
     initTheme();
     initLanguage();
@@ -16,21 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         loadBlogArticles();
     }, 100);
-});
+}
 
-// Fallback si DOMContentLoaded a déjà été déclenché
+// Initialisation au chargement
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            loadBlogArticles();
-        }, 100);
-    });
-} else if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    document.addEventListener('DOMContentLoaded', initBlogPage);
+} else {
     // DOM déjà chargé
     console.log('DOM déjà chargé, chargement immédiat des articles...');
-    setTimeout(() => {
-        loadBlogArticles();
-    }, 100);
+    initBlogPage();
 }
 
 // ============================================
@@ -252,14 +246,17 @@ async function loadBlogArticles() {
         console.log('Articles reçus:', articles);
         console.log('Nombre d\'articles:', articles ? articles.length : 0);
 
-        // Cacher le loader
+        // Cacher le loader dès que les articles sont reçus
         if (blogLoader) {
             blogLoader.classList.remove('active');
+            blogLoader.style.display = 'none';
         }
 
         if (!articles || articles.length === 0) {
             console.log('Aucun article trouvé, affichage du message vide');
-            blogGrid.style.display = 'none';
+            if (blogGrid) {
+                blogGrid.style.display = 'none';
+            }
             if (blogEmpty) {
                 blogEmpty.style.display = 'flex';
                 blogEmpty.style.flexDirection = 'column';
@@ -271,8 +268,10 @@ async function loadBlogArticles() {
             return;
         }
 
-        if (blogEmpty) blogEmpty.style.display = 'none';
-        
+        // Afficher la grille et cacher le message vide
+        if (blogEmpty) {
+            blogEmpty.style.display = 'none';
+        }
         if (blogGrid) {
             blogGrid.style.display = 'grid';
         }
@@ -344,8 +343,15 @@ async function loadBlogArticles() {
         
         if (blogGrid && articlesHTML) {
             blogGrid.innerHTML = articlesHTML;
+            // S'assurer que la grille est visible
+            blogGrid.style.display = 'grid';
+            console.log('Articles affichés dans la grille');
         } else {
-            console.error('Impossible d\'afficher les articles: blogGrid ou articlesHTML manquant');
+            console.error('Impossible d\'afficher les articles: blogGrid ou articlesHTML manquant', {
+                blogGrid: !!blogGrid,
+                articlesHTML: !!articlesHTML,
+                articlesHTMLLength: articlesHTML ? articlesHTML.length : 0
+            });
         }
 
         // Animer les cartes au scroll
