@@ -1307,7 +1307,7 @@ body.dark-mode .projects-count {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     contain: layout style paint;
 }
@@ -2256,7 +2256,7 @@ section {
     }
     
     .projects-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 25px;
     }
     

@@ -68,7 +68,7 @@ const translations = {
         
         // Blog Section
         blog: {
-            title: "MON BLOG",
+            title: "BLOG",
             description: "Découvrez mes articles sur le développement, les technologies et mes expériences.",
             empty: "Aucun article pour le moment. Revenez bientôt !",
             searchPlaceholder: "Rechercher un article...",
@@ -174,7 +174,7 @@ const translations = {
         
         // Blog Section
         blog: {
-            title: "MY BLOG",
+            title: "BLOG",
             description: "Discover my articles on development, technologies and my experiences.",
             empty: "No articles yet. Come back soon!",
             searchPlaceholder: "Search for an article...",
