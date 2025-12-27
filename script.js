@@ -1008,52 +1008,100 @@ async function trackSiteVisit() {
 }
 
 // ============================================
-// GESTION DU CLIC SUR L'IMAGE DU PROJET
+// GESTION DU CLIC SUR L'IMAGE ET LA DESCRIPTION DU PROJET
 // ============================================
 function initProjectReadMore() {
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
         const projectImage = card.querySelector('.project-image-placeholder');
+        const projectDescription = card.querySelector('.project-description-wrapper p');
+        const descriptionWrapper = card.querySelector('.project-description-wrapper');
         
-        if (!projectImage) return;
-        
-        // Rendre l'image cliquable
-        projectImage.style.cursor = 'pointer';
-        projectImage.setAttribute('role', 'button');
-        projectImage.setAttribute('tabindex', '0');
-        
-        // Mettre à jour l'aria-label selon la langue
-        const updateAriaLabel = () => {
-            const currentLang = localStorage.getItem('language') || 'fr';
-            const translations = window.translations || {};
-            if (translations[currentLang] && translations[currentLang].projects) {
-                projectImage.setAttribute('aria-label', translations[currentLang].projects.readMore || 'Voir les détails du projet');
-            } else {
-                projectImage.setAttribute('aria-label', 'Voir les détails du projet');
-            }
-        };
-        updateAriaLabel();
-        
-        // Écouter les changements de langue
-        window.addEventListener('languageChanged', updateAriaLabel);
-        
-        // Gérer le clic sur l'image - Ouvrir le modal
-        const openModal = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            openProjectModal(card);
-        };
-        
-        projectImage.addEventListener('click', openModal);
-        
-        // Gérer la touche Enter pour l'accessibilité
-        projectImage.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+        // Gestion du clic sur l'image - Ouvrir le modal
+        if (projectImage) {
+            // Rendre l'image cliquable
+            projectImage.style.cursor = 'pointer';
+            projectImage.setAttribute('role', 'button');
+            projectImage.setAttribute('tabindex', '0');
+            
+            // Mettre à jour l'aria-label selon la langue
+            const updateAriaLabel = () => {
+                const currentLang = localStorage.getItem('language') || 'fr';
+                const translations = window.translations || {};
+                if (translations[currentLang] && translations[currentLang].projects) {
+                    projectImage.setAttribute('aria-label', translations[currentLang].projects.readMore || 'Voir les détails du projet');
+                } else {
+                    projectImage.setAttribute('aria-label', 'Voir les détails du projet');
+                }
+            };
+            updateAriaLabel();
+            
+            // Écouter les changements de langue
+            window.addEventListener('languageChanged', updateAriaLabel);
+            
+            // Gérer le clic sur l'image - Ouvrir le modal
+            const openModal = (e) => {
                 e.preventDefault();
-                openModal(e);
+                e.stopPropagation();
+                openProjectModal(card);
+            };
+            
+            projectImage.addEventListener('click', openModal);
+            
+            // Gérer la touche Enter pour l'accessibilité
+            projectImage.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal(e);
+                }
+            });
+        }
+        
+        // Gestion du clic sur la description - Afficher la description complète dans un popup
+        if (projectDescription && descriptionWrapper) {
+            // Vérifier si la description est tronquée
+            const isTruncated = () => {
+                const lineHeight = parseInt(window.getComputedStyle(projectDescription).lineHeight);
+                const maxHeight = lineHeight * 3; // 3 lignes avec -webkit-line-clamp
+                return projectDescription.scrollHeight > maxHeight;
+            };
+            
+            // Rendre la description cliquable si elle est tronquée
+            if (isTruncated()) {
+                descriptionWrapper.style.cursor = 'pointer';
+                descriptionWrapper.setAttribute('role', 'button');
+                descriptionWrapper.setAttribute('tabindex', '0');
+                descriptionWrapper.setAttribute('aria-label', 'Cliquer pour voir la description complète');
+                
+                // Ajouter un indicateur visuel
+                descriptionWrapper.style.position = 'relative';
+                
+                // Gérer le clic sur la description - Ouvrir le popup
+                const openDescriptionModal = (e) => {
+                    // Ne pas ouvrir si on clique sur un lien ou un bouton à l'intérieur
+                    if (e.target.tagName === 'A' || e.target.closest('a') || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                        return;
+                    }
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Ouvrir le modal de description
+                    openDescriptionPopup(card);
+                };
+                
+                descriptionWrapper.addEventListener('click', openDescriptionModal);
+                
+                // Gérer la touche Enter pour l'accessibilité
+                descriptionWrapper.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openDescriptionModal(e);
+                    }
+                });
             }
-        });
+        }
     });
 }
 
@@ -1202,6 +1250,81 @@ function openProjectModal(projectCard) {
 
 function closeProjectModal() {
     const modal = document.getElementById('project-modal');
+    
+    if (!modal) return;
+    
+    // Masquer le modal
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+// ============================================
+// GESTION DU MODAL DE DESCRIPTION
+// ============================================
+function openDescriptionPopup(projectCard) {
+    const modal = document.getElementById('description-modal');
+    const modalOverlay = document.getElementById('description-modal-overlay');
+    const modalClose = document.getElementById('description-modal-close');
+    const modalTitle = document.getElementById('description-modal-title');
+    const modalText = document.getElementById('description-modal-text');
+    
+    if (!modal) return;
+    
+    // Récupérer les informations du projet
+    const projectTitle = projectCard.querySelector('h3');
+    const projectDescription = projectCard.querySelector('.project-description-wrapper p');
+    
+    // Remplir le modal avec les données
+    if (projectTitle) {
+        modalTitle.textContent = projectTitle.textContent;
+    }
+    
+    if (projectDescription) {
+        modalText.textContent = projectDescription.textContent;
+    }
+    
+    // Afficher le modal
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    // Fermer le modal au clic sur l'overlay
+    const overlayClickHandler = (e) => {
+        if (e.target === modalOverlay) {
+            closeDescriptionPopup();
+            modalOverlay.removeEventListener('click', overlayClickHandler);
+        }
+    };
+    modalOverlay.addEventListener('click', overlayClickHandler);
+    
+    // Empêcher la fermeture quand on clique sur le contenu du modal
+    const modalContent = document.querySelector('.description-modal-content');
+    if (modalContent) {
+        const handleContentClick = (e) => {
+            e.stopPropagation();
+        };
+        modalContent.removeEventListener('click', handleContentClick);
+        modalContent.addEventListener('click', handleContentClick);
+    }
+    
+    // Fermer le modal au clic sur le bouton de fermeture
+    const closeClickHandler = () => {
+        closeDescriptionPopup();
+        modalClose.removeEventListener('click', closeClickHandler);
+    };
+    modalClose.addEventListener('click', closeClickHandler);
+    
+    // Fermer le modal avec la touche Escape
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            closeDescriptionPopup();
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+}
+
+function closeDescriptionPopup() {
+    const modal = document.getElementById('description-modal');
     
     if (!modal) return;
     
