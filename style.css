@@ -1751,15 +1751,16 @@ body.dark-mode .project-modal-footer {
 
 .project-actions {
     margin-top: auto;
-    padding: 15px 20px;
-    padding-bottom: 20px;
+    padding: 0 20px 20px 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: stretch;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .project-card .btn-project {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -1769,7 +1770,7 @@ body.dark-mode .project-modal-footer {
     padding: 12px 24px;
     border-radius: 8px;
     width: 100%;
-    max-width: 100%;
+    min-width: 0;
     transition: all var(--animation-speed) var(--animation-easing);
     box-shadow: 0 4px 12px rgba(60, 148, 231, 0.3);
     text-decoration: none;
@@ -1778,8 +1779,7 @@ body.dark-mode .project-modal-footer {
     font-size: 0.95em;
     font-weight: 500;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
 .project-card .btn-project:hover {
