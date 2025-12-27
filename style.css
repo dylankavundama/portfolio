@@ -1751,32 +1751,57 @@ body.dark-mode .project-modal-footer {
 
 .project-actions {
     margin-top: auto;
-    padding-bottom: 15px;
+    padding: 15px 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-card .btn-project {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     text-align: center;
     background: linear-gradient(135deg, var(--primary-color), #2d7dd2);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 8px;
     width: 100%;
+    max-width: 100%;
     transition: all var(--animation-speed) var(--animation-easing);
     box-shadow: 0 4px 12px rgba(60, 148, 231, 0.3);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .project-card .btn-project:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(60, 148, 231, 0.4);
     background: linear-gradient(135deg, #2d7dd2, var(--primary-color));
+    color: white;
+    text-decoration: none;
+}
+
+.project-card .btn-project:active {
+    transform: translateY(0);
+}
+
+.project-card .btn-project i {
+    font-size: 0.9em;
+    flex-shrink: 0;
 }
 
 .project-card .btn-project span {
     font-weight: 600;
+    flex-shrink: 0;
 }
 
 /* Style pour les projets privés */
