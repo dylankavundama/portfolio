@@ -1345,6 +1345,97 @@ function openDescriptionPopup(projectCard) {
         }
     };
     document.addEventListener('keydown', handleEscape);
+
+    // Gestion du bouton de partage
+    const shareBtn = document.getElementById('description-share-btn');
+    if (shareBtn) {
+        // Cloner le bouton pour supprimer les anciens event listeners
+        const newShareBtn = shareBtn.cloneNode(true);
+        shareBtn.parentNode.replaceChild(newShareBtn, shareBtn);
+
+        // Configurer le nouveau bouton
+        newShareBtn.addEventListener('click', async () => {
+            const title = projectTitle ? projectTitle.textContent : 'Mon Portfolio';
+            const fullText = projectDescription ? projectDescription.textContent : '';
+
+            // Limiter la description à 3 phrases
+            // Regex simple pour découper les phrases
+            const sentences = fullText.match(/[^\.!\?]+[\.!\?]+/g) || [fullText];
+            const text = sentences.slice(0, 3).join(' ').trim();
+
+            // Essayer de trouver l'URL du projet
+            let url = window.location.href; // Fallback
+            const projectLink = projectCard.querySelector('.project-actions a') ||
+                projectCard.querySelector('.btn-project') ||
+                projectCard.querySelector('a.btn');
+
+            if (projectLink && projectLink.href && !projectLink.href.includes('#')) {
+                url = projectLink.href;
+            }
+
+            // Préparer les données de partage locales
+            const shareData = {
+                title: title,
+                text: `${text}\n\nDécouvrir ici :`,
+                url: url
+            };
+
+            // Tenter de récupérer l'image pour le partage
+            try {
+                const projectImage = projectCard.querySelector('.project-image-placeholder');
+                if (projectImage) {
+                    const style = window.getComputedStyle(projectImage);
+                    const bgImage = style.backgroundImage;
+                    // Extraire l'URL de url("...") et nettoyer
+                    const imageUrl = bgImage.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '');
+
+                    if (imageUrl && imageUrl !== 'none' && !imageUrl.startsWith('data:')) {
+                        const response = await fetch(imageUrl);
+                        const blob = await response.blob();
+                        const file = new File([blob], 'project.jpg', { type: blob.type });
+
+                        // Vérifier si le partage de fichiers est supporté par le navigateur
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            shareData.files = [file];
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Impossible de charger l\'image pour le partage (CORS ou erreur):', e);
+            }
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Erreur de partage:', err);
+                    // Si erreur (peut-être due au fichier), réessayer sans fichier
+                    if (shareData.files) {
+                        delete shareData.files;
+                        try {
+                            await navigator.share(shareData);
+                        } catch (retryErr) {
+                            console.log('Erreur retentative partage:', retryErr);
+                        }
+                    }
+                }
+            } else {
+                // Fallback : copie dans le presse-papier
+                try {
+                    await navigator.clipboard.writeText(`${title}\n\n${text}\n\nLien : ${url}`);
+
+                    // Feedback visuel
+                    const originalHtml = newShareBtn.innerHTML;
+                    newShareBtn.innerHTML = '<i class="fas fa-check"></i> Copié !';
+                    setTimeout(() => {
+                        newShareBtn.innerHTML = originalHtml;
+                    }, 2000);
+                } catch (err) {
+                    alert(`${title}\n\n${text}\n\n${url}`);
+                }
+            }
+        });
+    }
 }
 
 function closeDescriptionPopup() {
