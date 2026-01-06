@@ -1077,7 +1077,8 @@ function initProjectReadMore() {
                 const maxHeight = lineHeight * 3;
 
                 // Si on est sur mobile OU si le contenu dépasse
-                const isClamped = isMobile && projectDescription.scrollHeight > maxHeight;
+                // Si le contenu dépasse
+                const isClamped = projectDescription.scrollHeight > maxHeight;
 
                 if (isClamped) {
                     descriptionWrapper.style.cursor = 'pointer';
