@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function initTheme() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    
+
     if (!themeToggle || !themeIcon) return;
-    
+
     // Charger le thème sauvegardé
     const savedTheme = localStorage.getItem('theme') || 'light';
     if (savedTheme === 'dark') {
@@ -26,19 +26,19 @@ function initTheme() {
         themeIcon.classList.remove('fa-moon');
         themeIcon.classList.add('fa-sun');
     }
-    
+
     // Toggle du thème
     themeToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         e.preventDefault();
-        
+
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
-        
+
         // Changer l'icône avec animation
         themeIcon.style.transform = 'rotate(360deg)';
         themeIcon.style.transition = 'transform 0.5s ease';
-        
+
         setTimeout(() => {
             if (isDark) {
                 themeIcon.classList.remove('fa-moon');
@@ -49,7 +49,7 @@ function initTheme() {
             }
             themeIcon.style.transform = 'rotate(0deg)';
         }, 250);
-        
+
         // Sauvegarder le thème
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
@@ -66,26 +66,26 @@ function initLanguage() {
     const langToggle = document.getElementById('lang-toggle');
     const langDropdown = document.getElementById('lang-dropdown');
     const langOptions = document.querySelectorAll('.lang-option');
-    
+
     if (!langToggle || !langDropdown) return;
-    
+
     // Toggle au clic sur le bouton
     langToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         e.preventDefault();
         const isActive = langDropdown.classList.contains('active');
-        
+
         // Fermer tous les autres dropdowns
         document.querySelectorAll('.lang-dropdown.active').forEach(dropdown => {
             if (dropdown !== langDropdown) {
                 dropdown.classList.remove('active');
             }
         });
-        
+
         // Toggle le dropdown actuel
         langDropdown.classList.toggle('active', !isActive);
     });
-    
+
     // Sélection d'une langue
     langOptions.forEach(option => {
         option.addEventListener('click', (e) => {
@@ -98,7 +98,7 @@ function initLanguage() {
             }
         });
     });
-    
+
     // Fermer le dropdown en cliquant ailleurs
     document.addEventListener('click', (e) => {
         if (langToggle && langDropdown) {
@@ -107,14 +107,14 @@ function initLanguage() {
             }
         }
     });
-    
+
     // Fermer avec Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && langDropdown.classList.contains('active')) {
             langDropdown.classList.remove('active');
         }
     });
-    
+
     // Initialiser la langue au chargement
     updateLanguage(currentLanguage);
 }
@@ -123,23 +123,23 @@ function updateLanguage(lang) {
     currentLanguage = lang;
     localStorage.setItem('language', lang);
     document.documentElement.setAttribute('lang', lang);
-    
+
     // Mettre à jour le texte du bouton
     const currentLangSpan = document.getElementById('current-lang');
     if (currentLangSpan) {
         currentLangSpan.textContent = lang.toUpperCase();
     }
-    
+
     // Traduire tous les éléments
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         const keys = key.split('.');
         let translation = translations[lang];
-        
+
         for (const k of keys) {
             translation = translation?.[k];
         }
-        
+
         if (translation) {
             if (element.tagName === 'INPUT' && element.hasAttribute('data-i18n-placeholder')) {
                 element.placeholder = translation;
@@ -161,7 +161,7 @@ function updateLanguage(lang) {
             }
         }
     });
-    
+
     // Déclencher l'événement de changement de langue
     window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
 }
@@ -207,7 +207,7 @@ function debounce(func, wait) {
 if (header) {
     const handleScroll = debounce(() => {
         const currentScroll = window.pageYOffset;
-        
+
         // Ajouter une ombre au header quand on scroll
         if (currentScroll > 50) {
             header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
@@ -215,10 +215,10 @@ if (header) {
         } else {
             header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
         }
-        
+
         lastScroll = currentScroll;
     }, 10);
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
@@ -335,7 +335,7 @@ window.addEventListener('load', () => {
             el.style.transform = 'translateY(0)';
             el.style.display = '';
         });
-        
+
         // S'assurer que toutes les sections sont visibles
         sections.forEach(section => {
             section.style.opacity = '1';
@@ -351,7 +351,7 @@ window.addEventListener('load', () => {
 window.addEventListener('load', () => {
     const textContent = document.querySelector('.text-content');
     const imageContent = document.querySelector('.image-content');
-    
+
     if (textContent) {
         textContent.style.animation = 'fadeInLeft 1s ease-out';
     }
@@ -370,14 +370,14 @@ window.addEventListener('load', () => {
 // Utiliser la délégation d'événements pour de meilleures performances
 const projectsGrid = document.getElementById('projects-grid');
 if (projectsGrid) {
-    projectsGrid.addEventListener('mouseenter', function(e) {
+    projectsGrid.addEventListener('mouseenter', function (e) {
         const card = e.target.closest('.project-card');
         if (card && !card.classList.contains('hidden')) {
             card.style.willChange = 'transform, box-shadow';
         }
     }, true);
-    
-    projectsGrid.addEventListener('mouseleave', function(e) {
+
+    projectsGrid.addEventListener('mouseleave', function (e) {
         const card = e.target.closest('.project-card');
         if (card) {
             card.style.willChange = 'auto';
@@ -389,13 +389,13 @@ if (projectsGrid) {
 // ANIMATION DES CARTES DE COMPÉTENCES
 // ============================================
 document.querySelectorAll('.skill-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-8px)';
         this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
         this.style.boxShadow = '0 8px 25px rgba(60, 148, 231, 0.2)';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
         this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.05)';
     });
@@ -405,12 +405,12 @@ document.querySelectorAll('.skill-card').forEach(card => {
 // ANIMATION DES TECHNOLOGIES
 // ============================================
 document.querySelectorAll('.tech-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
+    item.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.1) rotate(5deg)';
         this.style.transition = 'transform 0.3s ease';
     });
-    
-    item.addEventListener('mouseleave', function() {
+
+    item.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1) rotate(0deg)';
     });
 });
@@ -419,30 +419,30 @@ document.querySelectorAll('.tech-item').forEach(item => {
 // ANIMATION DES BOUTONS
 // ============================================
 document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mouseenter', function() {
+    btn.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.05)';
         this.style.transition = 'transform 0.2s ease';
     });
-    
-    btn.addEventListener('mouseleave', function() {
+
+    btn.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1)';
     });
-    
-    btn.addEventListener('click', function(e) {
+
+    btn.addEventListener('click', function (e) {
         // Effet de ripple
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
-        
+
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
         ripple.classList.add('ripple');
-        
+
         this.appendChild(ripple);
-        
+
         setTimeout(() => {
             ripple.remove();
         }, 600);
@@ -454,12 +454,12 @@ document.querySelectorAll('.btn').forEach(btn => {
 // ============================================
 const logo = document.querySelector('.logo');
 if (logo) {
-    logo.addEventListener('mouseenter', function() {
+    logo.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.1)';
         this.style.transition = 'transform 0.3s ease';
     });
-    
-    logo.addEventListener('mouseleave', function() {
+
+    logo.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1)';
     });
 }
@@ -520,12 +520,12 @@ if (heroTitle) {
 // ANIMATION DES LIENS DE NAVIGATION
 // ============================================
 document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('mouseenter', function() {
+    link.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-2px)';
         this.style.transition = 'transform 0.2s ease';
     });
-    
-    link.addEventListener('mouseleave', function() {
+
+    link.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
     });
 });
@@ -560,7 +560,7 @@ if (youtubeSection) {
                 const intro = entry.target.querySelector('.youtube-intro');
                 const video = entry.target.querySelector('.video-container');
                 const cta = entry.target.querySelector('.youtube-cta');
-                
+
                 if (intro) {
                     setTimeout(() => intro.classList.add('animate-in'), 200);
                 }
@@ -573,7 +573,7 @@ if (youtubeSection) {
             }
         });
     }, { threshold: 0.2 });
-    
+
     youtubeObserver.observe(youtubeSection);
 }
 
@@ -608,36 +608,36 @@ function initProjectFilters() {
     const searchInput = document.getElementById('project-search');
     const projectsGrid = document.getElementById('projects-grid');
     const projectsCountText = document.getElementById('projects-count-text');
-    
+
     // Vérifier que les éléments existent
     if (!projectCards.length || !filterButtons.length || !searchInput || !projectsGrid || !projectsCountText) {
         console.warn('Éléments de filtrage non trouvés');
         return;
     }
-    
+
     let currentFilter = 'all';
     let currentSearch = '';
-    
+
     // Fonction pour filtrer et rechercher les projets
     function filterProjects() {
         let visibleCount = 0;
-        
+
         projectCards.forEach(card => {
             const category = card.getAttribute('data-category') || '';
             const searchText = (card.getAttribute('data-search') || '').toLowerCase();
             const cardTitle = (card.querySelector('h3')?.textContent || '').toLowerCase();
             const cardDescription = (card.querySelector('p')?.textContent || '').toLowerCase();
-            
+
             // Vérifier le filtre de catégorie
-            const matchesFilter = currentFilter === 'all' || 
-                                category.toLowerCase().includes(currentFilter.toLowerCase());
-            
+            const matchesFilter = currentFilter === 'all' ||
+                category.toLowerCase().includes(currentFilter.toLowerCase());
+
             // Vérifier la recherche
             const matchesSearch = currentSearch === '' ||
-                                searchText.includes(currentSearch.toLowerCase()) ||
-                                cardTitle.includes(currentSearch.toLowerCase()) ||
-                                cardDescription.includes(currentSearch.toLowerCase());
-            
+                searchText.includes(currentSearch.toLowerCase()) ||
+                cardTitle.includes(currentSearch.toLowerCase()) ||
+                cardDescription.includes(currentSearch.toLowerCase());
+
             if (matchesFilter && matchesSearch) {
                 card.style.display = '';
                 card.classList.remove('hidden');
@@ -654,12 +654,12 @@ function initProjectFilters() {
                 card.classList.remove('animate-in');
             }
         });
-        
+
         // Mettre à jour le compteur
         if (projectsCountText) {
             projectsCountText.textContent = visibleCount;
         }
-        
+
         // Afficher message si aucun résultat
         if (visibleCount === 0) {
             projectsGrid.classList.add('no-results');
@@ -667,41 +667,41 @@ function initProjectFilters() {
             projectsGrid.classList.remove('no-results');
         }
     }
-    
+
     // S'assurer que le bouton "Tous" est actif par défaut
     const allButton = Array.from(filterButtons).find(btn => btn.getAttribute('data-filter') === 'all');
     if (allButton && !allButton.classList.contains('active')) {
         allButton.classList.add('active');
     }
-    
+
     // Gestion des filtres
     filterButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
+
             // Retirer la classe active de tous les boutons
             filterButtons.forEach(btn => btn.classList.remove('active'));
-            
+
             // Ajouter la classe active au bouton cliqué
             button.classList.add('active');
-            
+
             // Mettre à jour le filtre actif
             const filterValue = button.getAttribute('data-filter');
             currentFilter = filterValue || 'all';
-            
+
             // Filtrer les projets
             filterProjects();
         });
     });
-    
+
     // Gestion de la recherche avec debounce optimisé
     let searchTimeout;
     let rafId;
     searchInput.addEventListener('input', (e) => {
         clearTimeout(searchTimeout);
         if (rafId) cancelAnimationFrame(rafId);
-        
+
         searchTimeout = setTimeout(() => {
             currentSearch = e.target.value.trim();
             rafId = requestAnimationFrame(() => {
@@ -709,13 +709,13 @@ function initProjectFilters() {
             });
         }, 200); // Délai réduit pour plus de réactivité
     });
-    
+
     // Recherche en temps réel (optionnel, commenté pour performance)
     // searchInput.addEventListener('input', (e) => {
     //     currentSearch = e.target.value.trim();
     //     filterProjects();
     // });
-    
+
     // Effacer la recherche avec Escape
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -724,12 +724,12 @@ function initProjectFilters() {
             filterProjects();
         }
     });
-    
+
     // Initialiser le compteur au chargement
     if (projectCards.length > 0 && projectsCountText) {
         projectsCountText.textContent = projectCards.length;
     }
-    
+
     // Initialiser l'affichage
     filterProjects();
 }
@@ -746,7 +746,7 @@ if (mobileMenuToggle && navLinks) {
         navLinks.classList.toggle('active');
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
     });
-    
+
     // Fermer le menu quand on clique sur un lien
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
@@ -755,7 +755,7 @@ if (mobileMenuToggle && navLinks) {
             document.body.style.overflow = '';
         });
     });
-    
+
     // Fermer le menu quand on clique en dehors
     document.addEventListener('click', (e) => {
         if (!navLinks.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
@@ -772,12 +772,12 @@ if (mobileMenuToggle && navLinks) {
 function initTestimonials() {
     const testimonialForm = document.getElementById('testimonial-form');
     const testimonialsGrid = document.getElementById('testimonials-grid');
-    
+
     if (!testimonialForm || !testimonialsGrid) return;
-    
+
     // Charger les avis au démarrage
     loadTestimonials();
-    
+
     // Gérer la soumission du formulaire
     testimonialForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -789,37 +789,37 @@ function initTestimonials() {
 async function loadTestimonials() {
     const testimonialsGrid = document.getElementById('testimonials-grid');
     if (!testimonialsGrid) return;
-    
+
     try {
         // Afficher un loader
         testimonialsGrid.innerHTML = '<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
-        
+
         const response = await fetch('/api/testimonials');
-        
+
         if (!response.ok) {
             throw new Error('Erreur lors du chargement des témoignages');
         }
-        
+
         const testimonials = await response.json();
-        
+
         // Garder uniquement l'avis exemple (celui avec data-testimonial-id="example")
         const exampleCard = testimonialsGrid.querySelector('[data-testimonial-id="example"]');
         const exampleHTML = exampleCard ? exampleCard.outerHTML : '';
-        
+
         // Vider la grille
         testimonialsGrid.innerHTML = '';
-        
+
         // Réinsérer l'avis exemple s'il existe
         if (exampleHTML) {
             testimonialsGrid.insertAdjacentHTML('beforeend', exampleHTML);
         }
-        
+
         // Ajouter les témoignages depuis l'API
         testimonials.forEach((testimonial, index) => {
             const card = createTestimonialCard(testimonial, testimonial.id || `api-${index}`);
             testimonialsGrid.appendChild(card);
         });
-        
+
         // Animer les nouvelles cartes
         setTimeout(() => {
             testimonialsGrid.querySelectorAll('.testimonial-card').forEach((card, index) => {
@@ -839,16 +839,16 @@ function createTestimonialCard(testimonial, id) {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
     card.setAttribute('data-testimonial-id', id);
-    
+
     // Générer les étoiles selon la note
     const stars = Array.from({ length: 5 }, (_, i) => {
         const isFilled = i < testimonial.rating;
         return `<i class="fas fa-star" style="color: ${isFilled ? '#ffc107' : '#ddd'};"></i>`;
     }).join('');
-    
+
     // Récupérer l'initiale du nom pour l'avatar
     const initial = testimonial.name.charAt(0).toUpperCase();
-    
+
     card.innerHTML = `
         <div class="testimonial-header">
             <div class="testimonial-avatar" style="font-size: 1.2em; font-weight: bold;">
@@ -866,7 +866,7 @@ function createTestimonialCard(testimonial, id) {
             "${escapeHtml(testimonial.text)}"
         </p>
     `;
-    
+
     return card;
 }
 
@@ -874,19 +874,19 @@ function createTestimonialCard(testimonial, id) {
 async function submitTestimonial() {
     const form = document.getElementById('testimonial-form');
     if (!form) return;
-    
+
     const formData = new FormData(form);
     const name = formData.get('name').trim();
     const role = formData.get('role').trim();
     const rating = parseInt(formData.get('rating'));
     const text = formData.get('text').trim();
-    
+
     // Validation
     if (!name || !rating || !text) {
         showTestimonialMessage('error', translations[currentLanguage].testimonials.errorMessage);
         return;
     }
-    
+
     try {
         // Envoyer le témoignage à l'API
         const response = await fetch('/api/testimonials', {
@@ -901,18 +901,18 @@ async function submitTestimonial() {
                 text
             })
         });
-        
+
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.error || 'Erreur lors de l\'envoi du témoignage');
         }
-        
+
         // Réinitialiser le formulaire
         form.reset();
-        
+
         // Afficher le message de succès
         showTestimonialMessage('success', 'Merci ! Votre témoignage a été soumis et sera publié après modération.');
-        
+
         // Note : On ne recharge pas les témoignages car le nouveau n'est pas encore approuvé
         // Scroll vers les avis
         setTimeout(() => {
@@ -929,17 +929,17 @@ function showTestimonialMessage(type, message) {
     // Supprimer les messages existants
     const existingMessages = document.querySelectorAll('.testimonial-message');
     existingMessages.forEach(msg => msg.remove());
-    
+
     // Créer le nouveau message
     const messageDiv = document.createElement('div');
     messageDiv.className = `testimonial-message ${type}`;
     messageDiv.textContent = message;
-    
+
     // Insérer le message dans le formulaire
     const form = document.getElementById('testimonial-form');
     if (form) {
         form.insertBefore(messageDiv, form.firstChild);
-        
+
         // Supprimer le message après 5 secondes
         setTimeout(() => {
             messageDiv.remove();
@@ -969,14 +969,14 @@ async function trackSiteVisit() {
     }
 
     const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-    
+
     // Générer ou récupérer un ID de visiteur unique
     let visitorId = localStorage.getItem('visitor_id');
     if (!visitorId) {
         visitorId = 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('visitor_id', visitorId);
     }
-    
+
     // Envoyer la visite à l'API (en arrière-plan, ne pas bloquer)
     try {
         await fetch('/api/stats/visit', {
@@ -994,11 +994,11 @@ async function trackSiteVisit() {
         // Erreur silencieuse - ne pas bloquer l'expérience utilisateur
         console.error('Erreur lors de l\'enregistrement de la visite:', error);
     }
-    
+
     // Garder aussi un cache local pour l'affichage immédiat (fallback)
     const totalVisits = parseInt(localStorage.getItem('site_total_visits') || '0') + 1;
     localStorage.setItem('site_total_visits', totalVisits.toString());
-    
+
     let visits = JSON.parse(localStorage.getItem(SITE_VISITS_KEY) || '{}');
     if (!visits[today]) {
         visits[today] = 0;
@@ -1012,19 +1012,19 @@ async function trackSiteVisit() {
 // ============================================
 function initProjectReadMore() {
     const projectCards = document.querySelectorAll('.project-card');
-    
+
     projectCards.forEach(card => {
         const projectImage = card.querySelector('.project-image-placeholder');
         const projectDescription = card.querySelector('.project-description-wrapper p');
         const descriptionWrapper = card.querySelector('.project-description-wrapper');
-        
+
         // Gestion du clic sur l'image - Ouvrir le modal
         if (projectImage) {
             // Rendre l'image cliquable
             projectImage.style.cursor = 'pointer';
             projectImage.setAttribute('role', 'button');
             projectImage.setAttribute('tabindex', '0');
-            
+
             // Mettre à jour l'aria-label selon la langue
             const updateAriaLabel = () => {
                 const currentLang = localStorage.getItem('language') || 'fr';
@@ -1036,19 +1036,19 @@ function initProjectReadMore() {
                 }
             };
             updateAriaLabel();
-            
+
             // Écouter les changements de langue
             window.addEventListener('languageChanged', updateAriaLabel);
-            
+
             // Gérer le clic sur l'image - Ouvrir le modal
             const openModal = (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 openProjectModal(card);
             };
-            
+
             projectImage.addEventListener('click', openModal);
-            
+
             // Gérer la touche Enter pour l'accessibilité
             projectImage.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -1057,50 +1057,73 @@ function initProjectReadMore() {
                 }
             });
         }
-        
+
+        // Gestion du clic sur la description - Afficher la description complète dans un popup
         // Gestion du clic sur la description - Afficher la description complète dans un popup
         if (projectDescription && descriptionWrapper) {
-            // Vérifier si la description est tronquée
-            const isTruncated = () => {
-                const lineHeight = parseInt(window.getComputedStyle(projectDescription).lineHeight);
-                const maxHeight = lineHeight * 3; // 3 lignes avec -webkit-line-clamp
-                return projectDescription.scrollHeight > maxHeight;
+            // Fonction pour vérifier et activer le clic
+            const checkTruncation = () => {
+                const style = window.getComputedStyle(projectDescription);
+                let lineHeight = parseInt(style.lineHeight);
+                // Gérer le cas "normal" (environ 1.2 * font-size)
+                if (isNaN(lineHeight)) {
+                    const fontSize = parseInt(style.fontSize);
+                    lineHeight = fontSize * 1.2;
+                }
+
+                // Vérifier si clampé (mobile) ou débordement
+                // Sur mobile le CSS force le clamp à 3 lignes
+                const isMobile = window.innerWidth <= 768;
+                const maxHeight = lineHeight * 3;
+
+                // Si on est sur mobile OU si le contenu dépasse
+                const isClamped = isMobile && projectDescription.scrollHeight > maxHeight;
+
+                if (isClamped) {
+                    descriptionWrapper.style.cursor = 'pointer';
+                    descriptionWrapper.setAttribute('role', 'button');
+                    descriptionWrapper.setAttribute('tabindex', '0');
+                    descriptionWrapper.setAttribute('aria-label', 'Cliquer pour voir la description complète');
+                    descriptionWrapper.classList.add('clickable'); // Pour le CSS
+                } else {
+                    descriptionWrapper.style.cursor = '';
+                    descriptionWrapper.removeAttribute('role');
+                    descriptionWrapper.removeAttribute('tabindex');
+                    descriptionWrapper.removeAttribute('aria-label');
+                    descriptionWrapper.classList.remove('clickable');
+                }
             };
-            
-            // Rendre la description cliquable si elle est tronquée
-            if (isTruncated()) {
-                descriptionWrapper.style.cursor = 'pointer';
-                descriptionWrapper.setAttribute('role', 'button');
-                descriptionWrapper.setAttribute('tabindex', '0');
-                descriptionWrapper.setAttribute('aria-label', 'Cliquer pour voir la description complète');
-                
-                // Ajouter un indicateur visuel
-                descriptionWrapper.style.position = 'relative';
-                
-                // Gérer le clic sur la description - Ouvrir le popup
-                const openDescriptionModal = (e) => {
-                    // Ne pas ouvrir si on clique sur un lien ou un bouton à l'intérieur
-                    if (e.target.tagName === 'A' || e.target.closest('a') || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                        return;
-                    }
-                    
+
+            // Vérifier au chargement et au redimensionnement
+            checkTruncation();
+            window.addEventListener('resize', debounce(checkTruncation, 200));
+
+            // Gérer le clic sur la description - Ouvrir le popup
+            const openDescriptionModal = (e) => {
+                // Ne pas ouvrir si on clique sur un lien ou un bouton à l'intérieur
+                // Et seulement si la description est considérée comme clickable (tronquée)
+                if (!descriptionWrapper.classList.contains('clickable')) return;
+
+                if (e.target.tagName === 'A' || e.target.closest('a') || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Ouvrir le modal de description
+                openDescriptionPopup(card);
+            };
+
+            descriptionWrapper.addEventListener('click', openDescriptionModal);
+
+            // Gérer la touche Enter pour l'accessibilité
+            descriptionWrapper.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && descriptionWrapper.classList.contains('clickable')) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Ouvrir le modal de description
                     openDescriptionPopup(card);
-                };
-                
-                descriptionWrapper.addEventListener('click', openDescriptionModal);
-                
-                // Gérer la touche Enter pour l'accessibilité
-                descriptionWrapper.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        openDescriptionModal(e);
-                    }
-                });
-            }
+                }
+            });
         }
     });
 }
@@ -1118,9 +1141,9 @@ function openProjectModal(projectCard) {
     const modalTags = document.getElementById('project-modal-tags');
     const modalDescription = document.getElementById('project-modal-description');
     const modalLink = document.getElementById('project-modal-link');
-    
+
     if (!modal) return;
-    
+
     // Récupérer les informations du projet
     const projectImage = projectCard.querySelector('.project-image-placeholder');
     const projectBadgeElement = projectCard.querySelector('.project-badge');
@@ -1128,42 +1151,42 @@ function openProjectModal(projectCard) {
     const projectTags = projectCard.querySelector('.tags');
     const projectDescription = projectCard.querySelector('.project-description-wrapper p');
     // Chercher le lien dans project-actions ou directement dans la carte
-    const projectLink = projectCard.querySelector('.project-actions a') || 
-                        projectCard.querySelector('.btn-project') ||
-                        projectCard.querySelector('a.btn');
-    
+    const projectLink = projectCard.querySelector('.project-actions a') ||
+        projectCard.querySelector('.btn-project') ||
+        projectCard.querySelector('a.btn');
+
     // Remplir le modal avec les données
     if (projectImage) {
         const bgImage = window.getComputedStyle(projectImage).backgroundImage;
         modalImage.style.backgroundImage = bgImage;
     }
-    
+
     if (projectBadgeElement) {
         modalBadge.innerHTML = projectBadgeElement.innerHTML;
         modalBadge.style.display = 'flex';
     } else {
         modalBadge.style.display = 'none';
     }
-    
+
     if (projectTitle) {
         modalTitle.textContent = projectTitle.textContent;
     }
-    
+
     if (projectTags) {
         modalTags.innerHTML = projectTags.innerHTML;
     }
-    
+
     if (projectDescription) {
         modalDescription.textContent = projectDescription.textContent;
     }
-    
+
     if (projectLink && projectLink.href && projectLink.href !== '#' && projectLink.href !== window.location.href + '#') {
         // Mettre à jour le href du lien
         modalLink.href = projectLink.href;
         modalLink.style.display = 'inline-flex';
         modalLink.style.pointerEvents = 'auto';
         modalLink.style.cursor = 'pointer';
-        
+
         // Mettre à jour le texte du lien selon la langue
         const currentLang = localStorage.getItem('language') || 'fr';
         const translations = window.translations || {};
@@ -1173,23 +1196,23 @@ function openProjectModal(projectCard) {
                 linkSpan.textContent = translations[currentLang].projects.voirProjet || 'Voir le projet';
             }
         }
-        
+
         // Nettoyer les anciens event listeners en clonant le lien
         const newLink = modalLink.cloneNode(true);
         modalLink.parentNode.replaceChild(newLink, modalLink);
-        
+
         // Récupérer la nouvelle référence du lien
         const updatedModalLink = document.getElementById('project-modal-link');
-        
+
         // Réappliquer les styles et attributs
         if (updatedModalLink) {
             updatedModalLink.href = projectLink.href;
             updatedModalLink.style.display = 'inline-flex';
             updatedModalLink.style.pointerEvents = 'auto';
             updatedModalLink.style.cursor = 'pointer';
-            
+
             // S'assurer que le clic sur le lien fonctionne
-            updatedModalLink.addEventListener('click', function(e) {
+            updatedModalLink.addEventListener('click', function (e) {
                 e.stopPropagation(); // Empêcher la propagation vers le modalContent et l'overlay
                 // Le lien fonctionnera normalement (navigation vers l'URL)
             });
@@ -1198,11 +1221,11 @@ function openProjectModal(projectCard) {
         modalLink.href = '#';
         modalLink.style.display = 'none';
     }
-    
+
     // Afficher le modal
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    
+
     // Fermer le modal au clic sur l'overlay (une seule fois)
     const overlayClickHandler = (e) => {
         // Ne fermer que si on clique directement sur l'overlay, pas sur le contenu
@@ -1212,7 +1235,7 @@ function openProjectModal(projectCard) {
         }
     };
     modalOverlay.addEventListener('click', overlayClickHandler);
-    
+
     // Empêcher la fermeture quand on clique sur le contenu du modal (mais pas sur les liens)
     const modalContent = document.querySelector('.project-modal-content');
     if (modalContent) {
@@ -1224,20 +1247,20 @@ function openProjectModal(projectCard) {
             }
             e.stopPropagation();
         };
-        
+
         // Retirer l'ancien listener s'il existe
         modalContent.removeEventListener('click', handleContentClick);
         // Ajouter le nouveau listener
         modalContent.addEventListener('click', handleContentClick);
     }
-    
+
     // Fermer le modal au clic sur le bouton de fermeture (une seule fois)
     const closeClickHandler = () => {
         closeProjectModal();
         modalClose.removeEventListener('click', closeClickHandler);
     };
     modalClose.addEventListener('click', closeClickHandler);
-    
+
     // Fermer le modal avec la touche Escape
     const handleEscape = (e) => {
         if (e.key === 'Escape') {
@@ -1250,9 +1273,9 @@ function openProjectModal(projectCard) {
 
 function closeProjectModal() {
     const modal = document.getElementById('project-modal');
-    
+
     if (!modal) return;
-    
+
     // Masquer le modal
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -1267,26 +1290,26 @@ function openDescriptionPopup(projectCard) {
     const modalClose = document.getElementById('description-modal-close');
     const modalTitle = document.getElementById('description-modal-title');
     const modalText = document.getElementById('description-modal-text');
-    
+
     if (!modal) return;
-    
+
     // Récupérer les informations du projet
     const projectTitle = projectCard.querySelector('h3');
     const projectDescription = projectCard.querySelector('.project-description-wrapper p');
-    
+
     // Remplir le modal avec les données
     if (projectTitle) {
         modalTitle.textContent = projectTitle.textContent;
     }
-    
+
     if (projectDescription) {
         modalText.textContent = projectDescription.textContent;
     }
-    
+
     // Afficher le modal
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    
+
     // Fermer le modal au clic sur l'overlay
     const overlayClickHandler = (e) => {
         if (e.target === modalOverlay) {
@@ -1295,7 +1318,7 @@ function openDescriptionPopup(projectCard) {
         }
     };
     modalOverlay.addEventListener('click', overlayClickHandler);
-    
+
     // Empêcher la fermeture quand on clique sur le contenu du modal
     const modalContent = document.querySelector('.description-modal-content');
     if (modalContent) {
@@ -1305,14 +1328,14 @@ function openDescriptionPopup(projectCard) {
         modalContent.removeEventListener('click', handleContentClick);
         modalContent.addEventListener('click', handleContentClick);
     }
-    
+
     // Fermer le modal au clic sur le bouton de fermeture
     const closeClickHandler = () => {
         closeDescriptionPopup();
         modalClose.removeEventListener('click', closeClickHandler);
     };
     modalClose.addEventListener('click', closeClickHandler);
-    
+
     // Fermer le modal avec la touche Escape
     const handleEscape = (e) => {
         if (e.key === 'Escape') {
@@ -1325,11 +1348,19 @@ function openDescriptionPopup(projectCard) {
 
 function closeDescriptionPopup() {
     const modal = document.getElementById('description-modal');
-    
+
     if (!modal) return;
-    
+
     // Masquer le modal
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
 }
+
+// Initialisation des fonctionnalités au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialiser la gestion des descriptions de projets (clic, troncature)
+    if (typeof initProjectReadMore === 'function') {
+        initProjectReadMore();
+    }
+});
 
