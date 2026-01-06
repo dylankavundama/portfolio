@@ -1983,7 +1983,8 @@ body.dark-mode .description-modal-title {
     font-size: 1.1em;
     line-height: 1.8;
     color: var(--text-light);
-    white-space: pre-wrap;
+    white-space: normal;
+    text-align: justify;
     word-wrap: break-word;
 }
 
