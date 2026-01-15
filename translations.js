@@ -12,7 +12,7 @@ const translations = {
             projets: "Réalisation",
             blog: "Blog"
         },
-        
+
         // Hero Section
         hero: {
             hello: "Hello, Je suis",
@@ -22,13 +22,13 @@ const translations = {
             contactWhatsApp: "Contactez-moi sur WhatsApp",
             voirCV: "Voir mon CV"
         },
-        
+
         // About Section
         about: {
             title: "À PROPOS DE MOI",
             text: "Développeur mobile senior passionné, je conçois des applications modernes, performantes et intuitives en alliant front-end, back-end et sens du design. Créatif et polyvalent, j'apporte une touche visuelle et technique unique à chacun de mes projets grâce à ma maîtrise du développement mobile multiplateforme et de l'expérience utilisateur (UX/UI)."
         },
-        
+
         // Skills Section
         skills: {
             title: "MES COMPÉTENCES",
@@ -47,7 +47,7 @@ const translations = {
                 description: "Capacité à planifier, organiser et superviser des projets de développement web et mobile en appliquant des méthodologies agiles telles que Kanban et Scrum, pour assurer une livraison efficace, structurée et alignée sur les objectifs métier."
             }
         },
-        
+
         // Projects Section
         projects: {
             title: "MES RÉALISATIONS",
@@ -65,7 +65,7 @@ const translations = {
             readMore: "Lire plus",
             readLess: "Lire moins"
         },
-        
+
         // Blog Section
         blog: {
             title: "BLOG",
@@ -74,7 +74,7 @@ const translations = {
             searchPlaceholder: "Rechercher un article...",
             viewAll: "Voir tous les articles"
         },
-        
+
         // Testimonials Section
         testimonials: {
             title: "AVIS CLIENTS",
@@ -88,14 +88,14 @@ const translations = {
             successMessage: "Merci ! Votre avis a été publié avec succès.",
             errorMessage: "Une erreur est survenue. Veuillez réessayer."
         },
-        
+
         // YouTube Section
         youtube: {
             title: "MA CHAÎNE YOUTUBE 📺",
             intro: "Découvrez mes derniers tutoriels, analyses et astuces en développement mobile et web. Abonnez-vous pour rester informé des meilleures pratiques et nouveautés du coding !",
             sAbonner: "S'ABONNER À LA CHAÎNE"
         },
-        
+
         // Footer
         footer: {
             description: "Développeur Fullstack Mobile passionné, créant des applications modernes et performantes pour le web et mobile.",
@@ -103,12 +103,12 @@ const translations = {
             contact: "Contact",
             location: "Goma, République Démocratique du Congo",
             whatsapp: "Discuter sur WhatsApp",
-            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025",
+            copyright: "Designed & Built by Dylan Kavundama Copyright © 2026",
             madeWith: "Fait avec",
             inRDC: "en RDC"
         }
     },
-    
+
     en: {
         // Navigation
         nav: {
@@ -118,7 +118,7 @@ const translations = {
             projets: "Projects",
             blog: "Blog"
         },
-        
+
         // Hero Section
         hero: {
             hello: "Hello, I'm",
@@ -128,13 +128,13 @@ const translations = {
             contactWhatsApp: "Contact me on WhatsApp",
             voirCV: "View my CV"
         },
-        
+
         // About Section
         about: {
             title: "ABOUT ME",
             text: "Passionate senior mobile developer, I design modern, performant and intuitive applications by combining front-end, back-end and design sense. Creative and versatile, I bring a unique visual and technical touch to each of my projects thanks to my mastery of cross-platform mobile development and user experience (UX/UI)."
         },
-        
+
         // Skills Section
         skills: {
             title: "MY SKILLS",
@@ -153,7 +153,7 @@ const translations = {
                 description: "Ability to plan, organize and supervise web and mobile development projects by applying agile methodologies such as Kanban and Scrum, to ensure efficient, structured delivery aligned with business objectives."
             }
         },
-        
+
         // Projects Section
         projects: {
             title: "MY PROJECTS",
@@ -171,7 +171,7 @@ const translations = {
             readMore: "Read more",
             readLess: "Read less"
         },
-        
+
         // Blog Section
         blog: {
             title: "BLOG",
@@ -180,7 +180,7 @@ const translations = {
             searchPlaceholder: "Search for an article...",
             viewAll: "View all articles"
         },
-        
+
         // Testimonials Section
         testimonials: {
             title: "CLIENT TESTIMONIALS",
@@ -194,14 +194,14 @@ const translations = {
             successMessage: "Thank you! Your testimonial has been published successfully.",
             errorMessage: "An error occurred. Please try again."
         },
-        
+
         // YouTube Section
         youtube: {
             title: "MY YOUTUBE CHANNEL 📺",
             intro: "Discover my latest tutorials, analyses and tips on mobile and web development. Subscribe to stay informed about best practices and coding news!",
             sAbonner: "SUBSCRIBE TO THE CHANNEL"
         },
-        
+
         // Footer
         footer: {
             description: "Passionate Fullstack Mobile developer, creating modern and performant applications for web and mobile.",
@@ -209,7 +209,7 @@ const translations = {
             contact: "Contact",
             location: "Goma, Democratic Republic of the Congo",
             whatsapp: "Chat on WhatsApp",
-            copyright: "Designed & Built by Dylan Kavundama Copyright © 2025",
+            copyright: "Designed & Built by Dylan Kavundama Copyright © 2026",
             madeWith: "Made with",
             inRDC: "in DRC"
         }
